@@ -1,0 +1,154 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> init
+Rule 1     init -> MAIN DOSPUNTOS listainstrucciones
+Rule 2     listainstrucciones -> listainstrucciones simpleinstrucciones
+Rule 3     listainstrucciones -> simpleinstrucciones
+Rule 4     simpleinstrucciones -> declaracion
+Rule 5     simpleinstrucciones -> asignacion
+Rule 6     simpleinstrucciones -> ifcomando
+Rule 7     simpleinstrucciones -> exit
+Rule 8     simpleinstrucciones -> print
+Rule 9     simpleinstrucciones -> etiqueta
+Rule 10    simpleinstrucciones -> goto
+Rule 11    simpleinstrucciones -> read
+Rule 12    simpleinstrucciones -> unset
+Rule 13    declaracion -> variable PTCOMA
+Rule 14    asignacion -> variable IGUAL tipo PTCOMA
+Rule 15    tipo -> instruccionregistro
+Rule 16    tipo -> conversion
+Rule 17    tipo -> ARRAY PARIZQ PARDE
+Rule 18    variable -> TEMPORALES
+Rule 19    variable -> PARAMETROS
+Rule 20    variable -> DEVOLUCIONES
+Rule 21    variable -> RETORNONIVEL
+Rule 22    variable -> PILA
+Rule 23    variable -> SP
+Rule 24    instruccionregistro -> registro MAS registro
+Rule 25    instruccionregistro -> registro MENOS registro
+Rule 26    instruccionregistro -> registro POR registro
+Rule 27    instruccionregistro -> registro DIVIDIDO registro
+Rule 28    instruccionregistro -> registro RESIDUO registro
+Rule 29    instruccionregistro -> ABS PARIZQ registro PARDER
+Rule 30    instruccionregistro -> registro ANDLOGICA registro
+Rule 31    instruccionregistro -> registro ORLOGICA registro
+Rule 32    instruccionregistro -> registro XOR registro
+Rule 33    instruccionregistro -> NOTLOGICA registro
+Rule 34    instruccionregistro -> registro ANDBIT registro
+Rule 35    instruccionregistro -> registro ORBIT registro
+Rule 36    instruccionregistro -> registro XORBIT registro
+Rule 37    instruccionregistro -> registro SHIFTIZQ registro
+Rule 38    instruccionregistro -> registro SHIFTDER registro
+Rule 39    instruccionregistro -> NOTBIT registro
+Rule 40    instruccionregistro -> registro IGUALIGUAL registro
+Rule 41    instruccionregistro -> registro NOIGUAL registro
+Rule 42    instruccionregistro -> registro MAYORIGUAL registro
+Rule 43    instruccionregistro -> registro MENORIGUAL registro
+Rule 44    instruccionregistro -> registro MAYOR registro
+Rule 45    instruccionregistro -> registro MENOR registro
+Rule 46    instruccionregistro -> MENOS registro
+Rule 47    instruccionregistro -> registro
+Rule 48    registro -> acceso
+Rule 49    registro -> ENTERO
+Rule 50    registro -> CADENA
+Rule 51    registro -> DECIMAL
+Rule 52    acceso -> variable dimension
+Rule 53    acceso -> variable
+Rule 54    dimension -> dimension CORCHETEIZQ inside CORCHETEDER
+Rule 55    dimension -> CORCHETEIZQ inside CORCHETEDER
+Rule 56    inside -> ENTERO
+Rule 57    inside -> CADENA
+Rule 58    inside -> acceso
+Rule 59    conversion -> PARIZQ eltipo PARDER registro
+Rule 60    eltipo -> FLOAT
+Rule 61    eltipo -> INT
+Rule 62    eltipo -> CHAR
+Rule 63    exit -> EXIT PTCOMA
+Rule 64    print -> PRINT PARIZQ instruccionregistro PARDER PTCOMA
+Rule 65    etiqueta -> ETIQUETA DOSPUNTOS
+Rule 66    goto -> GOTO ETIQUETA PTCOMA
+Rule 67    read -> READ PARIZQ PARDER PTCOMA
+Rule 68    unset -> UNSET PARIZQ registro PARDER PTCOMA
+Rule 69    ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+
+Terminals, with rules where they appear
+
+ABS                  : 29
+ANDBIT               : 34
+ANDLOGICA            : 30
+ARRAY                : 17
+CADENA               : 50 57
+CHAR                 : 62
+CORCHETEDER          : 54 55
+CORCHETEIZQ          : 54 55
+DECIMAL              : 51
+DEVOLUCIONES         : 20
+DIVIDIDO             : 27
+DOSPUNTOS            : 1 65
+ENTERO               : 49 56
+ETIQUETA             : 65 66 69
+EXIT                 : 63
+FLOAT                : 60
+GOTO                 : 66 69
+IF                   : 69
+IGUAL                : 14
+IGUALIGUAL           : 40
+INT                  : 61
+MAIN                 : 1
+MAS                  : 24
+MAYOR                : 44
+MAYORIGUAL           : 42
+MENOR                : 45
+MENORIGUAL           : 43
+MENOS                : 25 46
+NOIGUAL              : 41
+NOTBIT               : 39
+NOTLOGICA            : 33
+ORBIT                : 35
+ORLOGICA             : 31
+PARAMETROS           : 19
+PARDER               : 29 59 64 67 68 69
+PARIZQ               : 17 29 59 64 67 68 69
+PILA                 : 22
+POR                  : 26
+PRINT                : 64
+PTCOMA               : 13 14 63 64 66 67 68 69
+READ                 : 67
+RESIDUO              : 28
+RETORNONIVEL         : 21
+SHIFTDER             : 38
+SHIFTIZQ             : 37
+SP                   : 23
+TEMPORALES           : 18
+UNSET                : 68
+XOR                  : 32
+XORBIT               : 36
+error                : 
+
+Nonterminals, with rules where they appear
+
+PARDE                : 17
+acceso               : 48 58
+asignacion           : 5
+conversion           : 16
+declaracion          : 4
+dimension            : 52 54
+eltipo               : 59
+etiqueta             : 9
+exit                 : 7
+goto                 : 10
+ifcomando            : 6
+init                 : 0
+inside               : 54 55
+instruccionregistro  : 15 64 69
+listainstrucciones   : 1 2
+print                : 8
+read                 : 11
+registro             : 24 24 25 25 26 26 27 27 28 28 29 30 30 31 31 32 32 33 34 34 35 35 36 36 37 37 38 38 39 40 40 41 41 42 42 43 43 44 44 45 45 46 47 59 68
+simpleinstrucciones  : 2 3
+tipo                 : 14
+unset                : 12
+variable             : 13 14 52 53
+
