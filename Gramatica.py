@@ -160,6 +160,10 @@ t_ignore = " \t"
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += t.value.count("\n")
+
+def find_column(input, token):
+    line_start = input.rfind('\n', 0, token.lexpos) + 1
+    return (token.lexpos - line_start) + 1
     
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
@@ -299,19 +303,21 @@ def p_if(t):
 
 
 def p_error(t):
+    if not t:
+        print("EOF")
+        return
+   
+    linea =find_column(entrada,t)
+    t.lexpos=linea
     print(t)
     print("Error sintáctico en '%s'" % t.value)
-    if not t:
-         print("End of File!")
-         return
- 
-     # Read ahead looking for a closing '}'
+     # Buscando el proximo token tipo ;
     while True:
         tok = parser.token()
-           # Get the next token
+           # busca el siguiente token
         if not tok or tok.type == "PTCOMA": 
             break
-    parser.errok()
+    parser.errok() # quita los tokens y retorna el token de  recuperacion
     return tok
 
 parser = yacc.yacc()
@@ -323,4 +329,6 @@ def parse(input) :
     return parser.parse(input)
 f = open("./entrada.txt", "r")
 input = f.read()
+global entrada
+entrada = input
 parse(input)        

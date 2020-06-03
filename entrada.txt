@@ -1,12 +1,13 @@
 main:
  $a0 = 3;
  $ra = 0; #level 0
- $t1 = array();
+ $t1 = array()
  $t3 =(FLOAT)$t4;
  $t3=(int)$t4;
  $t3=(char)$t4;
  $t3=$t4+$t1;
-$t3=$t4*$t1;
+ $t4=$t5[$t6[$t6[$t6]]];
+$t3$t4*$t1;
  $t3=$t4<<$t1;
 $t3=$t4&&$t1;
  $t3=$t4+'javier';

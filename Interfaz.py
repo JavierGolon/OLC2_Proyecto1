@@ -1,8 +1,13 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=wildcard-import
+# pylint: disable=W0614
 import tkinter
 import os
 from tkinter import ttk
 from tkinter.messagebox import *
-from tkinter.filedialog import *
+from tkinter.filedialog import * 
 import re
 
 class Notepad:
@@ -275,10 +280,7 @@ class Notepad:
 		self.__GetSelectedText().event_generate("<<Paste>>")
 
 	def __Search(self):
-		countVar = StringVar()
-		pos = self.__GetSelectedText().search(
-		    "a", "1.0", stopindex="end", count=countVar)
-		self.__GetSelectedText().tag_add("search", pos,"%s + %sc" (pos, countVar.get()))
+		pass
 
 	def __Replace(self):
 		pass
