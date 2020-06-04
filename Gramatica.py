@@ -181,7 +181,9 @@ while True:
         break
     print(tok)"""
 #================================================== GRAMATICA =============================================================
-
+#importamos las clases con las instrucciones y las expresiones(Nodos)
+from Expresiones import *
+from Instrucciones import * 
 # declaracion de las precedencias
 precedence = (
     ('left','XOR'),
@@ -203,12 +205,16 @@ precedence = (
  
 def p_init(t):
     'init  :    MAIN DOSPUNTOS listainstrucciones'
+    t[0]=t[3]
 
 def p_lista_instrucciones(t):
     'listainstrucciones :   listainstrucciones simpleinstrucciones'
+    t[1].append(t[2])
+    t[0]=t[1]
 
 def p_lista_instrucciones_simple(t):
     'listainstrucciones : simpleinstrucciones'
+    t[0]=[t[1]]
 def p_simpleinstrucciones(t):
     '''simpleinstrucciones    : declaracion
                               | asignacion
@@ -219,14 +225,18 @@ def p_simpleinstrucciones(t):
                               | goto
                               | read
                               | unset'''
+    t[0]=t[1]
 def p_declaracion(t):
     'declaracion   :    variable PTCOMA'
+    t[0]=t[1]
 def p_asignacion(t):
     'asignacion :   variable IGUAL tipo PTCOMA'
+    t[0]=asignacion(t[1],t[3])
 def p_tipo(t):
     '''tipo :   instruccionregistro
             |   conversion
             |   ARRAY PARIZQ PARDER'''
+    t[0]=t[1]
 def p_variable(t):
     '''variable :   TEMPORALES
                 |   PARAMETROS
@@ -234,51 +244,95 @@ def p_variable(t):
                 |   RETORNONIVEL
                 |   PILA
                 |   SP'''
+    t[0]=t[1]
 def p_instruccionregistro(t):        
     '''instruccionregistro  : registro MAS registro
                             | registro MENOS registro 
                             | registro POR registro 
                             | registro DIVIDIDO registro 
                             | registro RESIDUO registro 
-                            | ABS PARIZQ registro PARDER 
                             | registro ANDLOGICA registro
                             | registro ORLOGICA registro 
                             | registro XOR registro 
-                            | NOTLOGICA registro
                             | registro ANDBIT registro
                             | registro ORBIT registro 
                             | registro XORBIT registro 
                             | registro SHIFTIZQ registro 
                             | registro SHIFTDER registro 
-                            | NOTBIT registro
                             | registro IGUALIGUAL registro
                             | registro NOIGUAL registro 
                             | registro MAYORIGUAL registro 
                             | registro MENORIGUAL registro 
                             | registro MAYOR registro 
-                            | registro MENOR registro
-                            | MENOS registro %prec UMENOS 
-                            | registro'''
+                            | registro MENOR registro'''
+    if t[2] == '+'  : t[0]=ExpresionBinariaAritmetica(t[1],t[3],OPERACION_ARITMETICA.MAS)
+    elif t[2] == '-': t[0]=ExpresionBinariaAritmetica(t[1],t[3],OPERACION_ARITMETICA.MENOS)
+    elif t[2] == '*': t[0]=ExpresionBinariaAritmetica(t[1],t[3],OPERACION_ARITMETICA.POR)
+    elif t[2] == '/': t[0]=ExpresionBinariaAritmetica(t[1],t[3],OPERACION_ARITMETICA.DIVIDIDO)
+    elif t[2] == '%': t[0]=ExpresionBinariaAritmetica(t[1],t[3],OPERACION_ARITMETICA.RESIDUO)
+    elif t[2] == '&&': t[0]=ExpresionBinarioLogica(t[1],t[3],OPERACION_LOGICA.AND)
+    elif t[2] == '||': t[0]=ExpresionBinarioLogica(t[1],t[3],OPERACION_LOGICA.OR)
+    elif t[2] == 'xor': t[0]=ExpresionBinarioLogica(t[1],t[3],OPERACION_LOGICA.XOR)
+    elif t[2] == '&': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.AND)
+    elif t[2] == '|': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.OR)
+    elif t[2] == '^': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.XOR)
+    elif t[2] == '<<': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.SHIFTIZQ)
+    elif t[2] == '>>': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.SHIFTDER)
+    elif t[2] == '==': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.IGUAL)
+    elif t[2] == '!=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.DIFERENTE)
+    elif t[2] == '>=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYORIGUAL)
+    elif t[2] == '<=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
+    elif t[2] == '>': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
+    elif t[2] == '<': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)  
+    
+
+def p_instruccionregistro_diferentes(t):
+    '''instruccionregistro  : ABS PARIZQ registro PARDER 
+                            | NOTLOGICA registro 
+                            | NOTBIT registro
+                            | MENOS registro %prec UMENOS'''
+    if t[1] == '!': t[0]=ExpresionBinarioLogica(t[2],OPERACION_LOGICA.NOT)
+    elif t[1] == '~': t[0]=ExpresionMonoBit(t[2],OPERACION_BIT.NOT)
+    elif t[1] == '-': t[0]=ExpresionNegativo(t[2])
+    elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
+def p_instruccion_registrounico(t):
+    '''instruccionregistro  : registro'''
+    t[0]=t[1]
+
 def p_registro(t):
-    '''registro :   acceso
-                |   ENTERO
-                |   CADENA
+    '''registro :   ENTERO
                 |   DECIMAL'''
+    t[0]=ExpresionNumero(t[1])
+
+def p_registro_cadena(t):
+    '''registro :   CADENA'''
+    t[0]=ExpresionComillas(t[1])
+
+def p_registro_acceso(t):
+    '''registro :   acceso'''
+    t[0]=t[1]
+                
 def p_acceso(t):
     '''acceso   :   variable dimension
                 |   variable'''
+    t[0]=ExpresionVariable(t[1])
+
 def p_dimension(t):
     '''dimension    :   dimension CORCHETEIZQ inside CORCHETEDER 
                     |   CORCHETEIZQ inside CORCHETEDER
                 '''
+    t[0]=t[1]
+
 def p_inside(t):
     '''inside   :   ENTERO
                 |   CADENA
                 |   acceso'''
+    t[0]=t[1]
 
 
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'
+    t[0]=t[1]
 
 def p_eltipo(t):
     '''eltipo   :   FLOAT
@@ -287,18 +341,25 @@ def p_eltipo(t):
 # ====================== Gramatica Para las Palabras Reservadas y funciones especiales
 def p_exit(t):
     'exit   :   EXIT PTCOMA'
+    t[0]=t[1]
 def p_print(t):
     'print  : PRINT PARIZQ instruccionregistro PARDER PTCOMA'
+    t[0]=Imprimir('Javier')
 def p_etiqueta(t):
-    'etiqueta   :  ETIQUETA DOSPUNTOS' # 
+    'etiqueta   :  ETIQUETA DOSPUNTOS' #
+    t[0]=t[1] 
 def p_goto(t):
     'goto   :   GOTO ETIQUETA PTCOMA' #
+    t[0]=t[1]
 def p_read(t):
     'read   :   READ PARIZQ PARDER PTCOMA'
+    t[0]=t[1]
 def p_unset(t):
     'unset  :   UNSET PARIZQ registro PARDER PTCOMA'
+    t[0]=t[1]
 def p_if(t):
     'ifcomando :    IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA'
+    t[0]=t[1]
 
 
 
@@ -326,9 +387,6 @@ parser = yacc.yacc()
 
 # Funcion que corre nuestro parse
 def parse(input) :
+    global entrada
+    entrada=input
     return parser.parse(input)
-f = open("./entrada.txt", "r")
-input = f.read()
-global entrada
-entrada = input
-parse(input)        

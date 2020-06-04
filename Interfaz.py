@@ -10,6 +10,7 @@ from tkinter.messagebox import *
 from tkinter.filedialog import * 
 import re
 
+
 class Notepad:
 
 	__root = Tk()

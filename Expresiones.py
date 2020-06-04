@@ -31,6 +31,30 @@ class OPEREACION_RELACIONAL(Enum):
 
 class ExpresionNumerica:
     ''' clase maestra que representa una expresion numerica'''
+class ExpresionLogica:
+    ''' clase que representa una expresion logica'''
+class ExpresionBit:
+    ''' clase que representa una expresion logica'''
+class ExpresionRelacional:
+    ''' clase que representa una expresion logica'''
+
+class ExpresionBinariaRelacional(ExpresionRelacional):
+    def __init(self,exp1,exp2,operador):
+        self.exp1=exp1
+        self.exp2=exp2
+        self.operador=operador
+
+class ExpresionBinariaBit(ExpresionBit):
+    def __init(self,exp1,exp2,operador):
+        self.exp1=exp1
+        self.exp2=exp2
+        self.operador=operador
+
+class ExpresionBinarioLogica(ExpresionLogica):
+    def __init(self,exp1,exp2,operador):
+        self.exp1=exp1
+        self.exp2=exp2
+        self.operador=operador
 
 class ExpresionBinariaAritmetica(ExpresionNumerica):
     def __init(self,exp1,exp2,operador):
@@ -38,7 +62,14 @@ class ExpresionBinariaAritmetica(ExpresionNumerica):
         self.exp2=exp2
         self.operador=operador
 
-
+class ExpresionMonoLogica(ExpresionLogica):
+    def __init__(self,exp,operador):
+        self.exp=exp
+        self.operador=operador
+class ExpresionMonoBit(ExpresionBit):
+    def __init__(self,exp,operador):
+        self.exp=exp
+        self.operador=operador
 class ExpresionNegativo(ExpresionNumerica):
     def __init__(self,exp):
         self.exp=exp
@@ -51,7 +82,7 @@ class ExpresionNumero(ExpresionNumerica):
     ''' esta clase representa como tal el numero (Entero o decimal) '''
     def __init__(self,valor=0):
         self.valor=valor
-class ExpresionVariable(ExpresionNumerica):
+class ExpresionVariable():
     ''' esta clase representa como tal un registro'''
     def __init__(self,registro=""):
         self.registro=registro
@@ -62,10 +93,4 @@ class ExpresionComillas(ExpresionCadena):
     def __init__(self,valor):
         self.valor=valor
 
-class ExpresionLogica():
-    ''' esta clase representa las operaciones logicas'''
-    def __init__(self,exp1,exp2,operador):
-        self.exp1=exp1
-        self.exp2=exp2
-        self.operador=operador
 
