@@ -228,7 +228,7 @@ def p_simpleinstrucciones(t):
     t[0]=t[1]
 def p_declaracion(t):
     'declaracion   :    variable PTCOMA'
-    t[0]=t[1]
+    t[0]=declaracion(t[1])
 def p_asignacion(t):
     'asignacion :   variable IGUAL tipo PTCOMA'
     t[0]=asignacion(t[1],t[3])
@@ -284,20 +284,21 @@ def p_instruccionregistro(t):
     elif t[2] == '<=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
     elif t[2] == '>': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
     elif t[2] == '<': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)  
-    
 
-def p_instruccionregistro_diferentes(t):
-    '''instruccionregistro  : ABS PARIZQ registro PARDER 
-                            | NOTLOGICA registro 
-                            | NOTBIT registro
-                            | MENOS registro %prec UMENOS'''
-    if t[1] == '!': t[0]=ExpresionBinarioLogica(t[2],OPERACION_LOGICA.NOT)
-    elif t[1] == '~': t[0]=ExpresionMonoBit(t[2],OPERACION_BIT.NOT)
-    elif t[1] == '-': t[0]=ExpresionNegativo(t[2])
-    elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
+
 def p_instruccion_registrounico(t):
     '''instruccionregistro  : registro'''
     t[0]=t[1]
+
+def p_instruccionregistro_diferentes(t):
+    '''registro  : ABS PARIZQ registro PARDER 
+                            | NOTLOGICA registro 
+                            | NOTBIT registro
+                            | MENOS registro %prec UMENOS'''
+    if t[1] == '!': t[0]=ExpresionMonoLogica(t[2],OPERACION_LOGICA.NOT)
+    elif t[1] == '~': t[0]=ExpresionMonoBit(t[2],OPERACION_BIT.NOT)
+    elif t[1] == '-': t[0]=ExpresionNegativo(t[2])
+    elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
 
 def p_registro(t):
     '''registro :   ENTERO
@@ -332,34 +333,35 @@ def p_inside(t):
 
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'
-    t[0]=t[1]
+    t[0]=Casteo(t[2],t[4])
 
 def p_eltipo(t):
     '''eltipo   :   FLOAT
                 |   INT
                 |   CHAR'''
+    t[0]=t[1]
 # ====================== Gramatica Para las Palabras Reservadas y funciones especiales
 def p_exit(t):
     'exit   :   EXIT PTCOMA'
-    t[0]=t[1]
+    t[0]=Exit(t[1])
 def p_print(t):
-    'print  : PRINT PARIZQ instruccionregistro PARDER PTCOMA'
-    t[0]=Imprimir('Javier')
+    'print  : PRINT PARIZQ registro PARDER PTCOMA'
+    t[0]=Imprimir(t[3])
 def p_etiqueta(t):
     'etiqueta   :  ETIQUETA DOSPUNTOS' #
-    t[0]=t[1] 
+    t[0]=Etiqueta(t[1]) 
 def p_goto(t):
     'goto   :   GOTO ETIQUETA PTCOMA' #
-    t[0]=t[1]
+    t[0]=Goto(t[2])
 def p_read(t):
     'read   :   READ PARIZQ PARDER PTCOMA'
-    t[0]=t[1]
+    t[0]=Read(t[1])
 def p_unset(t):
     'unset  :   UNSET PARIZQ registro PARDER PTCOMA'
-    t[0]=t[1]
+    t[0]=Unset(t[3])
 def p_if(t):
     'ifcomando :    IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA'
-    t[0]=t[1]
+    t[0]=instruccionIf(t[3],t[6])
 
 
 

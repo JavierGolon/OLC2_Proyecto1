@@ -39,25 +39,25 @@ class ExpresionRelacional:
     ''' clase que representa una expresion logica'''
 
 class ExpresionBinariaRelacional(ExpresionRelacional):
-    def __init(self,exp1,exp2,operador):
+    def __init__(self,exp1,exp2,operador):
         self.exp1=exp1
         self.exp2=exp2
         self.operador=operador
 
 class ExpresionBinariaBit(ExpresionBit):
-    def __init(self,exp1,exp2,operador):
+    def __init__(self,exp1,exp2,operador):
         self.exp1=exp1
         self.exp2=exp2
         self.operador=operador
 
 class ExpresionBinarioLogica(ExpresionLogica):
-    def __init(self,exp1,exp2,operador):
+    def __init__(self,exp1,exp2,operador):
         self.exp1=exp1
         self.exp2=exp2
         self.operador=operador
 
 class ExpresionBinariaAritmetica(ExpresionNumerica):
-    def __init(self,exp1,exp2,operador):
+    def __init__(self,exp1,exp2,operador):
         self.exp1=exp1
         self.exp2=exp2
         self.operador=operador

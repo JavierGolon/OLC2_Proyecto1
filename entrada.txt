@@ -1,8 +1,6 @@
 main:
-print('d');
-print('correcto');
-$t1=4;
-$t1=4;
-print('correcto');
-print('correcto');
-print('correcto');
+empezarr:
+$t1=4>>5;
+$t1=abs(-9);
+print($t1);
+goto empezar;

@@ -32,9 +32,8 @@ class Goto(Instruccion):
         self.label=label
 
 class Read(Instruccion):
-    def __init__(self,valor,registro):
+    def __init__(self,valor):
         self.valor=valor
-        self.registro=registro
 
 class Unset(Instruccion):
     def __init__(self,registro):
