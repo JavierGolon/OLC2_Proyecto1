@@ -235,7 +235,7 @@ def p_asignacion(t):
 def p_tipo(t):
     '''tipo :   instruccionregistro
             |   conversion
-            |   ARRAY PARIZQ PARDER'''
+            |   arreglo'''
     t[0]=t[1]
 def p_variable(t):
     '''variable :   TEMPORALES
@@ -278,12 +278,12 @@ def p_instruccionregistro(t):
     elif t[2] == '^': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.XOR)
     elif t[2] == '<<': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.SHIFTIZQ)
     elif t[2] == '>>': t[0]=ExpresionBinariaBit(t[1],t[3],OPERACION_BIT.SHIFTDER)
-    elif t[2] == '==': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.IGUAL)
-    elif t[2] == '!=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.DIFERENTE)
-    elif t[2] == '>=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYORIGUAL)
-    elif t[2] == '<=': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
-    elif t[2] == '>': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
-    elif t[2] == '<': t[0]=ExpresionRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)  
+    elif t[2] == '==': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.IGUAL)
+    elif t[2] == '!=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.DIFERENTE)
+    elif t[2] == '>=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYORIGUAL)
+    elif t[2] == '<=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
+    elif t[2] == '>': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
+    elif t[2] == '<': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)  
 
 
 def p_instruccion_registrounico(t):
@@ -294,11 +294,13 @@ def p_instruccionregistro_diferentes(t):
     '''registro  : ABS PARIZQ registro PARDER 
                             | NOTLOGICA registro 
                             | NOTBIT registro
-                            | MENOS registro %prec UMENOS'''
+                            | MENOS registro %prec UMENOS
+                            | ANDBIT registro'''
     if t[1] == '!': t[0]=ExpresionMonoLogica(t[2],OPERACION_LOGICA.NOT)
     elif t[1] == '~': t[0]=ExpresionMonoBit(t[2],OPERACION_BIT.NOT)
     elif t[1] == '-': t[0]=ExpresionNegativo(t[2])
     elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
+    elif t[1] == '&' : t[0] =ExpresionReferencia(t[2])
 
 def p_registro(t):
     '''registro :   ENTERO
@@ -334,6 +336,9 @@ def p_inside(t):
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'
     t[0]=Casteo(t[2],t[4])
+def p_arreglo(t):
+    'arreglo    :   ARRAY PARIZQ PARDER'
+    t[0]=Arreglo(2,2)   
 
 def p_eltipo(t):
     '''eltipo   :   FLOAT
@@ -357,7 +362,7 @@ def p_read(t):
     'read   :   READ PARIZQ PARDER PTCOMA'
     t[0]=Read(t[1])
 def p_unset(t):
-    'unset  :   UNSET PARIZQ registro PARDER PTCOMA'
+    'unset  :   UNSET PARIZQ acceso PARDER PTCOMA'
     t[0]=Unset(t[3])
 def p_if(t):
     'ifcomando :    IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA'

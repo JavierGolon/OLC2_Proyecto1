@@ -42,7 +42,7 @@ class Unset(Instruccion):
 # clases de expresiones de asignacion especiales
 
 class Casteo(Instruccion):
-    def _init__(self,tipo,valor):
+    def __init__(self,tipo,valor):
         self.tipo=tipo
         self.valor=valor
 class Arreglo(Instruccion):

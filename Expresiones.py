@@ -92,5 +92,8 @@ class ExpresionCadena:
 class ExpresionComillas(ExpresionCadena):
     def __init__(self,valor):
         self.valor=valor
+class ExpresionReferencia():
+    def __init__(self,registro):
+        self.registro=registro
 
 

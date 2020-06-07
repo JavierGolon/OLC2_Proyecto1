@@ -19,7 +19,7 @@ Rule 13    declaracion -> variable PTCOMA
 Rule 14    asignacion -> variable IGUAL tipo PTCOMA
 Rule 15    tipo -> instruccionregistro
 Rule 16    tipo -> conversion
-Rule 17    tipo -> ARRAY PARIZQ PARDER
+Rule 17    tipo -> arreglo
 Rule 18    variable -> TEMPORALES
 Rule 19    variable -> PARAMETROS
 Rule 20    variable -> DEVOLUCIONES
@@ -50,52 +50,54 @@ Rule 44    registro -> ABS PARIZQ registro PARDER
 Rule 45    registro -> NOTLOGICA registro
 Rule 46    registro -> NOTBIT registro
 Rule 47    registro -> MENOS registro
-Rule 48    registro -> ENTERO
-Rule 49    registro -> DECIMAL
-Rule 50    registro -> CADENA
-Rule 51    registro -> acceso
-Rule 52    acceso -> variable dimension
-Rule 53    acceso -> variable
-Rule 54    dimension -> dimension CORCHETEIZQ inside CORCHETEDER
-Rule 55    dimension -> CORCHETEIZQ inside CORCHETEDER
-Rule 56    inside -> ENTERO
-Rule 57    inside -> CADENA
-Rule 58    inside -> acceso
-Rule 59    conversion -> PARIZQ eltipo PARDER registro
-Rule 60    eltipo -> FLOAT
-Rule 61    eltipo -> INT
-Rule 62    eltipo -> CHAR
-Rule 63    exit -> EXIT PTCOMA
-Rule 64    print -> PRINT PARIZQ registro PARDER PTCOMA
-Rule 65    etiqueta -> ETIQUETA DOSPUNTOS
-Rule 66    goto -> GOTO ETIQUETA PTCOMA
-Rule 67    read -> READ PARIZQ PARDER PTCOMA
-Rule 68    unset -> UNSET PARIZQ registro PARDER PTCOMA
-Rule 69    ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+Rule 48    registro -> ANDBIT registro
+Rule 49    registro -> ENTERO
+Rule 50    registro -> DECIMAL
+Rule 51    registro -> CADENA
+Rule 52    registro -> acceso
+Rule 53    acceso -> variable dimension
+Rule 54    acceso -> variable
+Rule 55    dimension -> dimension CORCHETEIZQ inside CORCHETEDER
+Rule 56    dimension -> CORCHETEIZQ inside CORCHETEDER
+Rule 57    inside -> ENTERO
+Rule 58    inside -> CADENA
+Rule 59    inside -> acceso
+Rule 60    conversion -> PARIZQ eltipo PARDER registro
+Rule 61    arreglo -> ARRAY PARIZQ PARDER
+Rule 62    eltipo -> FLOAT
+Rule 63    eltipo -> INT
+Rule 64    eltipo -> CHAR
+Rule 65    exit -> EXIT PTCOMA
+Rule 66    print -> PRINT PARIZQ registro PARDER PTCOMA
+Rule 67    etiqueta -> ETIQUETA DOSPUNTOS
+Rule 68    goto -> GOTO ETIQUETA PTCOMA
+Rule 69    read -> READ PARIZQ PARDER PTCOMA
+Rule 70    unset -> UNSET PARIZQ acceso PARDER PTCOMA
+Rule 71    ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
 
 Terminals, with rules where they appear
 
 ABS                  : 44
-ANDBIT               : 32
+ANDBIT               : 32 48
 ANDLOGICA            : 29
-ARRAY                : 17
-CADENA               : 50 57
-CHAR                 : 62
-CORCHETEDER          : 54 55
-CORCHETEIZQ          : 54 55
-DECIMAL              : 49
+ARRAY                : 61
+CADENA               : 51 58
+CHAR                 : 64
+CORCHETEDER          : 55 56
+CORCHETEIZQ          : 55 56
+DECIMAL              : 50
 DEVOLUCIONES         : 20
 DIVIDIDO             : 27
-DOSPUNTOS            : 1 65
-ENTERO               : 48 56
-ETIQUETA             : 65 66 69
-EXIT                 : 63
-FLOAT                : 60
-GOTO                 : 66 69
-IF                   : 69
+DOSPUNTOS            : 1 67
+ENTERO               : 49 57
+ETIQUETA             : 67 68 71
+EXIT                 : 65
+FLOAT                : 62
+GOTO                 : 68 71
+IF                   : 71
 IGUAL                : 14
 IGUALIGUAL           : 37
-INT                  : 61
+INT                  : 63
 MAIN                 : 1
 MAS                  : 24
 MAYOR                : 41
@@ -109,47 +111,48 @@ NOTLOGICA            : 45
 ORBIT                : 33
 ORLOGICA             : 30
 PARAMETROS           : 19
-PARDER               : 17 44 59 64 67 68 69
-PARIZQ               : 17 44 59 64 67 68 69
+PARDER               : 44 60 61 66 69 70 71
+PARIZQ               : 44 60 61 66 69 70 71
 PILA                 : 22
 POR                  : 26
-PRINT                : 64
-PTCOMA               : 13 14 63 64 66 67 68 69
-READ                 : 67
+PRINT                : 66
+PTCOMA               : 13 14 65 66 68 69 70 71
+READ                 : 69
 RESIDUO              : 28
 RETORNONIVEL         : 21
 SHIFTDER             : 36
 SHIFTIZQ             : 35
 SP                   : 23
 TEMPORALES           : 18
-UNSET                : 68
+UNSET                : 70
 XOR                  : 31
 XORBIT               : 34
 error                : 
 
 Nonterminals, with rules where they appear
 
-acceso               : 51 58
+acceso               : 52 59 70
+arreglo              : 17
 asignacion           : 5
 conversion           : 16
 declaracion          : 4
-dimension            : 52 54
-eltipo               : 59
+dimension            : 53 55
+eltipo               : 60
 etiqueta             : 9
 exit                 : 7
 goto                 : 10
 ifcomando            : 6
 init                 : 0
-inside               : 54 55
-instruccionregistro  : 15 69
+inside               : 55 56
+instruccionregistro  : 15 71
 listainstrucciones   : 1 2
 print                : 8
 read                 : 11
-registro             : 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 44 45 46 47 59 64 68
+registro             : 24 24 25 25 26 26 27 27 28 28 29 29 30 30 31 31 32 32 33 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 44 45 46 47 48 60 66
 simpleinstrucciones  : 2 3
 tipo                 : 14
 unset                : 12
-variable             : 13 14 52 53
+variable             : 13 14 53 54
 
 Parsing method: LALR
 
@@ -191,13 +194,13 @@ state 3
     (12) simpleinstrucciones -> . unset
     (13) declaracion -> . variable PTCOMA
     (14) asignacion -> . variable IGUAL tipo PTCOMA
-    (69) ifcomando -> . IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
-    (63) exit -> . EXIT PTCOMA
-    (64) print -> . PRINT PARIZQ registro PARDER PTCOMA
-    (65) etiqueta -> . ETIQUETA DOSPUNTOS
-    (66) goto -> . GOTO ETIQUETA PTCOMA
-    (67) read -> . READ PARIZQ PARDER PTCOMA
-    (68) unset -> . UNSET PARIZQ registro PARDER PTCOMA
+    (71) ifcomando -> . IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+    (65) exit -> . EXIT PTCOMA
+    (66) print -> . PRINT PARIZQ registro PARDER PTCOMA
+    (67) etiqueta -> . ETIQUETA DOSPUNTOS
+    (68) goto -> . GOTO ETIQUETA PTCOMA
+    (69) read -> . READ PARIZQ PARDER PTCOMA
+    (70) unset -> . UNSET PARIZQ acceso PARDER PTCOMA
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -247,13 +250,13 @@ state 4
     (12) simpleinstrucciones -> . unset
     (13) declaracion -> . variable PTCOMA
     (14) asignacion -> . variable IGUAL tipo PTCOMA
-    (69) ifcomando -> . IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
-    (63) exit -> . EXIT PTCOMA
-    (64) print -> . PRINT PARIZQ registro PARDER PTCOMA
-    (65) etiqueta -> . ETIQUETA DOSPUNTOS
-    (66) goto -> . GOTO ETIQUETA PTCOMA
-    (67) read -> . READ PARIZQ PARDER PTCOMA
-    (68) unset -> . UNSET PARIZQ registro PARDER PTCOMA
+    (71) ifcomando -> . IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+    (65) exit -> . EXIT PTCOMA
+    (66) print -> . PRINT PARIZQ registro PARDER PTCOMA
+    (67) etiqueta -> . ETIQUETA DOSPUNTOS
+    (68) goto -> . GOTO ETIQUETA PTCOMA
+    (69) read -> . READ PARIZQ PARDER PTCOMA
+    (70) unset -> . UNSET PARIZQ acceso PARDER PTCOMA
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -499,49 +502,49 @@ state 15
 
 state 16
 
-    (69) ifcomando -> IF . PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+    (71) ifcomando -> IF . PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA
 
     PARIZQ          shift and go to state 32
 
 
 state 17
 
-    (66) goto -> GOTO . ETIQUETA PTCOMA
+    (68) goto -> GOTO . ETIQUETA PTCOMA
 
     ETIQUETA        shift and go to state 33
 
 
 state 18
 
-    (65) etiqueta -> ETIQUETA . DOSPUNTOS
+    (67) etiqueta -> ETIQUETA . DOSPUNTOS
 
     DOSPUNTOS       shift and go to state 34
 
 
 state 19
 
-    (63) exit -> EXIT . PTCOMA
+    (65) exit -> EXIT . PTCOMA
 
     PTCOMA          shift and go to state 35
 
 
 state 20
 
-    (64) print -> PRINT . PARIZQ registro PARDER PTCOMA
+    (66) print -> PRINT . PARIZQ registro PARDER PTCOMA
 
     PARIZQ          shift and go to state 36
 
 
 state 21
 
-    (67) read -> READ . PARIZQ PARDER PTCOMA
+    (69) read -> READ . PARIZQ PARDER PTCOMA
 
     PARIZQ          shift and go to state 37
 
 
 state 22
 
-    (68) unset -> UNSET . PARIZQ registro PARDER PTCOMA
+    (70) unset -> UNSET . PARIZQ acceso PARDER PTCOMA
 
     PARIZQ          shift and go to state 38
 
@@ -771,7 +774,7 @@ state 31
     (14) asignacion -> variable IGUAL . tipo PTCOMA
     (15) tipo -> . instruccionregistro
     (16) tipo -> . conversion
-    (17) tipo -> . ARRAY PARIZQ PARDER
+    (17) tipo -> . arreglo
     (24) instruccionregistro -> . registro MAS registro
     (25) instruccionregistro -> . registro MENOS registro
     (26) instruccionregistro -> . registro POR registro
@@ -792,17 +795,19 @@ state 31
     (41) instruccionregistro -> . registro MAYOR registro
     (42) instruccionregistro -> . registro MENOR registro
     (43) instruccionregistro -> . registro
-    (59) conversion -> . PARIZQ eltipo PARDER registro
+    (60) conversion -> . PARIZQ eltipo PARDER registro
+    (61) arreglo -> . ARRAY PARIZQ PARDER
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -810,15 +815,16 @@ state 31
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ARRAY           shift and go to state 43
-    PARIZQ          shift and go to state 44
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    PARIZQ          shift and go to state 47
+    ARRAY           shift and go to state 48
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -830,12 +836,13 @@ state 31
     tipo                           shift and go to state 40
     instruccionregistro            shift and go to state 41
     conversion                     shift and go to state 42
-    registro                       shift and go to state 45
-    acceso                         shift and go to state 53
+    arreglo                        shift and go to state 43
+    registro                       shift and go to state 44
+    acceso                         shift and go to state 55
 
 state 32
 
-    (69) ifcomando -> IF PARIZQ . instruccionregistro PARDER GOTO ETIQUETA PTCOMA
+    (71) ifcomando -> IF PARIZQ . instruccionregistro PARDER GOTO ETIQUETA PTCOMA
     (24) instruccionregistro -> . registro MAS registro
     (25) instruccionregistro -> . registro MENOS registro
     (26) instruccionregistro -> . registro POR registro
@@ -860,12 +867,13 @@ state 32
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -873,13 +881,14 @@ state 32
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -887,71 +896,72 @@ state 32
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    instruccionregistro            shift and go to state 54
-    registro                       shift and go to state 45
-    acceso                         shift and go to state 53
+    instruccionregistro            shift and go to state 56
+    registro                       shift and go to state 44
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
 state 33
 
-    (66) goto -> GOTO ETIQUETA . PTCOMA
+    (68) goto -> GOTO ETIQUETA . PTCOMA
 
-    PTCOMA          shift and go to state 55
+    PTCOMA          shift and go to state 57
 
 
 state 34
 
-    (65) etiqueta -> ETIQUETA DOSPUNTOS .
+    (67) etiqueta -> ETIQUETA DOSPUNTOS .
 
-    IF              reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    EXIT            reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    PRINT           reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    ETIQUETA        reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    GOTO            reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    READ            reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    UNSET           reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    TEMPORALES      reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    PARAMETROS      reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    DEVOLUCIONES    reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    RETORNONIVEL    reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    PILA            reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    SP              reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
-    $end            reduce using rule 65 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    IF              reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    EXIT            reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    PRINT           reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    ETIQUETA        reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    GOTO            reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    READ            reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    UNSET           reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    TEMPORALES      reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    PARAMETROS      reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    DEVOLUCIONES    reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    RETORNONIVEL    reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    PILA            reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    SP              reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
+    $end            reduce using rule 67 (etiqueta -> ETIQUETA DOSPUNTOS .)
 
 
 state 35
 
-    (63) exit -> EXIT PTCOMA .
+    (65) exit -> EXIT PTCOMA .
 
-    IF              reduce using rule 63 (exit -> EXIT PTCOMA .)
-    EXIT            reduce using rule 63 (exit -> EXIT PTCOMA .)
-    PRINT           reduce using rule 63 (exit -> EXIT PTCOMA .)
-    ETIQUETA        reduce using rule 63 (exit -> EXIT PTCOMA .)
-    GOTO            reduce using rule 63 (exit -> EXIT PTCOMA .)
-    READ            reduce using rule 63 (exit -> EXIT PTCOMA .)
-    UNSET           reduce using rule 63 (exit -> EXIT PTCOMA .)
-    TEMPORALES      reduce using rule 63 (exit -> EXIT PTCOMA .)
-    PARAMETROS      reduce using rule 63 (exit -> EXIT PTCOMA .)
-    DEVOLUCIONES    reduce using rule 63 (exit -> EXIT PTCOMA .)
-    RETORNONIVEL    reduce using rule 63 (exit -> EXIT PTCOMA .)
-    PILA            reduce using rule 63 (exit -> EXIT PTCOMA .)
-    SP              reduce using rule 63 (exit -> EXIT PTCOMA .)
-    $end            reduce using rule 63 (exit -> EXIT PTCOMA .)
+    IF              reduce using rule 65 (exit -> EXIT PTCOMA .)
+    EXIT            reduce using rule 65 (exit -> EXIT PTCOMA .)
+    PRINT           reduce using rule 65 (exit -> EXIT PTCOMA .)
+    ETIQUETA        reduce using rule 65 (exit -> EXIT PTCOMA .)
+    GOTO            reduce using rule 65 (exit -> EXIT PTCOMA .)
+    READ            reduce using rule 65 (exit -> EXIT PTCOMA .)
+    UNSET           reduce using rule 65 (exit -> EXIT PTCOMA .)
+    TEMPORALES      reduce using rule 65 (exit -> EXIT PTCOMA .)
+    PARAMETROS      reduce using rule 65 (exit -> EXIT PTCOMA .)
+    DEVOLUCIONES    reduce using rule 65 (exit -> EXIT PTCOMA .)
+    RETORNONIVEL    reduce using rule 65 (exit -> EXIT PTCOMA .)
+    PILA            reduce using rule 65 (exit -> EXIT PTCOMA .)
+    SP              reduce using rule 65 (exit -> EXIT PTCOMA .)
+    $end            reduce using rule 65 (exit -> EXIT PTCOMA .)
 
 
 state 36
 
-    (64) print -> PRINT PARIZQ . registro PARDER PTCOMA
+    (66) print -> PRINT PARIZQ . registro PARDER PTCOMA
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -959,58 +969,14 @@ state 36
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
-    TEMPORALES      shift and go to state 23
-    PARAMETROS      shift and go to state 24
-    DEVOLUCIONES    shift and go to state 25
-    RETORNONIVEL    shift and go to state 26
-    PILA            shift and go to state 27
-    SP              shift and go to state 28
-
-    registro                       shift and go to state 56
-    acceso                         shift and go to state 53
-    variable                       shift and go to state 39
-
-state 37
-
-    (67) read -> READ PARIZQ . PARDER PTCOMA
-
-    PARDER          shift and go to state 57
-
-
-state 38
-
-    (68) unset -> UNSET PARIZQ . registro PARDER PTCOMA
-    (44) registro -> . ABS PARIZQ registro PARDER
-    (45) registro -> . NOTLOGICA registro
-    (46) registro -> . NOTBIT registro
-    (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
-    (18) variable -> . TEMPORALES
-    (19) variable -> . PARAMETROS
-    (20) variable -> . DEVOLUCIONES
-    (21) variable -> . RETORNONIVEL
-    (22) variable -> . PILA
-    (23) variable -> . SP
-
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1019,47 +985,76 @@ state 38
     SP              shift and go to state 28
 
     registro                       shift and go to state 58
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
+    variable                       shift and go to state 39
+
+state 37
+
+    (69) read -> READ PARIZQ . PARDER PTCOMA
+
+    PARDER          shift and go to state 59
+
+
+state 38
+
+    (70) unset -> UNSET PARIZQ . acceso PARDER PTCOMA
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
+    (18) variable -> . TEMPORALES
+    (19) variable -> . PARAMETROS
+    (20) variable -> . DEVOLUCIONES
+    (21) variable -> . RETORNONIVEL
+    (22) variable -> . PILA
+    (23) variable -> . SP
+
+    TEMPORALES      shift and go to state 23
+    PARAMETROS      shift and go to state 24
+    DEVOLUCIONES    shift and go to state 25
+    RETORNONIVEL    shift and go to state 26
+    PILA            shift and go to state 27
+    SP              shift and go to state 28
+
+    acceso                         shift and go to state 60
     variable                       shift and go to state 39
 
 state 39
 
-    (52) acceso -> variable . dimension
-    (53) acceso -> variable .
-    (54) dimension -> . dimension CORCHETEIZQ inside CORCHETEDER
-    (55) dimension -> . CORCHETEIZQ inside CORCHETEDER
+    (53) acceso -> variable . dimension
+    (54) acceso -> variable .
+    (55) dimension -> . dimension CORCHETEIZQ inside CORCHETEDER
+    (56) dimension -> . CORCHETEIZQ inside CORCHETEDER
 
-    MAS             reduce using rule 53 (acceso -> variable .)
-    MENOS           reduce using rule 53 (acceso -> variable .)
-    POR             reduce using rule 53 (acceso -> variable .)
-    DIVIDIDO        reduce using rule 53 (acceso -> variable .)
-    RESIDUO         reduce using rule 53 (acceso -> variable .)
-    ANDLOGICA       reduce using rule 53 (acceso -> variable .)
-    ORLOGICA        reduce using rule 53 (acceso -> variable .)
-    XOR             reduce using rule 53 (acceso -> variable .)
-    ANDBIT          reduce using rule 53 (acceso -> variable .)
-    ORBIT           reduce using rule 53 (acceso -> variable .)
-    XORBIT          reduce using rule 53 (acceso -> variable .)
-    SHIFTIZQ        reduce using rule 53 (acceso -> variable .)
-    SHIFTDER        reduce using rule 53 (acceso -> variable .)
-    IGUALIGUAL      reduce using rule 53 (acceso -> variable .)
-    NOIGUAL         reduce using rule 53 (acceso -> variable .)
-    MAYORIGUAL      reduce using rule 53 (acceso -> variable .)
-    MENORIGUAL      reduce using rule 53 (acceso -> variable .)
-    MAYOR           reduce using rule 53 (acceso -> variable .)
-    MENOR           reduce using rule 53 (acceso -> variable .)
-    PTCOMA          reduce using rule 53 (acceso -> variable .)
-    PARDER          reduce using rule 53 (acceso -> variable .)
-    CORCHETEDER     reduce using rule 53 (acceso -> variable .)
-    CORCHETEIZQ     shift and go to state 60
+    MAS             reduce using rule 54 (acceso -> variable .)
+    MENOS           reduce using rule 54 (acceso -> variable .)
+    POR             reduce using rule 54 (acceso -> variable .)
+    DIVIDIDO        reduce using rule 54 (acceso -> variable .)
+    RESIDUO         reduce using rule 54 (acceso -> variable .)
+    ANDLOGICA       reduce using rule 54 (acceso -> variable .)
+    ORLOGICA        reduce using rule 54 (acceso -> variable .)
+    XOR             reduce using rule 54 (acceso -> variable .)
+    ANDBIT          reduce using rule 54 (acceso -> variable .)
+    ORBIT           reduce using rule 54 (acceso -> variable .)
+    XORBIT          reduce using rule 54 (acceso -> variable .)
+    SHIFTIZQ        reduce using rule 54 (acceso -> variable .)
+    SHIFTDER        reduce using rule 54 (acceso -> variable .)
+    IGUALIGUAL      reduce using rule 54 (acceso -> variable .)
+    NOIGUAL         reduce using rule 54 (acceso -> variable .)
+    MAYORIGUAL      reduce using rule 54 (acceso -> variable .)
+    MENORIGUAL      reduce using rule 54 (acceso -> variable .)
+    MAYOR           reduce using rule 54 (acceso -> variable .)
+    MENOR           reduce using rule 54 (acceso -> variable .)
+    PTCOMA          reduce using rule 54 (acceso -> variable .)
+    PARDER          reduce using rule 54 (acceso -> variable .)
+    CORCHETEDER     reduce using rule 54 (acceso -> variable .)
+    CORCHETEIZQ     shift and go to state 62
 
-    dimension                      shift and go to state 59
+    dimension                      shift and go to state 61
 
 state 40
 
     (14) asignacion -> variable IGUAL tipo . PTCOMA
 
-    PTCOMA          shift and go to state 61
+    PTCOMA          shift and go to state 63
 
 
 state 41
@@ -1078,25 +1073,12 @@ state 42
 
 state 43
 
-    (17) tipo -> ARRAY . PARIZQ PARDER
+    (17) tipo -> arreglo .
 
-    PARIZQ          shift and go to state 62
+    PTCOMA          reduce using rule 17 (tipo -> arreglo .)
 
 
 state 44
-
-    (59) conversion -> PARIZQ . eltipo PARDER registro
-    (60) eltipo -> . FLOAT
-    (61) eltipo -> . INT
-    (62) eltipo -> . CHAR
-
-    FLOAT           shift and go to state 64
-    INT             shift and go to state 65
-    CHAR            shift and go to state 66
-
-    eltipo                         shift and go to state 63
-
-state 45
 
     (24) instruccionregistro -> registro . MAS registro
     (25) instruccionregistro -> registro . MENOS registro
@@ -1119,42 +1101,43 @@ state 45
     (42) instruccionregistro -> registro . MENOR registro
     (43) instruccionregistro -> registro .
 
-    MAS             shift and go to state 67
-    MENOS           shift and go to state 68
-    POR             shift and go to state 69
-    DIVIDIDO        shift and go to state 70
-    RESIDUO         shift and go to state 71
-    ANDLOGICA       shift and go to state 72
-    ORLOGICA        shift and go to state 73
-    XOR             shift and go to state 74
-    ANDBIT          shift and go to state 75
-    ORBIT           shift and go to state 76
-    XORBIT          shift and go to state 77
-    SHIFTIZQ        shift and go to state 78
-    SHIFTDER        shift and go to state 79
-    IGUALIGUAL      shift and go to state 80
-    NOIGUAL         shift and go to state 81
-    MAYORIGUAL      shift and go to state 82
-    MENORIGUAL      shift and go to state 83
-    MAYOR           shift and go to state 84
-    MENOR           shift and go to state 85
+    MAS             shift and go to state 64
+    MENOS           shift and go to state 65
+    POR             shift and go to state 66
+    DIVIDIDO        shift and go to state 67
+    RESIDUO         shift and go to state 68
+    ANDLOGICA       shift and go to state 69
+    ORLOGICA        shift and go to state 70
+    XOR             shift and go to state 71
+    ANDBIT          shift and go to state 72
+    ORBIT           shift and go to state 73
+    XORBIT          shift and go to state 74
+    SHIFTIZQ        shift and go to state 75
+    SHIFTDER        shift and go to state 76
+    IGUALIGUAL      shift and go to state 77
+    NOIGUAL         shift and go to state 78
+    MAYORIGUAL      shift and go to state 79
+    MENORIGUAL      shift and go to state 80
+    MAYOR           shift and go to state 81
+    MENOR           shift and go to state 82
     PTCOMA          reduce using rule 43 (instruccionregistro -> registro .)
     PARDER          reduce using rule 43 (instruccionregistro -> registro .)
 
 
-state 46
+state 45
 
     (47) registro -> MENOS . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1162,13 +1145,14 @@ state 46
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1176,30 +1160,91 @@ state 46
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    registro                       shift and go to state 86
-    acceso                         shift and go to state 53
+    registro                       shift and go to state 83
+    acceso                         shift and go to state 55
+    variable                       shift and go to state 39
+
+state 46
+
+    (48) registro -> ANDBIT . registro
+    (44) registro -> . ABS PARIZQ registro PARDER
+    (45) registro -> . NOTLOGICA registro
+    (46) registro -> . NOTBIT registro
+    (47) registro -> . MENOS registro
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
+    (18) variable -> . TEMPORALES
+    (19) variable -> . PARAMETROS
+    (20) variable -> . DEVOLUCIONES
+    (21) variable -> . RETORNONIVEL
+    (22) variable -> . PILA
+    (23) variable -> . SP
+
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
+    TEMPORALES      shift and go to state 23
+    PARAMETROS      shift and go to state 24
+    DEVOLUCIONES    shift and go to state 25
+    RETORNONIVEL    shift and go to state 26
+    PILA            shift and go to state 27
+    SP              shift and go to state 28
+
+    registro                       shift and go to state 84
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
 state 47
 
-    (44) registro -> ABS . PARIZQ registro PARDER
+    (60) conversion -> PARIZQ . eltipo PARDER registro
+    (62) eltipo -> . FLOAT
+    (63) eltipo -> . INT
+    (64) eltipo -> . CHAR
 
-    PARIZQ          shift and go to state 87
+    FLOAT           shift and go to state 86
+    INT             shift and go to state 87
+    CHAR            shift and go to state 88
 
+    eltipo                         shift and go to state 85
 
 state 48
+
+    (61) arreglo -> ARRAY . PARIZQ PARDER
+
+    PARIZQ          shift and go to state 89
+
+
+state 49
+
+    (44) registro -> ABS . PARIZQ registro PARDER
+
+    PARIZQ          shift and go to state 90
+
+
+state 50
 
     (45) registro -> NOTLOGICA . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1207,13 +1252,14 @@ state 48
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1221,23 +1267,24 @@ state 48
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    registro                       shift and go to state 88
-    acceso                         shift and go to state 53
+    registro                       shift and go to state 91
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 49
+state 51
 
     (46) registro -> NOTBIT . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1245,13 +1292,14 @@ state 49
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1259,204 +1307,204 @@ state 49
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    registro                       shift and go to state 89
-    acceso                         shift and go to state 53
+    registro                       shift and go to state 92
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
-
-state 50
-
-    (48) registro -> ENTERO .
-
-    MAS             reduce using rule 48 (registro -> ENTERO .)
-    MENOS           reduce using rule 48 (registro -> ENTERO .)
-    POR             reduce using rule 48 (registro -> ENTERO .)
-    DIVIDIDO        reduce using rule 48 (registro -> ENTERO .)
-    RESIDUO         reduce using rule 48 (registro -> ENTERO .)
-    ANDLOGICA       reduce using rule 48 (registro -> ENTERO .)
-    ORLOGICA        reduce using rule 48 (registro -> ENTERO .)
-    XOR             reduce using rule 48 (registro -> ENTERO .)
-    ANDBIT          reduce using rule 48 (registro -> ENTERO .)
-    ORBIT           reduce using rule 48 (registro -> ENTERO .)
-    XORBIT          reduce using rule 48 (registro -> ENTERO .)
-    SHIFTIZQ        reduce using rule 48 (registro -> ENTERO .)
-    SHIFTDER        reduce using rule 48 (registro -> ENTERO .)
-    IGUALIGUAL      reduce using rule 48 (registro -> ENTERO .)
-    NOIGUAL         reduce using rule 48 (registro -> ENTERO .)
-    MAYORIGUAL      reduce using rule 48 (registro -> ENTERO .)
-    MENORIGUAL      reduce using rule 48 (registro -> ENTERO .)
-    MAYOR           reduce using rule 48 (registro -> ENTERO .)
-    MENOR           reduce using rule 48 (registro -> ENTERO .)
-    PTCOMA          reduce using rule 48 (registro -> ENTERO .)
-    PARDER          reduce using rule 48 (registro -> ENTERO .)
-
-
-state 51
-
-    (49) registro -> DECIMAL .
-
-    MAS             reduce using rule 49 (registro -> DECIMAL .)
-    MENOS           reduce using rule 49 (registro -> DECIMAL .)
-    POR             reduce using rule 49 (registro -> DECIMAL .)
-    DIVIDIDO        reduce using rule 49 (registro -> DECIMAL .)
-    RESIDUO         reduce using rule 49 (registro -> DECIMAL .)
-    ANDLOGICA       reduce using rule 49 (registro -> DECIMAL .)
-    ORLOGICA        reduce using rule 49 (registro -> DECIMAL .)
-    XOR             reduce using rule 49 (registro -> DECIMAL .)
-    ANDBIT          reduce using rule 49 (registro -> DECIMAL .)
-    ORBIT           reduce using rule 49 (registro -> DECIMAL .)
-    XORBIT          reduce using rule 49 (registro -> DECIMAL .)
-    SHIFTIZQ        reduce using rule 49 (registro -> DECIMAL .)
-    SHIFTDER        reduce using rule 49 (registro -> DECIMAL .)
-    IGUALIGUAL      reduce using rule 49 (registro -> DECIMAL .)
-    NOIGUAL         reduce using rule 49 (registro -> DECIMAL .)
-    MAYORIGUAL      reduce using rule 49 (registro -> DECIMAL .)
-    MENORIGUAL      reduce using rule 49 (registro -> DECIMAL .)
-    MAYOR           reduce using rule 49 (registro -> DECIMAL .)
-    MENOR           reduce using rule 49 (registro -> DECIMAL .)
-    PTCOMA          reduce using rule 49 (registro -> DECIMAL .)
-    PARDER          reduce using rule 49 (registro -> DECIMAL .)
-
 
 state 52
 
-    (50) registro -> CADENA .
+    (49) registro -> ENTERO .
 
-    MAS             reduce using rule 50 (registro -> CADENA .)
-    MENOS           reduce using rule 50 (registro -> CADENA .)
-    POR             reduce using rule 50 (registro -> CADENA .)
-    DIVIDIDO        reduce using rule 50 (registro -> CADENA .)
-    RESIDUO         reduce using rule 50 (registro -> CADENA .)
-    ANDLOGICA       reduce using rule 50 (registro -> CADENA .)
-    ORLOGICA        reduce using rule 50 (registro -> CADENA .)
-    XOR             reduce using rule 50 (registro -> CADENA .)
-    ANDBIT          reduce using rule 50 (registro -> CADENA .)
-    ORBIT           reduce using rule 50 (registro -> CADENA .)
-    XORBIT          reduce using rule 50 (registro -> CADENA .)
-    SHIFTIZQ        reduce using rule 50 (registro -> CADENA .)
-    SHIFTDER        reduce using rule 50 (registro -> CADENA .)
-    IGUALIGUAL      reduce using rule 50 (registro -> CADENA .)
-    NOIGUAL         reduce using rule 50 (registro -> CADENA .)
-    MAYORIGUAL      reduce using rule 50 (registro -> CADENA .)
-    MENORIGUAL      reduce using rule 50 (registro -> CADENA .)
-    MAYOR           reduce using rule 50 (registro -> CADENA .)
-    MENOR           reduce using rule 50 (registro -> CADENA .)
-    PTCOMA          reduce using rule 50 (registro -> CADENA .)
-    PARDER          reduce using rule 50 (registro -> CADENA .)
+    MAS             reduce using rule 49 (registro -> ENTERO .)
+    MENOS           reduce using rule 49 (registro -> ENTERO .)
+    POR             reduce using rule 49 (registro -> ENTERO .)
+    DIVIDIDO        reduce using rule 49 (registro -> ENTERO .)
+    RESIDUO         reduce using rule 49 (registro -> ENTERO .)
+    ANDLOGICA       reduce using rule 49 (registro -> ENTERO .)
+    ORLOGICA        reduce using rule 49 (registro -> ENTERO .)
+    XOR             reduce using rule 49 (registro -> ENTERO .)
+    ANDBIT          reduce using rule 49 (registro -> ENTERO .)
+    ORBIT           reduce using rule 49 (registro -> ENTERO .)
+    XORBIT          reduce using rule 49 (registro -> ENTERO .)
+    SHIFTIZQ        reduce using rule 49 (registro -> ENTERO .)
+    SHIFTDER        reduce using rule 49 (registro -> ENTERO .)
+    IGUALIGUAL      reduce using rule 49 (registro -> ENTERO .)
+    NOIGUAL         reduce using rule 49 (registro -> ENTERO .)
+    MAYORIGUAL      reduce using rule 49 (registro -> ENTERO .)
+    MENORIGUAL      reduce using rule 49 (registro -> ENTERO .)
+    MAYOR           reduce using rule 49 (registro -> ENTERO .)
+    MENOR           reduce using rule 49 (registro -> ENTERO .)
+    PTCOMA          reduce using rule 49 (registro -> ENTERO .)
+    PARDER          reduce using rule 49 (registro -> ENTERO .)
 
 
 state 53
 
-    (51) registro -> acceso .
+    (50) registro -> DECIMAL .
 
-    MAS             reduce using rule 51 (registro -> acceso .)
-    MENOS           reduce using rule 51 (registro -> acceso .)
-    POR             reduce using rule 51 (registro -> acceso .)
-    DIVIDIDO        reduce using rule 51 (registro -> acceso .)
-    RESIDUO         reduce using rule 51 (registro -> acceso .)
-    ANDLOGICA       reduce using rule 51 (registro -> acceso .)
-    ORLOGICA        reduce using rule 51 (registro -> acceso .)
-    XOR             reduce using rule 51 (registro -> acceso .)
-    ANDBIT          reduce using rule 51 (registro -> acceso .)
-    ORBIT           reduce using rule 51 (registro -> acceso .)
-    XORBIT          reduce using rule 51 (registro -> acceso .)
-    SHIFTIZQ        reduce using rule 51 (registro -> acceso .)
-    SHIFTDER        reduce using rule 51 (registro -> acceso .)
-    IGUALIGUAL      reduce using rule 51 (registro -> acceso .)
-    NOIGUAL         reduce using rule 51 (registro -> acceso .)
-    MAYORIGUAL      reduce using rule 51 (registro -> acceso .)
-    MENORIGUAL      reduce using rule 51 (registro -> acceso .)
-    MAYOR           reduce using rule 51 (registro -> acceso .)
-    MENOR           reduce using rule 51 (registro -> acceso .)
-    PTCOMA          reduce using rule 51 (registro -> acceso .)
-    PARDER          reduce using rule 51 (registro -> acceso .)
+    MAS             reduce using rule 50 (registro -> DECIMAL .)
+    MENOS           reduce using rule 50 (registro -> DECIMAL .)
+    POR             reduce using rule 50 (registro -> DECIMAL .)
+    DIVIDIDO        reduce using rule 50 (registro -> DECIMAL .)
+    RESIDUO         reduce using rule 50 (registro -> DECIMAL .)
+    ANDLOGICA       reduce using rule 50 (registro -> DECIMAL .)
+    ORLOGICA        reduce using rule 50 (registro -> DECIMAL .)
+    XOR             reduce using rule 50 (registro -> DECIMAL .)
+    ANDBIT          reduce using rule 50 (registro -> DECIMAL .)
+    ORBIT           reduce using rule 50 (registro -> DECIMAL .)
+    XORBIT          reduce using rule 50 (registro -> DECIMAL .)
+    SHIFTIZQ        reduce using rule 50 (registro -> DECIMAL .)
+    SHIFTDER        reduce using rule 50 (registro -> DECIMAL .)
+    IGUALIGUAL      reduce using rule 50 (registro -> DECIMAL .)
+    NOIGUAL         reduce using rule 50 (registro -> DECIMAL .)
+    MAYORIGUAL      reduce using rule 50 (registro -> DECIMAL .)
+    MENORIGUAL      reduce using rule 50 (registro -> DECIMAL .)
+    MAYOR           reduce using rule 50 (registro -> DECIMAL .)
+    MENOR           reduce using rule 50 (registro -> DECIMAL .)
+    PTCOMA          reduce using rule 50 (registro -> DECIMAL .)
+    PARDER          reduce using rule 50 (registro -> DECIMAL .)
 
 
 state 54
 
-    (69) ifcomando -> IF PARIZQ instruccionregistro . PARDER GOTO ETIQUETA PTCOMA
+    (51) registro -> CADENA .
 
-    PARDER          shift and go to state 90
+    MAS             reduce using rule 51 (registro -> CADENA .)
+    MENOS           reduce using rule 51 (registro -> CADENA .)
+    POR             reduce using rule 51 (registro -> CADENA .)
+    DIVIDIDO        reduce using rule 51 (registro -> CADENA .)
+    RESIDUO         reduce using rule 51 (registro -> CADENA .)
+    ANDLOGICA       reduce using rule 51 (registro -> CADENA .)
+    ORLOGICA        reduce using rule 51 (registro -> CADENA .)
+    XOR             reduce using rule 51 (registro -> CADENA .)
+    ANDBIT          reduce using rule 51 (registro -> CADENA .)
+    ORBIT           reduce using rule 51 (registro -> CADENA .)
+    XORBIT          reduce using rule 51 (registro -> CADENA .)
+    SHIFTIZQ        reduce using rule 51 (registro -> CADENA .)
+    SHIFTDER        reduce using rule 51 (registro -> CADENA .)
+    IGUALIGUAL      reduce using rule 51 (registro -> CADENA .)
+    NOIGUAL         reduce using rule 51 (registro -> CADENA .)
+    MAYORIGUAL      reduce using rule 51 (registro -> CADENA .)
+    MENORIGUAL      reduce using rule 51 (registro -> CADENA .)
+    MAYOR           reduce using rule 51 (registro -> CADENA .)
+    MENOR           reduce using rule 51 (registro -> CADENA .)
+    PTCOMA          reduce using rule 51 (registro -> CADENA .)
+    PARDER          reduce using rule 51 (registro -> CADENA .)
 
 
 state 55
 
-    (66) goto -> GOTO ETIQUETA PTCOMA .
+    (52) registro -> acceso .
 
-    IF              reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    EXIT            reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    PRINT           reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    ETIQUETA        reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    GOTO            reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    READ            reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    UNSET           reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    TEMPORALES      reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    PARAMETROS      reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    DEVOLUCIONES    reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    RETORNONIVEL    reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    PILA            reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    SP              reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
-    $end            reduce using rule 66 (goto -> GOTO ETIQUETA PTCOMA .)
+    MAS             reduce using rule 52 (registro -> acceso .)
+    MENOS           reduce using rule 52 (registro -> acceso .)
+    POR             reduce using rule 52 (registro -> acceso .)
+    DIVIDIDO        reduce using rule 52 (registro -> acceso .)
+    RESIDUO         reduce using rule 52 (registro -> acceso .)
+    ANDLOGICA       reduce using rule 52 (registro -> acceso .)
+    ORLOGICA        reduce using rule 52 (registro -> acceso .)
+    XOR             reduce using rule 52 (registro -> acceso .)
+    ANDBIT          reduce using rule 52 (registro -> acceso .)
+    ORBIT           reduce using rule 52 (registro -> acceso .)
+    XORBIT          reduce using rule 52 (registro -> acceso .)
+    SHIFTIZQ        reduce using rule 52 (registro -> acceso .)
+    SHIFTDER        reduce using rule 52 (registro -> acceso .)
+    IGUALIGUAL      reduce using rule 52 (registro -> acceso .)
+    NOIGUAL         reduce using rule 52 (registro -> acceso .)
+    MAYORIGUAL      reduce using rule 52 (registro -> acceso .)
+    MENORIGUAL      reduce using rule 52 (registro -> acceso .)
+    MAYOR           reduce using rule 52 (registro -> acceso .)
+    MENOR           reduce using rule 52 (registro -> acceso .)
+    PTCOMA          reduce using rule 52 (registro -> acceso .)
+    PARDER          reduce using rule 52 (registro -> acceso .)
 
 
 state 56
 
-    (64) print -> PRINT PARIZQ registro . PARDER PTCOMA
-
-    PARDER          shift and go to state 91
-
-
-state 57
-
-    (67) read -> READ PARIZQ PARDER . PTCOMA
-
-    PTCOMA          shift and go to state 92
-
-
-state 58
-
-    (68) unset -> UNSET PARIZQ registro . PARDER PTCOMA
+    (71) ifcomando -> IF PARIZQ instruccionregistro . PARDER GOTO ETIQUETA PTCOMA
 
     PARDER          shift and go to state 93
 
 
+state 57
+
+    (68) goto -> GOTO ETIQUETA PTCOMA .
+
+    IF              reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    EXIT            reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    PRINT           reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    ETIQUETA        reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    GOTO            reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    READ            reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    UNSET           reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    TEMPORALES      reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    PARAMETROS      reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    DEVOLUCIONES    reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    RETORNONIVEL    reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    PILA            reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    SP              reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+    $end            reduce using rule 68 (goto -> GOTO ETIQUETA PTCOMA .)
+
+
+state 58
+
+    (66) print -> PRINT PARIZQ registro . PARDER PTCOMA
+
+    PARDER          shift and go to state 94
+
+
 state 59
 
-    (52) acceso -> variable dimension .
-    (54) dimension -> dimension . CORCHETEIZQ inside CORCHETEDER
+    (69) read -> READ PARIZQ PARDER . PTCOMA
 
-    MAS             reduce using rule 52 (acceso -> variable dimension .)
-    MENOS           reduce using rule 52 (acceso -> variable dimension .)
-    POR             reduce using rule 52 (acceso -> variable dimension .)
-    DIVIDIDO        reduce using rule 52 (acceso -> variable dimension .)
-    RESIDUO         reduce using rule 52 (acceso -> variable dimension .)
-    ANDLOGICA       reduce using rule 52 (acceso -> variable dimension .)
-    ORLOGICA        reduce using rule 52 (acceso -> variable dimension .)
-    XOR             reduce using rule 52 (acceso -> variable dimension .)
-    ANDBIT          reduce using rule 52 (acceso -> variable dimension .)
-    ORBIT           reduce using rule 52 (acceso -> variable dimension .)
-    XORBIT          reduce using rule 52 (acceso -> variable dimension .)
-    SHIFTIZQ        reduce using rule 52 (acceso -> variable dimension .)
-    SHIFTDER        reduce using rule 52 (acceso -> variable dimension .)
-    IGUALIGUAL      reduce using rule 52 (acceso -> variable dimension .)
-    NOIGUAL         reduce using rule 52 (acceso -> variable dimension .)
-    MAYORIGUAL      reduce using rule 52 (acceso -> variable dimension .)
-    MENORIGUAL      reduce using rule 52 (acceso -> variable dimension .)
-    MAYOR           reduce using rule 52 (acceso -> variable dimension .)
-    MENOR           reduce using rule 52 (acceso -> variable dimension .)
-    PTCOMA          reduce using rule 52 (acceso -> variable dimension .)
-    PARDER          reduce using rule 52 (acceso -> variable dimension .)
-    CORCHETEDER     reduce using rule 52 (acceso -> variable dimension .)
-    CORCHETEIZQ     shift and go to state 94
+    PTCOMA          shift and go to state 95
 
 
 state 60
 
-    (55) dimension -> CORCHETEIZQ . inside CORCHETEDER
-    (56) inside -> . ENTERO
-    (57) inside -> . CADENA
-    (58) inside -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (70) unset -> UNSET PARIZQ acceso . PARDER PTCOMA
+
+    PARDER          shift and go to state 96
+
+
+state 61
+
+    (53) acceso -> variable dimension .
+    (55) dimension -> dimension . CORCHETEIZQ inside CORCHETEDER
+
+    MAS             reduce using rule 53 (acceso -> variable dimension .)
+    MENOS           reduce using rule 53 (acceso -> variable dimension .)
+    POR             reduce using rule 53 (acceso -> variable dimension .)
+    DIVIDIDO        reduce using rule 53 (acceso -> variable dimension .)
+    RESIDUO         reduce using rule 53 (acceso -> variable dimension .)
+    ANDLOGICA       reduce using rule 53 (acceso -> variable dimension .)
+    ORLOGICA        reduce using rule 53 (acceso -> variable dimension .)
+    XOR             reduce using rule 53 (acceso -> variable dimension .)
+    ANDBIT          reduce using rule 53 (acceso -> variable dimension .)
+    ORBIT           reduce using rule 53 (acceso -> variable dimension .)
+    XORBIT          reduce using rule 53 (acceso -> variable dimension .)
+    SHIFTIZQ        reduce using rule 53 (acceso -> variable dimension .)
+    SHIFTDER        reduce using rule 53 (acceso -> variable dimension .)
+    IGUALIGUAL      reduce using rule 53 (acceso -> variable dimension .)
+    NOIGUAL         reduce using rule 53 (acceso -> variable dimension .)
+    MAYORIGUAL      reduce using rule 53 (acceso -> variable dimension .)
+    MENORIGUAL      reduce using rule 53 (acceso -> variable dimension .)
+    MAYOR           reduce using rule 53 (acceso -> variable dimension .)
+    MENOR           reduce using rule 53 (acceso -> variable dimension .)
+    PTCOMA          reduce using rule 53 (acceso -> variable dimension .)
+    PARDER          reduce using rule 53 (acceso -> variable dimension .)
+    CORCHETEDER     reduce using rule 53 (acceso -> variable dimension .)
+    CORCHETEIZQ     shift and go to state 97
+
+
+state 62
+
+    (56) dimension -> CORCHETEIZQ . inside CORCHETEDER
+    (57) inside -> . ENTERO
+    (58) inside -> . CADENA
+    (59) inside -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1464,8 +1512,8 @@ state 60
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ENTERO          shift and go to state 96
-    CADENA          shift and go to state 97
+    ENTERO          shift and go to state 99
+    CADENA          shift and go to state 100
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1473,11 +1521,11 @@ state 60
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    inside                         shift and go to state 95
-    acceso                         shift and go to state 98
+    inside                         shift and go to state 98
+    acceso                         shift and go to state 101
     variable                       shift and go to state 39
 
-state 61
+state 63
 
     (14) asignacion -> variable IGUAL tipo PTCOMA .
 
@@ -1497,54 +1545,20 @@ state 61
     $end            reduce using rule 14 (asignacion -> variable IGUAL tipo PTCOMA .)
 
 
-state 62
-
-    (17) tipo -> ARRAY PARIZQ . PARDER
-
-    PARDER          shift and go to state 99
-
-
-state 63
-
-    (59) conversion -> PARIZQ eltipo . PARDER registro
-
-    PARDER          shift and go to state 100
-
-
 state 64
-
-    (60) eltipo -> FLOAT .
-
-    PARDER          reduce using rule 60 (eltipo -> FLOAT .)
-
-
-state 65
-
-    (61) eltipo -> INT .
-
-    PARDER          reduce using rule 61 (eltipo -> INT .)
-
-
-state 66
-
-    (62) eltipo -> CHAR .
-
-    PARDER          reduce using rule 62 (eltipo -> CHAR .)
-
-
-state 67
 
     (24) instruccionregistro -> registro MAS . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1552,51 +1566,14 @@ state 67
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
-    TEMPORALES      shift and go to state 23
-    PARAMETROS      shift and go to state 24
-    DEVOLUCIONES    shift and go to state 25
-    RETORNONIVEL    shift and go to state 26
-    PILA            shift and go to state 27
-    SP              shift and go to state 28
-
-    registro                       shift and go to state 101
-    acceso                         shift and go to state 53
-    variable                       shift and go to state 39
-
-state 68
-
-    (25) instruccionregistro -> registro MENOS . registro
-    (44) registro -> . ABS PARIZQ registro PARDER
-    (45) registro -> . NOTLOGICA registro
-    (46) registro -> . NOTBIT registro
-    (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
-    (18) variable -> . TEMPORALES
-    (19) variable -> . PARAMETROS
-    (20) variable -> . DEVOLUCIONES
-    (21) variable -> . RETORNONIVEL
-    (22) variable -> . PILA
-    (23) variable -> . SP
-
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1605,22 +1582,23 @@ state 68
     SP              shift and go to state 28
 
     registro                       shift and go to state 102
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 69
+state 65
 
-    (26) instruccionregistro -> registro POR . registro
+    (25) instruccionregistro -> registro MENOS . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1628,13 +1606,14 @@ state 69
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1643,22 +1622,23 @@ state 69
     SP              shift and go to state 28
 
     registro                       shift and go to state 103
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 70
+state 66
 
-    (27) instruccionregistro -> registro DIVIDIDO . registro
+    (26) instruccionregistro -> registro POR . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1666,13 +1646,14 @@ state 70
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1681,22 +1662,23 @@ state 70
     SP              shift and go to state 28
 
     registro                       shift and go to state 104
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 71
+state 67
 
-    (28) instruccionregistro -> registro RESIDUO . registro
+    (27) instruccionregistro -> registro DIVIDIDO . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1704,13 +1686,14 @@ state 71
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1719,22 +1702,23 @@ state 71
     SP              shift and go to state 28
 
     registro                       shift and go to state 105
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 72
+state 68
 
-    (29) instruccionregistro -> registro ANDLOGICA . registro
+    (28) instruccionregistro -> registro RESIDUO . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1742,13 +1726,14 @@ state 72
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1757,22 +1742,23 @@ state 72
     SP              shift and go to state 28
 
     registro                       shift and go to state 106
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 73
+state 69
 
-    (30) instruccionregistro -> registro ORLOGICA . registro
+    (29) instruccionregistro -> registro ANDLOGICA . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1780,13 +1766,14 @@ state 73
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1795,22 +1782,23 @@ state 73
     SP              shift and go to state 28
 
     registro                       shift and go to state 107
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 74
+state 70
 
-    (31) instruccionregistro -> registro XOR . registro
+    (30) instruccionregistro -> registro ORLOGICA . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1818,13 +1806,14 @@ state 74
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1833,22 +1822,23 @@ state 74
     SP              shift and go to state 28
 
     registro                       shift and go to state 108
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 75
+state 71
 
-    (32) instruccionregistro -> registro ANDBIT . registro
+    (31) instruccionregistro -> registro XOR . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1856,13 +1846,14 @@ state 75
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1871,22 +1862,23 @@ state 75
     SP              shift and go to state 28
 
     registro                       shift and go to state 109
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 76
+state 72
 
-    (33) instruccionregistro -> registro ORBIT . registro
+    (32) instruccionregistro -> registro ANDBIT . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1894,13 +1886,14 @@ state 76
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1909,22 +1902,23 @@ state 76
     SP              shift and go to state 28
 
     registro                       shift and go to state 110
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 77
+state 73
 
-    (34) instruccionregistro -> registro XORBIT . registro
+    (33) instruccionregistro -> registro ORBIT . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1932,13 +1926,14 @@ state 77
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1947,22 +1942,23 @@ state 77
     SP              shift and go to state 28
 
     registro                       shift and go to state 111
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 78
+state 74
 
-    (35) instruccionregistro -> registro SHIFTIZQ . registro
+    (34) instruccionregistro -> registro XORBIT . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -1970,13 +1966,14 @@ state 78
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -1985,22 +1982,23 @@ state 78
     SP              shift and go to state 28
 
     registro                       shift and go to state 112
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 79
+state 75
 
-    (36) instruccionregistro -> registro SHIFTDER . registro
+    (35) instruccionregistro -> registro SHIFTIZQ . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2008,13 +2006,14 @@ state 79
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2023,22 +2022,23 @@ state 79
     SP              shift and go to state 28
 
     registro                       shift and go to state 113
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 80
+state 76
 
-    (37) instruccionregistro -> registro IGUALIGUAL . registro
+    (36) instruccionregistro -> registro SHIFTDER . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2046,13 +2046,14 @@ state 80
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2061,22 +2062,23 @@ state 80
     SP              shift and go to state 28
 
     registro                       shift and go to state 114
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 81
+state 77
 
-    (38) instruccionregistro -> registro NOIGUAL . registro
+    (37) instruccionregistro -> registro IGUALIGUAL . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2084,13 +2086,14 @@ state 81
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2099,22 +2102,23 @@ state 81
     SP              shift and go to state 28
 
     registro                       shift and go to state 115
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 82
+state 78
 
-    (39) instruccionregistro -> registro MAYORIGUAL . registro
+    (38) instruccionregistro -> registro NOIGUAL . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2122,13 +2126,14 @@ state 82
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2137,22 +2142,23 @@ state 82
     SP              shift and go to state 28
 
     registro                       shift and go to state 116
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 83
+state 79
 
-    (40) instruccionregistro -> registro MENORIGUAL . registro
+    (39) instruccionregistro -> registro MAYORIGUAL . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2160,13 +2166,14 @@ state 83
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2175,22 +2182,23 @@ state 83
     SP              shift and go to state 28
 
     registro                       shift and go to state 117
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 84
+state 80
 
-    (41) instruccionregistro -> registro MAYOR . registro
+    (40) instruccionregistro -> registro MENORIGUAL . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2198,13 +2206,14 @@ state 84
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2213,22 +2222,23 @@ state 84
     SP              shift and go to state 28
 
     registro                       shift and go to state 118
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 85
+state 81
 
-    (42) instruccionregistro -> registro MENOR . registro
+    (41) instruccionregistro -> registro MAYOR . registro
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2236,13 +2246,14 @@ state 85
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2251,10 +2262,50 @@ state 85
     SP              shift and go to state 28
 
     registro                       shift and go to state 119
-    acceso                         shift and go to state 53
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 86
+state 82
+
+    (42) instruccionregistro -> registro MENOR . registro
+    (44) registro -> . ABS PARIZQ registro PARDER
+    (45) registro -> . NOTLOGICA registro
+    (46) registro -> . NOTBIT registro
+    (47) registro -> . MENOS registro
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
+    (18) variable -> . TEMPORALES
+    (19) variable -> . PARAMETROS
+    (20) variable -> . DEVOLUCIONES
+    (21) variable -> . RETORNONIVEL
+    (22) variable -> . PILA
+    (23) variable -> . SP
+
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
+    TEMPORALES      shift and go to state 23
+    PARAMETROS      shift and go to state 24
+    DEVOLUCIONES    shift and go to state 25
+    RETORNONIVEL    shift and go to state 26
+    PILA            shift and go to state 27
+    SP              shift and go to state 28
+
+    registro                       shift and go to state 120
+    acceso                         shift and go to state 55
+    variable                       shift and go to state 39
+
+state 83
 
     (47) registro -> MENOS registro .
 
@@ -2281,19 +2332,82 @@ state 86
     PARDER          reduce using rule 47 (registro -> MENOS registro .)
 
 
+state 84
+
+    (48) registro -> ANDBIT registro .
+
+    MAS             reduce using rule 48 (registro -> ANDBIT registro .)
+    MENOS           reduce using rule 48 (registro -> ANDBIT registro .)
+    POR             reduce using rule 48 (registro -> ANDBIT registro .)
+    DIVIDIDO        reduce using rule 48 (registro -> ANDBIT registro .)
+    RESIDUO         reduce using rule 48 (registro -> ANDBIT registro .)
+    ANDLOGICA       reduce using rule 48 (registro -> ANDBIT registro .)
+    ORLOGICA        reduce using rule 48 (registro -> ANDBIT registro .)
+    XOR             reduce using rule 48 (registro -> ANDBIT registro .)
+    ANDBIT          reduce using rule 48 (registro -> ANDBIT registro .)
+    ORBIT           reduce using rule 48 (registro -> ANDBIT registro .)
+    XORBIT          reduce using rule 48 (registro -> ANDBIT registro .)
+    SHIFTIZQ        reduce using rule 48 (registro -> ANDBIT registro .)
+    SHIFTDER        reduce using rule 48 (registro -> ANDBIT registro .)
+    IGUALIGUAL      reduce using rule 48 (registro -> ANDBIT registro .)
+    NOIGUAL         reduce using rule 48 (registro -> ANDBIT registro .)
+    MAYORIGUAL      reduce using rule 48 (registro -> ANDBIT registro .)
+    MENORIGUAL      reduce using rule 48 (registro -> ANDBIT registro .)
+    MAYOR           reduce using rule 48 (registro -> ANDBIT registro .)
+    MENOR           reduce using rule 48 (registro -> ANDBIT registro .)
+    PTCOMA          reduce using rule 48 (registro -> ANDBIT registro .)
+    PARDER          reduce using rule 48 (registro -> ANDBIT registro .)
+
+
+state 85
+
+    (60) conversion -> PARIZQ eltipo . PARDER registro
+
+    PARDER          shift and go to state 121
+
+
+state 86
+
+    (62) eltipo -> FLOAT .
+
+    PARDER          reduce using rule 62 (eltipo -> FLOAT .)
+
+
 state 87
+
+    (63) eltipo -> INT .
+
+    PARDER          reduce using rule 63 (eltipo -> INT .)
+
+
+state 88
+
+    (64) eltipo -> CHAR .
+
+    PARDER          reduce using rule 64 (eltipo -> CHAR .)
+
+
+state 89
+
+    (61) arreglo -> ARRAY PARIZQ . PARDER
+
+    PARDER          shift and go to state 122
+
+
+state 90
 
     (44) registro -> ABS PARIZQ . registro PARDER
     (44) registro -> . ABS PARIZQ registro PARDER
     (45) registro -> . NOTLOGICA registro
     (46) registro -> . NOTBIT registro
     (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2301,13 +2415,14 @@ state 87
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2315,11 +2430,11 @@ state 87
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    registro                       shift and go to state 120
-    acceso                         shift and go to state 53
+    registro                       shift and go to state 123
+    acceso                         shift and go to state 55
     variable                       shift and go to state 39
 
-state 88
+state 91
 
     (45) registro -> NOTLOGICA registro .
 
@@ -2346,7 +2461,7 @@ state 88
     PARDER          reduce using rule 45 (registro -> NOTLOGICA registro .)
 
 
-state 89
+state 92
 
     (46) registro -> NOTBIT registro .
 
@@ -2373,123 +2488,55 @@ state 89
     PARDER          reduce using rule 46 (registro -> NOTBIT registro .)
 
 
-state 90
-
-    (69) ifcomando -> IF PARIZQ instruccionregistro PARDER . GOTO ETIQUETA PTCOMA
-
-    GOTO            shift and go to state 121
-
-
-state 91
-
-    (64) print -> PRINT PARIZQ registro PARDER . PTCOMA
-
-    PTCOMA          shift and go to state 122
-
-
-state 92
-
-    (67) read -> READ PARIZQ PARDER PTCOMA .
-
-    IF              reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    EXIT            reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    PRINT           reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    ETIQUETA        reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    GOTO            reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    READ            reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    UNSET           reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    TEMPORALES      reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    PARAMETROS      reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    DEVOLUCIONES    reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    RETORNONIVEL    reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    PILA            reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    SP              reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-    $end            reduce using rule 67 (read -> READ PARIZQ PARDER PTCOMA .)
-
-
 state 93
 
-    (68) unset -> UNSET PARIZQ registro PARDER . PTCOMA
+    (71) ifcomando -> IF PARIZQ instruccionregistro PARDER . GOTO ETIQUETA PTCOMA
 
-    PTCOMA          shift and go to state 123
+    GOTO            shift and go to state 124
 
 
 state 94
 
-    (54) dimension -> dimension CORCHETEIZQ . inside CORCHETEDER
-    (56) inside -> . ENTERO
-    (57) inside -> . CADENA
-    (58) inside -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
-    (18) variable -> . TEMPORALES
-    (19) variable -> . PARAMETROS
-    (20) variable -> . DEVOLUCIONES
-    (21) variable -> . RETORNONIVEL
-    (22) variable -> . PILA
-    (23) variable -> . SP
+    (66) print -> PRINT PARIZQ registro PARDER . PTCOMA
 
-    ENTERO          shift and go to state 96
-    CADENA          shift and go to state 97
-    TEMPORALES      shift and go to state 23
-    PARAMETROS      shift and go to state 24
-    DEVOLUCIONES    shift and go to state 25
-    RETORNONIVEL    shift and go to state 26
-    PILA            shift and go to state 27
-    SP              shift and go to state 28
+    PTCOMA          shift and go to state 125
 
-    inside                         shift and go to state 124
-    acceso                         shift and go to state 98
-    variable                       shift and go to state 39
 
 state 95
 
-    (55) dimension -> CORCHETEIZQ inside . CORCHETEDER
+    (69) read -> READ PARIZQ PARDER PTCOMA .
 
-    CORCHETEDER     shift and go to state 125
+    IF              reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    EXIT            reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    PRINT           reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    ETIQUETA        reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    GOTO            reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    READ            reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    UNSET           reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    TEMPORALES      reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    PARAMETROS      reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    DEVOLUCIONES    reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    RETORNONIVEL    reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    PILA            reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    SP              reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
+    $end            reduce using rule 69 (read -> READ PARIZQ PARDER PTCOMA .)
 
 
 state 96
 
-    (56) inside -> ENTERO .
+    (70) unset -> UNSET PARIZQ acceso PARDER . PTCOMA
 
-    CORCHETEDER     reduce using rule 56 (inside -> ENTERO .)
+    PTCOMA          shift and go to state 126
 
 
 state 97
 
-    (57) inside -> CADENA .
-
-    CORCHETEDER     reduce using rule 57 (inside -> CADENA .)
-
-
-state 98
-
-    (58) inside -> acceso .
-
-    CORCHETEDER     reduce using rule 58 (inside -> acceso .)
-
-
-state 99
-
-    (17) tipo -> ARRAY PARIZQ PARDER .
-
-    PTCOMA          reduce using rule 17 (tipo -> ARRAY PARIZQ PARDER .)
-
-
-state 100
-
-    (59) conversion -> PARIZQ eltipo PARDER . registro
-    (44) registro -> . ABS PARIZQ registro PARDER
-    (45) registro -> . NOTLOGICA registro
-    (46) registro -> . NOTBIT registro
-    (47) registro -> . MENOS registro
-    (48) registro -> . ENTERO
-    (49) registro -> . DECIMAL
-    (50) registro -> . CADENA
-    (51) registro -> . acceso
-    (52) acceso -> . variable dimension
-    (53) acceso -> . variable
+    (55) dimension -> dimension CORCHETEIZQ . inside CORCHETEDER
+    (57) inside -> . ENTERO
+    (58) inside -> . CADENA
+    (59) inside -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
     (18) variable -> . TEMPORALES
     (19) variable -> . PARAMETROS
     (20) variable -> . DEVOLUCIONES
@@ -2497,13 +2544,8 @@ state 100
     (22) variable -> . PILA
     (23) variable -> . SP
 
-    ABS             shift and go to state 47
-    NOTLOGICA       shift and go to state 48
-    NOTBIT          shift and go to state 49
-    MENOS           shift and go to state 46
-    ENTERO          shift and go to state 50
-    DECIMAL         shift and go to state 51
-    CADENA          shift and go to state 52
+    ENTERO          shift and go to state 99
+    CADENA          shift and go to state 100
     TEMPORALES      shift and go to state 23
     PARAMETROS      shift and go to state 24
     DEVOLUCIONES    shift and go to state 25
@@ -2511,11 +2553,39 @@ state 100
     PILA            shift and go to state 27
     SP              shift and go to state 28
 
-    registro                       shift and go to state 126
-    acceso                         shift and go to state 53
+    inside                         shift and go to state 127
+    acceso                         shift and go to state 101
     variable                       shift and go to state 39
 
+state 98
+
+    (56) dimension -> CORCHETEIZQ inside . CORCHETEDER
+
+    CORCHETEDER     shift and go to state 128
+
+
+state 99
+
+    (57) inside -> ENTERO .
+
+    CORCHETEDER     reduce using rule 57 (inside -> ENTERO .)
+
+
+state 100
+
+    (58) inside -> CADENA .
+
+    CORCHETEDER     reduce using rule 58 (inside -> CADENA .)
+
+
 state 101
+
+    (59) inside -> acceso .
+
+    CORCHETEDER     reduce using rule 59 (inside -> acceso .)
+
+
+state 102
 
     (24) instruccionregistro -> registro MAS registro .
 
@@ -2523,7 +2593,7 @@ state 101
     PARDER          reduce using rule 24 (instruccionregistro -> registro MAS registro .)
 
 
-state 102
+state 103
 
     (25) instruccionregistro -> registro MENOS registro .
 
@@ -2531,7 +2601,7 @@ state 102
     PARDER          reduce using rule 25 (instruccionregistro -> registro MENOS registro .)
 
 
-state 103
+state 104
 
     (26) instruccionregistro -> registro POR registro .
 
@@ -2539,7 +2609,7 @@ state 103
     PARDER          reduce using rule 26 (instruccionregistro -> registro POR registro .)
 
 
-state 104
+state 105
 
     (27) instruccionregistro -> registro DIVIDIDO registro .
 
@@ -2547,7 +2617,7 @@ state 104
     PARDER          reduce using rule 27 (instruccionregistro -> registro DIVIDIDO registro .)
 
 
-state 105
+state 106
 
     (28) instruccionregistro -> registro RESIDUO registro .
 
@@ -2555,7 +2625,7 @@ state 105
     PARDER          reduce using rule 28 (instruccionregistro -> registro RESIDUO registro .)
 
 
-state 106
+state 107
 
     (29) instruccionregistro -> registro ANDLOGICA registro .
 
@@ -2563,7 +2633,7 @@ state 106
     PARDER          reduce using rule 29 (instruccionregistro -> registro ANDLOGICA registro .)
 
 
-state 107
+state 108
 
     (30) instruccionregistro -> registro ORLOGICA registro .
 
@@ -2571,7 +2641,7 @@ state 107
     PARDER          reduce using rule 30 (instruccionregistro -> registro ORLOGICA registro .)
 
 
-state 108
+state 109
 
     (31) instruccionregistro -> registro XOR registro .
 
@@ -2579,7 +2649,7 @@ state 108
     PARDER          reduce using rule 31 (instruccionregistro -> registro XOR registro .)
 
 
-state 109
+state 110
 
     (32) instruccionregistro -> registro ANDBIT registro .
 
@@ -2587,7 +2657,7 @@ state 109
     PARDER          reduce using rule 32 (instruccionregistro -> registro ANDBIT registro .)
 
 
-state 110
+state 111
 
     (33) instruccionregistro -> registro ORBIT registro .
 
@@ -2595,7 +2665,7 @@ state 110
     PARDER          reduce using rule 33 (instruccionregistro -> registro ORBIT registro .)
 
 
-state 111
+state 112
 
     (34) instruccionregistro -> registro XORBIT registro .
 
@@ -2603,7 +2673,7 @@ state 111
     PARDER          reduce using rule 34 (instruccionregistro -> registro XORBIT registro .)
 
 
-state 112
+state 113
 
     (35) instruccionregistro -> registro SHIFTIZQ registro .
 
@@ -2611,7 +2681,7 @@ state 112
     PARDER          reduce using rule 35 (instruccionregistro -> registro SHIFTIZQ registro .)
 
 
-state 113
+state 114
 
     (36) instruccionregistro -> registro SHIFTDER registro .
 
@@ -2619,7 +2689,7 @@ state 113
     PARDER          reduce using rule 36 (instruccionregistro -> registro SHIFTDER registro .)
 
 
-state 114
+state 115
 
     (37) instruccionregistro -> registro IGUALIGUAL registro .
 
@@ -2627,7 +2697,7 @@ state 114
     PARDER          reduce using rule 37 (instruccionregistro -> registro IGUALIGUAL registro .)
 
 
-state 115
+state 116
 
     (38) instruccionregistro -> registro NOIGUAL registro .
 
@@ -2635,7 +2705,7 @@ state 115
     PARDER          reduce using rule 38 (instruccionregistro -> registro NOIGUAL registro .)
 
 
-state 116
+state 117
 
     (39) instruccionregistro -> registro MAYORIGUAL registro .
 
@@ -2643,7 +2713,7 @@ state 116
     PARDER          reduce using rule 39 (instruccionregistro -> registro MAYORIGUAL registro .)
 
 
-state 117
+state 118
 
     (40) instruccionregistro -> registro MENORIGUAL registro .
 
@@ -2651,7 +2721,7 @@ state 117
     PARDER          reduce using rule 40 (instruccionregistro -> registro MENORIGUAL registro .)
 
 
-state 118
+state 119
 
     (41) instruccionregistro -> registro MAYOR registro .
 
@@ -2659,7 +2729,7 @@ state 118
     PARDER          reduce using rule 41 (instruccionregistro -> registro MAYOR registro .)
 
 
-state 119
+state 120
 
     (42) instruccionregistro -> registro MENOR registro .
 
@@ -2667,104 +2737,151 @@ state 119
     PARDER          reduce using rule 42 (instruccionregistro -> registro MENOR registro .)
 
 
-state 120
-
-    (44) registro -> ABS PARIZQ registro . PARDER
-
-    PARDER          shift and go to state 127
-
-
 state 121
 
-    (69) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO . ETIQUETA PTCOMA
+    (60) conversion -> PARIZQ eltipo PARDER . registro
+    (44) registro -> . ABS PARIZQ registro PARDER
+    (45) registro -> . NOTLOGICA registro
+    (46) registro -> . NOTBIT registro
+    (47) registro -> . MENOS registro
+    (48) registro -> . ANDBIT registro
+    (49) registro -> . ENTERO
+    (50) registro -> . DECIMAL
+    (51) registro -> . CADENA
+    (52) registro -> . acceso
+    (53) acceso -> . variable dimension
+    (54) acceso -> . variable
+    (18) variable -> . TEMPORALES
+    (19) variable -> . PARAMETROS
+    (20) variable -> . DEVOLUCIONES
+    (21) variable -> . RETORNONIVEL
+    (22) variable -> . PILA
+    (23) variable -> . SP
 
-    ETIQUETA        shift and go to state 128
+    ABS             shift and go to state 49
+    NOTLOGICA       shift and go to state 50
+    NOTBIT          shift and go to state 51
+    MENOS           shift and go to state 45
+    ANDBIT          shift and go to state 46
+    ENTERO          shift and go to state 52
+    DECIMAL         shift and go to state 53
+    CADENA          shift and go to state 54
+    TEMPORALES      shift and go to state 23
+    PARAMETROS      shift and go to state 24
+    DEVOLUCIONES    shift and go to state 25
+    RETORNONIVEL    shift and go to state 26
+    PILA            shift and go to state 27
+    SP              shift and go to state 28
 
+    registro                       shift and go to state 129
+    acceso                         shift and go to state 55
+    variable                       shift and go to state 39
 
 state 122
 
-    (64) print -> PRINT PARIZQ registro PARDER PTCOMA .
+    (61) arreglo -> ARRAY PARIZQ PARDER .
 
-    IF              reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    EXIT            reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    PRINT           reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    ETIQUETA        reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    GOTO            reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    READ            reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    UNSET           reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    TEMPORALES      reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    PARAMETROS      reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    DEVOLUCIONES    reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    RETORNONIVEL    reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    PILA            reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    SP              reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
-    $end            reduce using rule 64 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    PTCOMA          reduce using rule 61 (arreglo -> ARRAY PARIZQ PARDER .)
 
 
 state 123
 
-    (68) unset -> UNSET PARIZQ registro PARDER PTCOMA .
+    (44) registro -> ABS PARIZQ registro . PARDER
 
-    IF              reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    EXIT            reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    PRINT           reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    ETIQUETA        reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    GOTO            reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    READ            reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    UNSET           reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    TEMPORALES      reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    PARAMETROS      reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    DEVOLUCIONES    reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    RETORNONIVEL    reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    PILA            reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    SP              reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
-    $end            reduce using rule 68 (unset -> UNSET PARIZQ registro PARDER PTCOMA .)
+    PARDER          shift and go to state 130
 
 
 state 124
 
-    (54) dimension -> dimension CORCHETEIZQ inside . CORCHETEDER
+    (71) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO . ETIQUETA PTCOMA
 
-    CORCHETEDER     shift and go to state 129
+    ETIQUETA        shift and go to state 131
 
 
 state 125
 
-    (55) dimension -> CORCHETEIZQ inside CORCHETEDER .
+    (66) print -> PRINT PARIZQ registro PARDER PTCOMA .
 
-    CORCHETEIZQ     reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MAS             reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MENOS           reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    POR             reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    DIVIDIDO        reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    RESIDUO         reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    ANDLOGICA       reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    ORLOGICA        reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    XOR             reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    ANDBIT          reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    ORBIT           reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    XORBIT          reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    SHIFTIZQ        reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    SHIFTDER        reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    IGUALIGUAL      reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    NOIGUAL         reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MAYORIGUAL      reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MENORIGUAL      reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MAYOR           reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    MENOR           reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    PTCOMA          reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    PARDER          reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
-    CORCHETEDER     reduce using rule 55 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    IF              reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    EXIT            reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    PRINT           reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    ETIQUETA        reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    GOTO            reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    READ            reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    UNSET           reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    TEMPORALES      reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    PARAMETROS      reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    DEVOLUCIONES    reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    RETORNONIVEL    reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    PILA            reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    SP              reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
+    $end            reduce using rule 66 (print -> PRINT PARIZQ registro PARDER PTCOMA .)
 
 
 state 126
 
-    (59) conversion -> PARIZQ eltipo PARDER registro .
+    (70) unset -> UNSET PARIZQ acceso PARDER PTCOMA .
 
-    PTCOMA          reduce using rule 59 (conversion -> PARIZQ eltipo PARDER registro .)
+    IF              reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    EXIT            reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    PRINT           reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    ETIQUETA        reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    GOTO            reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    READ            reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    UNSET           reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    TEMPORALES      reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    PARAMETROS      reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    DEVOLUCIONES    reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    RETORNONIVEL    reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    PILA            reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    SP              reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
+    $end            reduce using rule 70 (unset -> UNSET PARIZQ acceso PARDER PTCOMA .)
 
 
 state 127
+
+    (55) dimension -> dimension CORCHETEIZQ inside . CORCHETEDER
+
+    CORCHETEDER     shift and go to state 132
+
+
+state 128
+
+    (56) dimension -> CORCHETEIZQ inside CORCHETEDER .
+
+    CORCHETEIZQ     reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MAS             reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MENOS           reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    POR             reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    DIVIDIDO        reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    RESIDUO         reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    ANDLOGICA       reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    ORLOGICA        reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    XOR             reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    ANDBIT          reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    ORBIT           reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    XORBIT          reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    SHIFTIZQ        reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    SHIFTDER        reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    IGUALIGUAL      reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    NOIGUAL         reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MAYORIGUAL      reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MENORIGUAL      reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MAYOR           reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    MENOR           reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    PTCOMA          reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    PARDER          reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+    CORCHETEDER     reduce using rule 56 (dimension -> CORCHETEIZQ inside CORCHETEDER .)
+
+
+state 129
+
+    (60) conversion -> PARIZQ eltipo PARDER registro .
+
+    PTCOMA          reduce using rule 60 (conversion -> PARIZQ eltipo PARDER registro .)
+
+
+state 130
 
     (44) registro -> ABS PARIZQ registro PARDER .
 
@@ -2791,58 +2908,58 @@ state 127
     PARDER          reduce using rule 44 (registro -> ABS PARIZQ registro PARDER .)
 
 
-state 128
+state 131
 
-    (69) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA . PTCOMA
+    (71) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA . PTCOMA
 
-    PTCOMA          shift and go to state 130
-
-
-state 129
-
-    (54) dimension -> dimension CORCHETEIZQ inside CORCHETEDER .
-
-    CORCHETEIZQ     reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MAS             reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MENOS           reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    POR             reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    DIVIDIDO        reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    RESIDUO         reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    ANDLOGICA       reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    ORLOGICA        reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    XOR             reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    ANDBIT          reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    ORBIT           reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    XORBIT          reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    SHIFTIZQ        reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    SHIFTDER        reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    IGUALIGUAL      reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    NOIGUAL         reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MAYORIGUAL      reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MENORIGUAL      reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MAYOR           reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    MENOR           reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    PTCOMA          reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    PARDER          reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
-    CORCHETEDER     reduce using rule 54 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    PTCOMA          shift and go to state 133
 
 
-state 130
+state 132
 
-    (69) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .
+    (55) dimension -> dimension CORCHETEIZQ inside CORCHETEDER .
 
-    IF              reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    EXIT            reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    PRINT           reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    ETIQUETA        reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    GOTO            reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    READ            reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    UNSET           reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    TEMPORALES      reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    PARAMETROS      reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    DEVOLUCIONES    reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    RETORNONIVEL    reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    PILA            reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    SP              reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
-    $end            reduce using rule 69 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    CORCHETEIZQ     reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MAS             reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MENOS           reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    POR             reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    DIVIDIDO        reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    RESIDUO         reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    ANDLOGICA       reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    ORLOGICA        reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    XOR             reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    ANDBIT          reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    ORBIT           reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    XORBIT          reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    SHIFTIZQ        reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    SHIFTDER        reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    IGUALIGUAL      reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    NOIGUAL         reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MAYORIGUAL      reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MENORIGUAL      reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MAYOR           reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    MENOR           reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    PTCOMA          reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    PARDER          reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+    CORCHETEDER     reduce using rule 55 (dimension -> dimension CORCHETEIZQ inside CORCHETEDER .)
+
+
+state 133
+
+    (71) ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .
+
+    IF              reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    EXIT            reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    PRINT           reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    ETIQUETA        reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    GOTO            reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    READ            reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    UNSET           reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    TEMPORALES      reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    PARAMETROS      reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    DEVOLUCIONES    reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    RETORNONIVEL    reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    PILA            reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    SP              reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
+    $end            reduce using rule 71 (ifcomando -> IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA .)
 
