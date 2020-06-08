@@ -96,4 +96,14 @@ class ExpresionReferencia():
     def __init__(self,registro):
         self.registro=registro
 
+class Dimen:
+    '''Dimension'''
+class ExpresionDimension(Dimen):
+    def __init__(self,registro):
+        self.registro=registro
+class ExpresionArreglo():
+    def __init__(self,id,dimension):
+        self.id=id
+        self.dimension=dimension
+
 

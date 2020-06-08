@@ -1,4 +1,6 @@
 main:
+$t65[2][2]=4;
+$t55=array();
 $t20 = 55;
 unset($t20);
 $t41='javier';

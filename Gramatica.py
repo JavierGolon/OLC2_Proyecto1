@@ -245,6 +245,14 @@ def p_variable(t):
                 |   PILA
                 |   SP'''
     t[0]=t[1]
+def p_variable_arreglo(t):
+    '''variable :   TEMPORALES listadimension
+                |   PARAMETROS listadimension
+                |   DEVOLUCIONES listadimension
+                |   RETORNONIVEL listadimension
+                |   PILA listadimension
+                |   SP listadimension'''
+    t[0]=ExpresionArreglo(t[1],t[2])
 def p_instruccionregistro(t):        
     '''instruccionregistro  : registro MAS registro
                             | registro MENOS registro 
@@ -316,15 +324,25 @@ def p_registro_acceso(t):
     t[0]=t[1]
                 
 def p_acceso(t):
-    '''acceso   :   variable dimension
-                |   variable'''
+    '''acceso   :   variable'''
     t[0]=ExpresionVariable(t[1])
+def p_acceso_dimension(t):
+    '''acceso   :   variable listadimension'''
+    t[1]=ExpresionArreglo(t[1],t[2])
+    t[0] = t[1]
 
+
+def p_lista_dimension(t):
+    '''listadimension    :   listadimension dimension'''
+    t[1].append(t[2])
+    t[0] = t[1]
+
+def p_lista_dimnension2(t):
+    '''listadimension   :   dimension'''
+    t[0] = [t[1]]
 def p_dimension(t):
-    '''dimension    :   dimension CORCHETEIZQ inside CORCHETEDER 
-                    |   CORCHETEIZQ inside CORCHETEDER
-                '''
-    t[0]=t[1]
+    '''dimension    :   CORCHETEIZQ inside CORCHETEDER'''
+    t[0] = ExpresionDimension(t[2])
 
 def p_inside(t):
     '''inside   :   ENTERO

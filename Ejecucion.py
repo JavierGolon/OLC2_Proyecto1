@@ -32,6 +32,10 @@ def accion_asignar(instr,ts):
     if isinstance(instr.valor,ExpresionReferencia):
         simboloref = ts.ObtenerTabla()[instr.valor.registro.registro]
         ts.agregar(simboloref,instr.variable)
+    elif isinstance(instr.variable,ExpresionArreglo):
+        print(instr.variable.id)
+        for lista in instr.variable.dimension:
+            print(lista.registro)
     else:
         valor = resolver_Expresion(instr.valor,ts) # Obtenie la operacion de la expresion
         id = Obtener_o_Crear_Id(instr.variable,ts)
@@ -42,6 +46,8 @@ def accion_asignar(instr,ts):
             simbolo=TS.Simbolo(TS.TIPO_DATO.NUMERO,valor) # le asigno ya el nuevo valor
         elif type(valor) is float:
             simbolo=TS.Simbolo(TS.TIPO_DATO.FLOAT,valor) # le asigno ya el nuevo valor
+        elif type(valor) is dict:
+            simbolo =  TS.Simbolo(TS.TIPO_DATO.ARRAY,valor)
         ts.actualizar(simbolo,id)
 
 """ >>> Accion Crear Variable o Verificar Registro en Ts Correcta """
@@ -192,7 +198,7 @@ def resolver_Expresion(Expresion,ts):
             return valor.valor
     #================= Instancias de los Casteos o de la declaracion de arreglo (FALTA ARREGLOS) ======================
     elif isinstance(Expresion,Arreglo):
-        pass
+        return {} # retorno un diccionario
     elif isinstance(Expresion,Casteo):
         tipo = Expresion.tipo
         valor =resolver_Expresion(Expresion.valor,ts)
@@ -257,7 +263,11 @@ def accion_LlenarTsEtiquetas(instrucciones,ts):
                     ts.actualizar(simbolo,lastflagnane)
                     
         if isinstance(instrucciones[i],asignacion):
-            var = instrucciones[i].variable
+            var=""
+            if isinstance(instrucciones[i].variable,ExpresionArreglo):
+                var=instrucciones[i].variable.id
+            else:
+                var = instrucciones[i].variable
             if '$a' in var:
                 if flagetiq is True:
                     lastindex = ts.obtener(lastflagnane).valor
@@ -313,3 +323,7 @@ for i in ts_global.ObtenerTabla():
 """
 grafo = Graficadora()
 grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""
+
+
+var = {}
+print(type(var))
