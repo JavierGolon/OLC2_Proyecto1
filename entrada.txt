@@ -1,27 +1,43 @@
 main:
-#agenda
+    $s0 = array(); # stack
+    $sp = -1; # null pointer
+    $a0 = 3; # m
+    $a1 = 8; # n
+    $sp = $sp + 1;
+    $s0[$sp] = $a0; # push
+    goto ack;
 
-$t1[0]['nombre']="Daniel";
-$t1[0]['direccion']="zona 4";
-$t1[0]['telefono']=6546;
-$t1[0]['telefono']=544654;
+ret0:
+    print($v0);
+    exit;
 
-$t1[1]['nombre']="Hugo";
-$t1[1]['direccion']="zona 8";
-$t1[1]['telefono']=241565;
-$t1[1]['telefono']=30154;
+ack:
+    if ($sp < 0) goto ret3; # empty stack
+    $a0 = $s0[$sp]; # pop
+    $sp = $sp - 1;
+    if ($a0 != 0) goto ret1;
+    $t4 = $a0 + 1;
+    $a1 = $a1 + $t4;
+    goto ack;
 
-$t1[2]['nombre']="Manuel";
-$t1[2]['direccion']="zona 11";
-$t1[2]['telefono']=1234;
-$t1[2]['telefono']=284;
+ret1:
+    if ($a1 != 0) goto ret2;
+    $a1 = $a1 + 1;
+    $a0 = $a0 - 1; # --m
+    $sp = $sp + 1;
+    $s0[$sp] = $a0; # push
+    goto ack;
 
+ret2:
+    $a0 = $a0 - 1; # --m
+    $sp = $sp + 1;
+    $s0[$sp] = $a0;
+    $a0 = $a0 + 1; # ++m
+    $sp = $sp + 1;
+    $s0[$sp] = $a0; # push
+    $a1 = $a1 - 1;
+    goto ack;
 
-$t2=0;
-while0:
-if ($t2>2) goto end;
-print($t1[$t2]["nombre"]);
-$t2=$t2+1;
-goto while0;
-end:
-
+ret3:
+    $v0 = $a1;
+    goto ret0;

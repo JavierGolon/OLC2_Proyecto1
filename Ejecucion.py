@@ -387,7 +387,8 @@ def Recorrer_Instrucciones(instrucciones,ts):
     accion_LlenarTsEtiquetas(instrucciones,ts) # mando a llenar la ts con todas mis etiquetas
     largo = len(instrucciones)
     i = 0
-    while i < largo:
+    l = resetable_range(largo)
+    for i in l:
         if isinstance(instrucciones[i],Imprimir): accion_imprimir(instrucciones[i],ts)
         elif isinstance(instrucciones[i],asignacion): accion_asignar(instrucciones[i],ts)
         elif isinstance(instrucciones[i],declaracion): accion_declaracion(instrucciones[i],ts)
@@ -399,15 +400,18 @@ def Recorrer_Instrucciones(instrucciones,ts):
             elif estado == 1:
                 newindex = ts.obtener(instrucciones[i].goto).valor # la etiqueta fijo esta en ts
                 i= newindex # salto a la posicion donde viene la etiqueta para hacer los saltos
+                l.reset(i)
                 continue 
         elif isinstance(instrucciones[i],Goto):
             newindex = ts.obtener(instrucciones[i].label).valor #la etiqueta fijo esta en ts
             i=newindex
+            l.reset(i)
             continue
         elif isinstance(instrucciones[i],Exit):
-            i = largo+1 # termina la ejecucion de mi codigo
-            continue
-        i+=1
+            i = largo # termina la ejecucion de mi codigo
+            l.reset(i)
+            
+        
 
 #======== Llamada del archivo de entrada(Temporal, tiene que  hacerser con el text de la interfaz) ======
 file = open("./entrada.txt", "r")
@@ -415,9 +419,10 @@ input = file.read()
 instrucciones = g.parse(input)
 ts_global=TS.TablaDeSimbolos()
 Recorrer_Instrucciones(instrucciones,ts_global)
-for i in ts_global.ObtenerTabla():
+"""for i in ts_global.ObtenerTabla():
     print(i)
     print('--',ts_global.ObtenerTabla()[i].tipo,'--',ts_global.ObtenerTabla()[i].valor)
-"""
+
 grafo = Graficadora()
 grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""
+
