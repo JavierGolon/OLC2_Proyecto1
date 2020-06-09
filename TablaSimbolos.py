@@ -8,6 +8,7 @@ class TIPO_DATO(Enum) :
     FUNCION=5
     ETIQUETA=6
     ARRAY=7
+    STRUCT=8
     
 class Simbolo() :
     'Esta clase representa un simbolo dentro de nuestra tabla de simbolos'

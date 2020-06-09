@@ -1,6 +1,7 @@
 import Gramatica as g
 import TablaSimbolos as TS
 from operator import xor
+from Metodos_Complementarios import *
 from Expresiones import *
 from Instrucciones import * 
 from GraficarAST import Graficadora
@@ -9,11 +10,11 @@ from GraficarAST import Graficadora
 """ >>> Accion Imprimir Correcta """
 def accion_imprimir(instr,ts):
     # en print solo puedo obtener valores de registros
-    registro = Obtener_Valor_Registro(instr.cadena,ts)
+    registro = resolver_Expresion(instr.cadena,ts)
     if registro is None:
         print('>> ','Error, Referencia Erronea -- Print()')
     else:
-        print('>> ', registro.valor)
+        print('>> ', registro)
 
 """ >>> Accion Obtener Valor registro Correcta """
 def Obtener_Valor_Registro(registro,ts):
@@ -22,33 +23,128 @@ def Obtener_Valor_Registro(registro,ts):
 
 """ >>> Accion Declaracion Correcta """
 def accion_declaracion(inst,ts):
-    searched_var = ts.obtener(inst.variable)
+    searched_var = ts.obtener(inst.variable.registro)
     if searched_var is None:
         simbolo = TS.Simbolo(TS.TIPO_DATO.NUMERO,0) # lo inicializo en 0
-        ts.agregar(simbolo,inst.variable) # crea una nueva variable en la tabla de simbolos
+        ts.agregar(simbolo,inst.variable.registro) # crea una nueva variable en la tabla de simbolos
 
+#======================== Obtencion del valor de un arreglo ===============================================
+
+
+#============================= Creacion o Comprobacion de variable arreglo ===============================
+
+def Comprobar_Crear_Arreglo(registro,ts):
+    searched = ts.obtener(registro)
+    if searched is None:
+        nuevosimbolo = TS.Simbolo(TS.TIPO_DATO.ARRAY,{})
+        ts.agregar(nuevosimbolo,registro)
+        dic = ts.obtener(registro).valor
+        return dic
+    elif type(searched.valor) is dict:
+        return searched.valor # devuelo el diccionario
+    else: # creao o actualizo el arreglo
+        nuevosimbolo = TS.Simbolo(TS.TIPO_DATO.ARRAY,{})
+        ts.actualizar(nuevosimbolo,registro)
+        searched=ts.obtener(registro) # vuelo a traer su simbolo
+        return searched.valor # devuelo el diccionario pertinente
+
+ #==================================== METODO Obtener el valor de un arreglo para su posterior uso =================================
+
+
+def Obtener_Valor_de_Arreglo(instr,ts):
+    diccionario = ts.obtener(instr.id).valor
+    if type(diccionario) is str:
+        indexes = []
+        for keys in instr.dimension:
+            llave = resolver_Expresion(keys.registro,ts)
+            indexes.append(llave)
+        if len(indexes) == 1:
+            return diccionario[indexes[0]]
+        else:
+            return None
+    elif type(diccionario) is  None:
+        return None
+    elif type(diccionario) is dict:
+        llaveconcatenada=""
+        result=""
+        indexlast=[]
+        lastflag=False
+        for lista in instr.dimension: # voy obteniendo las dimensiones de los registros
+            if lastflag is False:
+                valor = resolver_Expresion(lista.registro,ts)
+                llaveconcatenada+='$'+str(valor)
+                result = diccionario.get(llaveconcatenada,None)
+                if result is not None :
+                    lastflag=True                
+            else:
+                indexlast.append(resolver_Expresion(lista.registro,ts)) # agregando las dimensiones luego del valor en caso existan
+        if len(indexlast) > 0:
+            if len(indexlast) == 1:
+                valor = diccionario.get(llaveconcatenada,None)[int(indexlast[0])]
+                return valor
+            else:
+                return None
+        else:
+            return diccionario.get(llaveconcatenada,None)
+
+ #==================================== METODO PARA ASIGNAR VALORES =================================
 
 def accion_asignar(instr,ts):
     if isinstance(instr.valor,ExpresionReferencia):
         simboloref = ts.ObtenerTabla()[instr.valor.registro.registro]
         ts.agregar(simboloref,instr.variable)
     elif isinstance(instr.variable,ExpresionArreglo):
-        print(instr.variable.id)
-        for lista in instr.variable.dimension:
-            print(lista.registro)
+        diccionario = Comprobar_Crear_Arreglo(instr.variable.id,ts)
+        llaveconcatenada=""
+        result=""
+        indexlast=[]
+        lastflag=False
+        for lista in instr.variable.dimension: # voy obteniendo las dimensiones de los registros
+            if lastflag is False:
+                valor = resolver_Expresion(lista.registro,ts)
+                llaveconcatenada+='$'+str(valor)
+                result = diccionario.get(llaveconcatenada,None)
+                if result is not None :
+                    lastflag=True                
+            else:
+                indexlast.append(resolver_Expresion(lista.registro,ts)) # agregando las dimensiones luego del valor en caso existan
+        # Procedo a hacer la insercion o modiicacion
+    
+        if len(indexlast) >0: # cambiar caracter, modifcar val o error
+            if len(indexlast) == 1:
+                valor = diccionario.get(llaveconcatenada)
+                nuevocaracter = resolver_Expresion(instr.valor,ts)
+                # llamada a metodo exterior
+                nuevacadena = replace_str_index(valor,int(indexlast[0]),nuevocaracter[0])
+                diccionario[llaveconcatenada] = nuevacadena
+                nuevo = TS.Simbolo(TS.TIPO_DATO.ARRAY,diccionario)
+                ts.actualizar(nuevo,instr.variable.id)
+            else:
+                print('Dimensiones Incorrectas')
+        else: # tengo que crear una nueva llave
+            
+            valor = resolver_Expresion(instr.valor,ts)
+            diccionario[llaveconcatenada] = valor
+            nuevo = TS.Simbolo(TS.TIPO_DATO.ARRAY,diccionario)
+            ts.actualizar(nuevo,instr.variable.id)  
+
     else:
         valor = resolver_Expresion(instr.valor,ts) # Obtenie la operacion de la expresion
-        id = Obtener_o_Crear_Id(instr.variable,ts)
+        id = Obtener_o_Crear_Id(instr.variable.registro,ts)
+        
         # una vez comprobada ya esta creada la var o verificada
         if type(valor) is str:
             simbolo=TS.Simbolo(TS.TIPO_DATO.CADENA,valor) # le asigno ya el nuevo valor
+            ts.actualizar(simbolo,id)
         elif type(valor) is int:
             simbolo=TS.Simbolo(TS.TIPO_DATO.NUMERO,valor) # le asigno ya el nuevo valor
+            ts.actualizar(simbolo,id)
         elif type(valor) is float:
             simbolo=TS.Simbolo(TS.TIPO_DATO.FLOAT,valor) # le asigno ya el nuevo valor
+            ts.actualizar(simbolo,id)
         elif type(valor) is dict:
             simbolo =  TS.Simbolo(TS.TIPO_DATO.ARRAY,valor)
-        ts.actualizar(simbolo,id)
+            ts.actualizar(simbolo,id)    
 
 """ >>> Accion Crear Variable o Verificar Registro en Ts Correcta """
 def Obtener_o_Crear_Id(variable,ts):
@@ -223,6 +319,8 @@ def resolver_Expresion(Expresion,ts):
     elif isinstance(Expresion,Read):
         valorconsola = 'cambiar'
         return valorconsola
+    elif isinstance(Expresion,ExpresionArreglo):
+        return Obtener_Valor_de_Arreglo(Expresion,ts)
     
 
 #===================================== Acciones especiales ==================================================
@@ -249,7 +347,7 @@ def accion_LlenarTsEtiquetas(instrucciones,ts):
             lastflagnane = instrucciones[i].iden
             flagetiq=True
         if isinstance(instrucciones[i],declaracion):
-            var = instrucciones[i].variable
+            var = instrucciones[i].variable.registro
             if '$a' in var:
                 if flagetiq is True:
                     lastindex = ts.obtener(lastflagnane).valor
@@ -267,7 +365,7 @@ def accion_LlenarTsEtiquetas(instrucciones,ts):
             if isinstance(instrucciones[i].variable,ExpresionArreglo):
                 var=instrucciones[i].variable.id
             else:
-                var = instrucciones[i].variable
+                var = instrucciones[i].variable.registro
             if '$a' in var:
                 if flagetiq is True:
                     lastindex = ts.obtener(lastflagnane).valor
@@ -323,7 +421,3 @@ for i in ts_global.ObtenerTabla():
 """
 grafo = Graficadora()
 grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""
-
-
-var = {}
-print(type(var))

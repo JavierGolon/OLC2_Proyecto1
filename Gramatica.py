@@ -141,7 +141,7 @@ def t_SP(t):
     return t
 
 def t_CADENA(t):
-    r'\'.*?\''
+    r'(\'|\").*?(\'|\")'
     t.value = t.value[1:-1] # remuevo las comillas
     return t
 
@@ -244,7 +244,7 @@ def p_variable(t):
                 |   RETORNONIVEL
                 |   PILA
                 |   SP'''
-    t[0]=t[1]
+    t[0]=ExpresionVariable(t[1])
 def p_variable_arreglo(t):
     '''variable :   TEMPORALES listadimension
                 |   PARAMETROS listadimension
@@ -325,11 +325,7 @@ def p_registro_acceso(t):
                 
 def p_acceso(t):
     '''acceso   :   variable'''
-    t[0]=ExpresionVariable(t[1])
-def p_acceso_dimension(t):
-    '''acceso   :   variable listadimension'''
-    t[1]=ExpresionArreglo(t[1],t[2])
-    t[0] = t[1]
+    t[0]=t[1]
 
 
 def p_lista_dimension(t):
@@ -341,15 +337,8 @@ def p_lista_dimnension2(t):
     '''listadimension   :   dimension'''
     t[0] = [t[1]]
 def p_dimension(t):
-    '''dimension    :   CORCHETEIZQ inside CORCHETEDER'''
+    '''dimension    :   CORCHETEIZQ registro CORCHETEDER'''
     t[0] = ExpresionDimension(t[2])
-
-def p_inside(t):
-    '''inside   :   ENTERO
-                |   CADENA
-                |   acceso'''
-    t[0]=t[1]
-
 
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'

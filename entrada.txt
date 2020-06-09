@@ -1,34 +1,27 @@
 main:
-$t65[2][2]=4;
-$t55=array();
-$t20 = 55;
-unset($t20);
-$t41='javier';
-$t41=(char)$t41;
-$t45 = &$t41;
-$t66;
-$t99;
-$t45=100;
- $a0 = 3;
- $ra = 0; #level 0
- goto fact;
-ret0:
- print($v0);
- exit;
+#agenda
 
-fact:
- if ($a0>1) goto sino;
- $v0 = 1;
- if ($ra==0) goto ret0;
- $ra = $ra - 1;
- goto ret1;
-sino:
- $a0 = $a0 - 1;
- $ra = $ra + 1; #level ++
- goto fact;
-ret1:
- $a0 = $a0 + 1;
- $v0 = $a0 * $v0;
- if ($ra==0) goto ret0;
- $ra = $ra - 1;
- goto ret1;
+$t1[0]['nombre']="Daniel";
+$t1[0]['direccion']="zona 4";
+$t1[0]['telefono']=6546;
+$t1[0]['telefono']=544654;
+
+$t1[1]['nombre']="Hugo";
+$t1[1]['direccion']="zona 8";
+$t1[1]['telefono']=241565;
+$t1[1]['telefono']=30154;
+
+$t1[2]['nombre']="Manuel";
+$t1[2]['direccion']="zona 11";
+$t1[2]['telefono']=1234;
+$t1[2]['telefono']=284;
+
+
+$t2=0;
+while0:
+if ($t2>2) goto end;
+print($t1[$t2]["nombre"]);
+$t2=$t2+1;
+goto while0;
+end:
+
