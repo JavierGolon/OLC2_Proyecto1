@@ -8,10 +8,47 @@ import os
 from tkinter import ttk
 from tkinter.messagebox import *
 from tkinter.filedialog import * 
+from tkinter.simpledialog import *
+from tkdocviewer import *
 import re
 
+findtxt = 'Empty'
+searchtxt = 'Empty'
+#============================================ CLASE PARA UTILIZAR EL TXT COMO CONSOLA DE SALIDA Y ENTRADA ======================
+class txtAsConsole(object):
+	def __init__(self,text_widget):
+		self.txt = text_widget
+	def write(self,string):
+		self.txt.insert('end', string)
+		self.txt.see('end')
 
-class Notepad:
+# =================================== CLASE PARA EL DIALOGO DE BUSCAR Y REMPLAZAR ========================
+
+
+
+class DialogFind_Search:
+	def __init__(self,parent):
+		top = self.top = tkinter.Toplevel(parent)
+		self.myLabel = tkinter.Label(top, text='Find')
+		self.myLabel.pack()
+
+		self.myEntryBox = tkinter.Entry(top)
+		self.myEntryBox.pack()
+
+		self.myLabel2 = tkinter.Label(top, text='Search')
+		self.myLabel2.pack()
+
+		self.myEntryBox2 = tkinter.Entry(top)
+		self.myEntryBox2.pack()
+		self.mySubmitButton = tkinter.Button(top, text='Submit', command=self.send)
+		self.mySubmitButton.pack()
+	def send(self):
+		global findtxt
+		global searchtxt
+		findtxt = self.myEntryBox.get()
+		searchtxt = self.myEntryBox2.get()
+		self.top.destroy()
+class Interfaz:
 
 	__root = Tk()
 	# Creamos las imagenes para los botones de los menus
@@ -29,11 +66,10 @@ class Notepad:
 	# Creamos la pestaña
 	__mytabs = ttk.Notebook(__frametop)
 	# Creamos la consola
-	__myConsole = Text(__framebotton, background="#000000", foreground="#FFFFFF")
+	__myConsole = Text(__framebotton, background="#000000", foreground="#FFFFFF",insertbackground='white')
 	# default window width and height
 	__thisWidth = 300
 	__thisHeight = 300
-	__thisTextArea = Text(__root, width=50, height=200)
 	__thisMenuBar = Menu(__root)
 	__thisFileMenu = Menu(__thisMenuBar, tearoff=0)
 	__thisEditMenu = Menu(__thisMenuBar, tearoff=0)
@@ -47,14 +83,14 @@ class Notepad:
 	__ThisManageTabs = Menu(__thisMenuBar, tearoff=0)
 
 	# To add scrollbar
-	__thisScrollBar = Scrollbar(__thisTextArea)
+	
 	__file = None
 
 	def __init__(self, **kwargs):
 
 		# Set icon
 		try:
-				self.__root.wm_iconbitmap("Notepad.ico")
+				self.__root.wm_iconbitmap("Interfaz.ico")
 		except:
 				pass
 
@@ -88,12 +124,7 @@ class Notepad:
 											self.__thisHeight,
 											left, top))
 
-		# To make the textarea auto resizable
-		# self.__root.grid_rowconfigure(0, weight=1)
-		# self.__root.grid_columnconfigure(0, weight=1)
-
-		# Add controls (widget)
-		# self.__thisTextArea.grid(sticky = N + E + S + W)
+	
 
 		# ===================================== DROP DOWN DE FILE ==========================================
 		self.__thisFileMenu.add_command(label="New",
@@ -196,12 +227,16 @@ class Notepad:
 		self.__frametop.pack(side=TOP, fill=BOTH, expand=1)
 		self.__framebotton.pack(side=BOTTOM, fill=NONE, expand=0)
 		# ========================================== CONFIGURANDO LAS PESTAÑAS ===================================
-		__web_label = Text(self.__mytabs)
+		__web_label = Text(background="#2E2E2E", foreground="#FFFFFF",insertbackground='white')
+		#__web_label.tag_configure("red",foreground="#ff0000")
+		#__web_label.highlight_pattern("hola","red",)
 		__web_label.bind('<Key>', self.__highlighter)
 		self.__mytabs.add(__web_label, text="New Tab", padding=20)
 		self.__mytabs.place(relx=0.01, rely=0.03, relwidth=0.98, relheight=0.94)
 		# ==================================== CONFIGURANDO LA CONSOLA =============================================
 		self.__myConsole.place(relx=0.01, rely=0.03, relwidth=0.98, relheight=0.94)
+		sys.stdout = txtAsConsole(self.__myConsole)
+		#sys.stdin = self.__myConsole
 
 	def __quitApplication(self):
 		self.__root.destroy()
@@ -281,32 +316,57 @@ class Notepad:
 		self.__GetSelectedText().event_generate("<<Paste>>")
 
 	def __Search(self):
-		pass
+		theword = tkinter.simpledialog.askstring("Input","Find",parent=self.__root)
+		self.PintarBusqueda(theword)
 
 	def __Replace(self):
-		pass
+
+		mydialog = DialogFind_Search(self.__root)
+		self.__root.wait_window(mydialog.top)
+		txtwidget = self.__GetSelectedText()
+		texto = txtwidget.get(1.0, END)
+		txtwidget.delete("1.0", "end")
+		if findtxt != 'Empty' and searchtxt!='Empty':
+			txtwidget.insert(END,texto.replace(findtxt,searchtxt))
+
 
 	def __RTabla(self):
-		pass
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __RAst(self):
-		pass
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __RGrama(self):
-		pass
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __RLexico(self):
-		pass
-
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 	def __RSinta(self):
-		pass
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 		
 
 	def __RSema(self):
-		pass
+		newwindow = tkinter.Toplevel(self.__root)
+		v = DocViewer(newwindow)
+		v.pack(side="top", expand=1, fill="both")
+		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __FormaDESC(self):
 		pass
-
 	def __FormaASC(self):
 		pass
 
@@ -317,15 +377,45 @@ class Notepad:
 
 	def __DropTab(self):
 		self.__mytabs.forget(self.__mytabs.select())
+
+	def PintarBusqueda(self,word):
+		self.__GetSelectedText().tag_remove('found', '1.0', END)
+		s = word  
+		if s: 
+			idx = '1.0'
+			while 1: #searches for desried string from index 1 
+				idx = self.__GetSelectedText().search(s, idx, nocase=1,stopindex=END)  
+				if not idx: break
+				lastidx = '%s+%dc' % (idx, len(s))
+				self.__GetSelectedText().tag_add('found', idx, lastidx)  
+				idx = lastidx 
+			self.__GetSelectedText().tag_config('found', foreground='#B40404')  
 	# ============================================= IMPLEMENTACION DEL SINTAX HIGHLIGHT ========================================
 	
-	__highlightWords = {'if': 'green','else': 'red',re.compile('d1'):'blue'}
+	__highlightWords = {
+	'if': '#DF013A',
+	'else': '#DF013A',
+	'main':'red',
+	'exit':'red',
+	'array':'#DF013A',
+	'read':'#F7819F',
+	'int':'#01DFA5',
+	'float':'#01DFA5',
+	'char':'#01DFA5',
+	'print':'yellow',
+	r'\(|=|\+|-|\*|\/|':'white',
+	r'(\d+)':'blue',
+	r'(\d+\.\d+)':'blue',
+	r'\$(t|s|a|v|r)(\d+)':'#088A68',
+	r'\#.*\n':'green',
+	r'(\'|\").*?(\'|\")':'#DF7401'}
 	def __highlighter(self,event):
 		'''the highlight function, called when a Key-press event occurs'''
 		for k,v in self.__highlightWords.items(): # iterate over dict
 			startIndex = '1.0'
+			
 			while True:
-				startIndex = self.__GetSelectedText().search(k, startIndex, END) # search for occurence of k
+				startIndex = self.__GetSelectedText().search(k, startIndex, END,regexp=True) # search for occurence of k
 				if startIndex:
 					endIndex = self.__GetSelectedText().index('%s+%dc' % (startIndex, (len(k)))) # find end of k
 					self.__GetSelectedText().tag_add(k, startIndex, endIndex) # add tag to k
@@ -345,5 +435,5 @@ class Notepad:
 
 
 # Run main application 
-notepad = Notepad(width=1100,height=800) 
-notepad.run() 
+Interfaz = Interfaz(width=1100,height=800) 
+Interfaz.run() 
