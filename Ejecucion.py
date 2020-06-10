@@ -92,7 +92,7 @@ def Obtener_Valor_de_Arreglo(instr,ts):
 def accion_asignar(instr,ts):
     if isinstance(instr.valor,ExpresionReferencia):
         simboloref = ts.ObtenerTabla()[instr.valor.registro.registro]
-        ts.agregar(simboloref,instr.variable)
+        ts.agregar(simboloref,instr.variable.registro)
     elif isinstance(instr.variable,ExpresionArreglo):
         diccionario = Comprobar_Crear_Arreglo(instr.variable.id,ts)
         llaveconcatenada=""
@@ -134,16 +134,24 @@ def accion_asignar(instr,ts):
         
         # una vez comprobada ya esta creada la var o verificada
         if type(valor) is str:
-            simbolo=TS.Simbolo(TS.TIPO_DATO.CADENA,valor) # le asigno ya el nuevo valor
+            simbolo=ts.obtener(id) # obtengo el simbolo para no perder referencia
+            simbolo.tipo=TS.TIPO_DATO.CADENA
+            simbolo.valor=valor
             ts.actualizar(simbolo,id)
         elif type(valor) is int:
-            simbolo=TS.Simbolo(TS.TIPO_DATO.NUMERO,valor) # le asigno ya el nuevo valor
+            simbolo=ts.obtener(id) # obtengo el simbolo para no perder referencia
+            simbolo.tipo=TS.TIPO_DATO.NUMERO
+            simbolo.valor=valor
             ts.actualizar(simbolo,id)
         elif type(valor) is float:
-            simbolo=TS.Simbolo(TS.TIPO_DATO.FLOAT,valor) # le asigno ya el nuevo valor
+            simbolo=ts.obtener(id) # Obtengo el simbolo para no perder referencia
+            simbolo.tipo=TS.TIPO_DATO.FLOAT
+            simbolo.valor=valor
             ts.actualizar(simbolo,id)
         elif type(valor) is dict:
-            simbolo =  TS.Simbolo(TS.TIPO_DATO.ARRAY,valor)
+            simbolo =  ts.obtener(id) # Obtengo el simbolo para no perder referencia
+            simbolo.tipo=TS.TIPO_DATO.ARRAY
+            simbolo.valor=valor # el nuevo array
             ts.actualizar(simbolo,id)    
 
 """ >>> Accion Crear Variable o Verificar Registro en Ts Correcta """
@@ -419,10 +427,10 @@ input = file.read()
 instrucciones = g.parse(input)
 ts_global=TS.TablaDeSimbolos()
 Recorrer_Instrucciones(instrucciones,ts_global)
-"""for i in ts_global.ObtenerTabla():
+for i in ts_global.ObtenerTabla():
     print(i)
     print('--',ts_global.ObtenerTabla()[i].tipo,'--',ts_global.ObtenerTabla()[i].valor)
-
+"""
 grafo = Graficadora()
 grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""
 
