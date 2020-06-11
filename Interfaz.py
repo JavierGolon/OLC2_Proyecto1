@@ -13,11 +13,14 @@ from tkdocviewer import *
 import re
 # Importacion de la clase ejecucion
 import Ejecucion as analisador
-
+import Globales
+Globales.initialized()
 findtxt = 'Empty'
 searchtxt = 'Empty'
 ReporteGramatical = ['Vacio'] # es el mismo para los dos tipos
 ReporteTablaSimbolos = {} # para el reporte de simbolos y el debuger
+
+
 #============================================ CLASE PARA UTILIZAR EL TXT COMO CONSOLA DE SALIDA Y ENTRADA ======================
 class txtAsConsole(object):
 	def __init__(self,text_widget):
@@ -340,7 +343,7 @@ class Interfaz:
 		listbox.grid(row=1, column=0, columnspan=4)
 		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
 			tipo = ReporteTablaSimbolos[llave].tipo
-			valor = ReporteTablaSimbolos[llave].tipo
+			valor = ReporteTablaSimbolos[llave].valor
 			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1)) 
 
 	def __RAst(self):
@@ -389,8 +392,7 @@ class Interfaz:
 		ReporteGramatical = analisador.g.DatosGrafo
 		global ReporteTablaSimbolos
 		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
-		for i in ReporteTablaSimbolos:
-			print(i)
+
 		
 
 	def __AddTab(self):
@@ -447,26 +449,38 @@ class Interfaz:
 				else:
 					break
 	def AgregarATabla(self,treeview):
-		tempList = [['Jijavierm', '0.33'], ['Dave', '0.67'], ['James', '0.67'], ['Eden', '0.5']]
+		analisador.NextDebbuger()
+		# actualizo la tabla de simbolos
+		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
 		
 		for i in treeview.get_children():
 			treeview.delete(i)
-		for i, (name, score) in enumerate(tempList, start=1):
-			treeview.insert("",'end', values=(i, name, score))
+		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+			tipo = ReporteTablaSimbolos[llave].tipo
+			valor = ReporteTablaSimbolos[llave].valor
+			treeview.insert("", "end", values=(i,llave,tipo,valor,'main',1))
 
 
 	def __debugear(self):
-		# abriendo la ventana que contiene la informacion 
+		# antes tengo que mandar a analizar la primera instruccion y traer los datos
+		entrada = self.__GetSelectedText().get(1.0,END)
+		analisador.DebuggerIniciar(entrada)
+		global ReporteGramatical
+		ReporteGramatical = analisador.g.DatosGrafo
+		global ReporteTablaSimbolos
+		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		# abriendo la ventana que contiene la informacion
 		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Debugger \n Variables", font=("Arial",25)).grid(row=0, columnspan=3)
-		columnas = ('Position', 'Name', 'Score')
+		tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
+		columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
 		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
 		for col in columnas:
 			listbox.heading(col,text=col)
-		listbox.grid(row=1, column=0, columnspan=2)
-		tempList = [['Jim', '0.33'], ['Dave', '0.67'], ['James', '0.67'], ['Eden', '0.5']]
-		for i, (name, score) in enumerate(tempList, start=1):
-			listbox.insert("", "end", values=(i, name, score))
+		listbox.grid(row=1, column=0, columnspan=4)
+		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+			tipo = ReporteTablaSimbolos[llave].tipo
+			valor = ReporteTablaSimbolos[llave].valor
+			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1))
 		tkinter.Button(newwindow, text="Next", width=15, command=lambda:self.AgregarATabla(listbox)).grid(row=4, column=0)
 		tkinter.Button(newwindow, text="Finish", width=15, command=None).grid(row=4, column=1)
 

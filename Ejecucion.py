@@ -5,16 +5,27 @@ from Metodos_Complementarios import *
 from Expresiones import *
 from Instrucciones import * 
 from GraficarAST import Graficadora
+import tkinter as tk
+from tkinter import simpledialog
+import Globales
+ # INICIALIZO LA VARIABLE QUE VA A HCAER MI DEBBUGER
 #sys.setrecursionlimit()
 #sys.setrecursionlimit(3000)
+
+
 """ >>> Accion Imprimir Correcta """
 def accion_imprimir(instr,ts):
     # en print solo puedo obtener valores de registros
     registro = resolver_Expresion(instr.cadena,ts)
     if registro is None:
         print('>> ','Error, Referencia Erronea -- Print()')
+    elif type(registro) is dict:
+        print('!Error No se puede Imprimir Un Arreglo')
+    elif registro== '\\n':
+        print("")
+        
     else:
-        print('>> ', registro)
+        print(registro)
 
 """ >>> Accion Obtener Valor registro Correcta """
 def Obtener_Valor_Registro(registro,ts):
@@ -325,8 +336,14 @@ def resolver_Expresion(Expresion,ts):
                 elif valor > 0 and valor <=255:
                     return str(chr(int(valor)))
     elif isinstance(Expresion,Read):
-        valorconsola = 'cambiar'
-        return valorconsola
+        
+        valorconsola = simpledialog.askstring("Input","Datos")
+        if valorconsola.isnumeric() is True:
+            return int(valorconsola)
+        else:
+            return valorconsola
+        return 0
+
     elif isinstance(Expresion,ExpresionArreglo):
         return Obtener_Valor_de_Arreglo(Expresion,ts)
     
@@ -418,6 +435,50 @@ def Recorrer_Instrucciones(instrucciones,ts):
         elif isinstance(instrucciones[i],Exit):
             i = largo # termina la ejecucion de mi codigo
             l.reset(i)
+
+
+ #============================================= METODO PAR EL DEBBUGER ===========================================
+instrdebug=[]
+def DebuggerIniciar(input):
+    global instrdebug 
+    instrdebug =g.parse(input)
+    global ts_global
+    Globales.debug=0
+    ts_global=TS.TablaDeSimbolos()
+    accion_LlenarTsEtiquetas(instrdebug,ts_global) # tengo que llenar al iniciar mis etiquetas
+
+def NextDebbuger():
+    largo = len(instrdebug)
+    if isinstance(instrdebug[Globales.debug],Imprimir):
+        accion_imprimir(instrdebug[Globales.debug],ts_global)
+        Globales.debug=Globales+1
+    elif isinstance(instrdebug[Globales.debug],asignacion):
+        accion_asignar(instrdebug[Globales.debug],ts_global)
+        Globales.debug
+    elif isinstance(instrdebug[Globales.debug],declaracion):
+        accion_declaracion(instrdebug[Globales.debug],ts_global)
+        Globales.debug
+    elif isinstance(instrdebug[Globales.debug],Unset): 
+        accion_unset(instrdebug[Globales.debug].registro,ts_global)
+        Globales.debug
+    elif isinstance(instrdebug[Globales.debug],instruccionIf): 
+        estado = resolver_Expresion(instrdebug[Globales.debug].exprelogica,ts_global)
+        if estado == 0 :
+            ''' sigue el flujo del programa '''
+            Globales.debug+=1
+        elif estado == 1:
+            newindex = ts_global.obtener(instrdebug[Globales.debug].goto).valor # la etiqueta fijo esta en ts
+            Globales.debug= newindex # no necesito interrumpir
+        else:
+            Globales.debug
+                 
+    elif isinstance(instrdebug[Globales.debug],Goto):
+        newindex = ts_global.obtener(instrdebug[Globales.debug].label).valor #la etiqueta fijo esta en ts
+        Globales.debug=newindex
+            
+    elif isinstance(instrdebug[Globales.debug],Exit):
+        Globales.debug = largo # termina la ejecucion de mi codigo 
+           
             
 def ObtenerTablaSimbolos():
     return ts_global.ObtenerTabla()      
@@ -433,6 +494,9 @@ def EjecutarASC(input):
     global ts_global
     ts_global=TS.TablaDeSimbolos()
     Recorrer_Instrucciones(instrucciones,ts_global)
+
+
+
 
 
 """

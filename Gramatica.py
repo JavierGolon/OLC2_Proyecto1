@@ -224,7 +224,6 @@ def p_simpleinstrucciones(t):
                               | print
                               | etiqueta
                               | goto
-                              | read
                               | unset'''
     t[0]=t[1]
     DatosGrafo.append('simpleinstrucciones : mis instrucciones')
@@ -328,6 +327,9 @@ def p_instruccionregistro_diferentes(t):
     elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
     elif t[1] == '&' : t[0] =ExpresionReferencia(t[2])
     DatosGrafo.append('registro : '+str(t[1]))  
+def p_nuevo_(t):
+    'registro   :   readisntr'
+    t[0]=t[1]
 
 def p_registro(t):
     '''registro :   ENTERO
@@ -404,9 +406,9 @@ def p_goto(t):
 
 
 def p_read(t):
-    'read   :   READ PARIZQ PARDER PTCOMA'
+    'readisntr   :   READ PARIZQ PARDER '
     t[0]=Read(t[1])
-    DatosGrafo.append('read   :   READ PARIZQ PARDER PTCOMA')
+    DatosGrafo.append('read   :   READ PARIZQ PARDER')
 
 def p_unset(t):
     'unset  :   UNSET PARIZQ acceso PARDER PTCOMA'
