@@ -1,7 +1,5 @@
 main:
-$t1 ='5';
-$t2 =&$t1;
-$t1 =6;
-
-$t2 ='javier';
-unset($t1);
+$t1= 'jaj';
+$t3=55;
+print('hola');
+print('hola2');

@@ -91,8 +91,8 @@ def Obtener_Valor_de_Arreglo(instr,ts):
 
 def accion_asignar(instr,ts):
     if isinstance(instr.valor,ExpresionReferencia):
-        simboloref = ts.ObtenerTabla()[instr.valor.registro.registro]
-        ts.agregar(simboloref,instr.variable.registro)
+        simboloref = ts.ObtenerTabla()[instr.valor.registro.registro] # obtengo el dic de la referencia que estoy haciendo
+        ts.agregar(simboloref,instr.variable.registro) # creo una nueva variable pero con el mismo  simbolo 
     elif isinstance(instr.variable,ExpresionArreglo):
         diccionario = Comprobar_Crear_Arreglo(instr.variable.id,ts)
         llaveconcatenada=""
@@ -419,17 +419,29 @@ def Recorrer_Instrucciones(instrucciones,ts):
             i = largo # termina la ejecucion de mi codigo
             l.reset(i)
             
-        
+def ObtenerTablaSimbolos():
+    return ts_global.ObtenerTabla()      
 
-#======== Llamada del archivo de entrada(Temporal, tiene que  hacerser con el text de la interfaz) ======
+#=================  Metodo Que Ejecuta Toda la Informacion =====================
+"""
 file = open("./entrada.txt", "r")
 input = file.read()
-instrucciones = g.parse(input)
-ts_global=TS.TablaDeSimbolos()
-Recorrer_Instrucciones(instrucciones,ts_global)
+"""
+ts_global = None
+def EjecutarASC(input):
+    instrucciones = g.parse(input)
+    global ts_global
+    ts_global=TS.TablaDeSimbolos()
+    Recorrer_Instrucciones(instrucciones,ts_global)
+
+
+"""
 for i in ts_global.ObtenerTabla():
     print(i)
     print('--',ts_global.ObtenerTabla()[i].tipo,'--',ts_global.ObtenerTabla()[i].valor)
+
+"""
+
 """
 grafo = Graficadora()
 grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""

@@ -11,9 +11,13 @@ from tkinter.filedialog import *
 from tkinter.simpledialog import *
 from tkdocviewer import *
 import re
+# Importacion de la clase ejecucion
+import Ejecucion as analisador
 
 findtxt = 'Empty'
 searchtxt = 'Empty'
+ReporteGramatical = ['Vacio'] # es el mismo para los dos tipos
+ReporteTablaSimbolos = {} # para el reporte de simbolos y el debuger
 #============================================ CLASE PARA UTILIZAR EL TXT COMO CONSOLA DE SALIDA Y ENTRADA ======================
 class txtAsConsole(object):
 	def __init__(self,text_widget):
@@ -188,12 +192,8 @@ class Interfaz:
 		# ================================ MENU DEDUBGGER ===================================================
 		self.__thisMenuBar.add_separator()
 		self.__thisMenuBar.add_separator()
-		self.__thisMenuBar.add_cascade(label="Play",
-									menu=self.__thisRun)
-		self.__thisMenuBar.add_cascade(label="Stop",
-									menu=self.__ThisStop)
-		self.__thisMenuBar.add_cascade(label="Next",
-									menu=self.__ThisNext)
+		self.__thisMenuBar.add_command(label="Debbug",
+									command = self.__debugear)
 		self.__thisMenuBar.add_separator()
 		self.__thisMenuBar.add_separator()
 		# ================================== DROP DOWN DE INFORMACION PERSONAL ===============================
@@ -330,17 +330,31 @@ class Interfaz:
 			txtwidget.insert(END,texto.replace(findtxt,searchtxt))
 
 
-	def __RTabla(self):
+	def __RTabla(self): # reporte tabla de simbolos
 		newwindow = tkinter.Toplevel(self.__root)
-		v = DocViewer(newwindow)
-		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
+		tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
+		columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
+		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+		for col in columnas:
+			listbox.heading(col,text=col)
+		listbox.grid(row=1, column=0, columnspan=4)
+		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+			tipo = ReporteTablaSimbolos[llave].tipo
+			valor = ReporteTablaSimbolos[llave].tipo
+			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1)) 
 
 	def __RAst(self):
 		newwindow = tkinter.Toplevel(self.__root)
-		v = DocViewer(newwindow)
-		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
+		tkinter.Label(newwindow, text="Reporte Gramatical \n ASC", font=("Arial",25)).grid(row=0, columnspan=6)
+		columnas = ('No','Regla')
+		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+		listbox.column("No", width=50)
+		listbox.column("Regla", width=600)
+		for col in columnas:
+			listbox.heading(col,text=col)
+		listbox.grid(row=1, column=0, columnspan=4)
+		for i, (name) in enumerate(ReporteGramatical, start=1):
+			listbox.insert("", "end", values=(i, name)) 
 
 	def __RGrama(self):
 		newwindow = tkinter.Toplevel(self.__root)
@@ -368,7 +382,16 @@ class Interfaz:
 	def __FormaDESC(self):
 		pass
 	def __FormaASC(self):
-		pass
+		
+		entrada = self.__GetSelectedText().get(1.0,END)
+		analisador.EjecutarASC(entrada)
+		global ReporteGramatical
+		ReporteGramatical = analisador.g.DatosGrafo
+		global ReporteTablaSimbolos
+		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		for i in ReporteTablaSimbolos:
+			print(i)
+		
 
 	def __AddTab(self):
 		__web_label = Text(self.__mytabs)
@@ -423,7 +446,35 @@ class Interfaz:
 					startIndex = endIndex # reset startIndex to continue searching
 				else:
 					break
+	def AgregarATabla(self,treeview):
+		tempList = [['Jijavierm', '0.33'], ['Dave', '0.67'], ['James', '0.67'], ['Eden', '0.5']]
+		
+		for i in treeview.get_children():
+			treeview.delete(i)
+		for i, (name, score) in enumerate(tempList, start=1):
+			treeview.insert("",'end', values=(i, name, score))
+
+
+	def __debugear(self):
+		# abriendo la ventana que contiene la informacion 
+		newwindow = tkinter.Toplevel(self.__root)
+		tkinter.Label(newwindow, text="Debugger \n Variables", font=("Arial",25)).grid(row=0, columnspan=3)
+		columnas = ('Position', 'Name', 'Score')
+		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+		for col in columnas:
+			listbox.heading(col,text=col)
+		listbox.grid(row=1, column=0, columnspan=2)
+		tempList = [['Jim', '0.33'], ['Dave', '0.67'], ['James', '0.67'], ['Eden', '0.5']]
+		for i, (name, score) in enumerate(tempList, start=1):
+			listbox.insert("", "end", values=(i, name, score))
+		tkinter.Button(newwindow, text="Next", width=15, command=lambda:self.AgregarATabla(listbox)).grid(row=4, column=0)
+		tkinter.Button(newwindow, text="Finish", width=15, command=None).grid(row=4, column=1)
+
 	
+	def __ThisNext(self):
+		pass
+	def __ThisStop(self):
+		pass
 
 
 	def run(self): 

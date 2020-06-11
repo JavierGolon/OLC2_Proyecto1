@@ -1,6 +1,10 @@
 # importamos las herramientas de PLY
 import ply.lex as lex
 import ply.yacc as yacc
+import ListaErrores as LErrores
+
+ListaE = LErrores.ListaError()
+DatosGrafo = []
 
 # ESTRUCTURA CON LAS PALABRAS RESERVADAS DE NUESTRO LENGUAJE
 
@@ -166,20 +170,14 @@ def find_column(input, token):
     return (token.lexpos - line_start) + 1
     
 def t_error(t):
+    
     print("Illegal character '%s'" % t.value[0])
+    mistake=LErrores.Error('Lexical Error',str(t.value[0]),'Ilegal Character',t.lexer.lineno,find_column(entrada,t))
+    ListaE.AddError(mistake)
     t.lexer.skip(1)     
 
 lexer = lex.lex()
 
-"""
-f = open("./entrada.txt", "r")
-input = f.read()
-lexer.input(input)
-while True:
-    tok = lexer.token()
-    if not tok:
-        break
-    print(tok)"""
 #================================================== GRAMATICA =============================================================
 #importamos las clases con las instrucciones y las expresiones(Nodos)
 from Expresiones import *
@@ -206,14 +204,17 @@ precedence = (
 def p_init(t):
     'init  :    MAIN DOSPUNTOS listainstrucciones'
     t[0]=t[3]
+    DatosGrafo.append('init  :    MAIN DOSPUNTOS listainstrucciones')
 
 def p_lista_instrucciones(t):
     'listainstrucciones :   listainstrucciones simpleinstrucciones'
     t[1].append(t[2])
     t[0]=t[1]
+    DatosGrafo.append('listainstrucciones :   listainstrucciones simpleinstrucciones')
 
 def p_lista_instrucciones_simple(t):
     'listainstrucciones : simpleinstrucciones'
+    DatosGrafo.append('listainstrucciones : simpleinstrucciones')
     t[0]=[t[1]]
 def p_simpleinstrucciones(t):
     '''simpleinstrucciones    : declaracion
@@ -226,17 +227,28 @@ def p_simpleinstrucciones(t):
                               | read
                               | unset'''
     t[0]=t[1]
+    DatosGrafo.append('simpleinstrucciones : mis instrucciones')
 def p_declaracion(t):
     'declaracion   :    variable PTCOMA'
     t[0]=declaracion(t[1])
+    DatosGrafo.append('declaracion   :    variable PTCOMA')
+
 def p_asignacion(t):
     'asignacion :   variable IGUAL tipo PTCOMA'
     t[0]=asignacion(t[1],t[3])
+    DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA')
+
+def p_asignacion_error(t):
+    'asignacion :   variable error PTCOMA'
+    print('Error variable encontrado')
+
 def p_tipo(t):
     '''tipo :   instruccionregistro
             |   conversion
             |   arreglo'''
     t[0]=t[1]
+    DatosGrafo.append('tipo :   cambiartipos')
+
 def p_variable(t):
     '''variable :   TEMPORALES
                 |   PARAMETROS
@@ -245,6 +257,8 @@ def p_variable(t):
                 |   PILA
                 |   SP'''
     t[0]=ExpresionVariable(t[1])
+    DatosGrafo.append('variable :   misvaiable')
+
 def p_variable_arreglo(t):
     '''variable :   TEMPORALES listadimension
                 |   PARAMETROS listadimension
@@ -253,6 +267,8 @@ def p_variable_arreglo(t):
                 |   PILA listadimension
                 |   SP listadimension'''
     t[0]=ExpresionArreglo(t[1],t[2])
+    DatosGrafo.append('variable :   misvaiable dimensional')
+
 def p_instruccionregistro(t):        
     '''instruccionregistro  : registro MAS registro
                             | registro MENOS registro 
@@ -291,12 +307,14 @@ def p_instruccionregistro(t):
     elif t[2] == '>=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYORIGUAL)
     elif t[2] == '<=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
     elif t[2] == '>': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
-    elif t[2] == '<': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)  
+    elif t[2] == '<': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)
+    DatosGrafo.append('instruccionregistro : registro '+str(t[2]),' registro')  
 
 
 def p_instruccion_registrounico(t):
     '''instruccionregistro  : registro'''
     t[0]=t[1]
+    DatosGrafo.append('instruccionregistro  : registro')  
 
 def p_instruccionregistro_diferentes(t):
     '''registro  : ABS PARIZQ registro PARDER 
@@ -309,71 +327,96 @@ def p_instruccionregistro_diferentes(t):
     elif t[1] == '-': t[0]=ExpresionNegativo(t[2])
     elif t[1] == 'abs': t[0]=ExpresionAbs(t[3])
     elif t[1] == '&' : t[0] =ExpresionReferencia(t[2])
+    DatosGrafo.append('registro : '+str(t[1]))  
 
 def p_registro(t):
     '''registro :   ENTERO
                 |   DECIMAL'''
     t[0]=ExpresionNumero(t[1])
+    DatosGrafo.append('registro :   ENTERO') 
 
 def p_registro_cadena(t):
     '''registro :   CADENA'''
     t[0]=ExpresionComillas(t[1])
+    DatosGrafo.append('registro :   CADENA') 
 
 def p_registro_acceso(t):
     '''registro :   acceso'''
     t[0]=t[1]
+    DatosGrafo.append('registro :   acceso') 
                 
 def p_acceso(t):
     '''acceso   :   variable'''
     t[0]=t[1]
+    DatosGrafo.append('registro :   variable') 
 
 
 def p_lista_dimension(t):
     '''listadimension    :   listadimension dimension'''
     t[1].append(t[2])
     t[0] = t[1]
+    DatosGrafo.append('listadimension    :   listadimension dimension') 
 
 def p_lista_dimnension2(t):
     '''listadimension   :   dimension'''
     t[0] = [t[1]]
+    DatosGrafo.append('listadimension   :   dimension')
+
 def p_dimension(t):
     '''dimension    :   CORCHETEIZQ registro CORCHETEDER'''
     t[0] = ExpresionDimension(t[2])
+    DatosGrafo.append('dimension    :   CORCHETEIZQ registro CORCHETEDER')
 
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'
     t[0]=Casteo(t[2],t[4])
+    DatosGrafo.append('conversion   : PARIZQ eltipo PARDER registro')
+
 def p_arreglo(t):
     'arreglo    :   ARRAY PARIZQ PARDER'
-    t[0]=Arreglo(2,2)   
+    t[0]=Arreglo(2,2)
+    DatosGrafo.append('arreglo    :   ARRAY PARIZQ PARDER')   
 
 def p_eltipo(t):
     '''eltipo   :   FLOAT
                 |   INT
                 |   CHAR'''
     t[0]=t[1]
+    DatosGrafo.append('eltipo   :   FLOAT')
 # ====================== Gramatica Para las Palabras Reservadas y funciones especiales
 def p_exit(t):
     'exit   :   EXIT PTCOMA'
     t[0]=Exit(t[1])
+    DatosGrafo.append('exit   :   EXIT PTCOMA')
 def p_print(t):
     'print  : PRINT PARIZQ registro PARDER PTCOMA'
     t[0]=Imprimir(t[3])
+    DatosGrafo.append('print  : PRINT PARIZQ registro PARDER PTCOMA')
+
 def p_etiqueta(t):
     'etiqueta   :  ETIQUETA DOSPUNTOS' #
-    t[0]=Etiqueta(t[1]) 
+    t[0]=Etiqueta(t[1])
+    DatosGrafo.append('etiqueta   :  ETIQUETA DOSPUNTOS') 
 def p_goto(t):
     'goto   :   GOTO ETIQUETA PTCOMA' #
     t[0]=Goto(t[2])
+    DatosGrafo.append('goto   :   GOTO ETIQUETA PTCOMA')
+
+
 def p_read(t):
     'read   :   READ PARIZQ PARDER PTCOMA'
     t[0]=Read(t[1])
+    DatosGrafo.append('read   :   READ PARIZQ PARDER PTCOMA')
+
 def p_unset(t):
     'unset  :   UNSET PARIZQ acceso PARDER PTCOMA'
     t[0]=Unset(t[3])
+    DatosGrafo.append('unset  :   UNSET PARIZQ acceso PARDER PTCOMA')
+
 def p_if(t):
     'ifcomando :    IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA'
     t[0]=instruccionIf(t[3],t[6])
+    DatosGrafo.append('ifcomando : IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA')
 
 
 
@@ -385,13 +428,12 @@ def p_error(t):
     linea =find_column(entrada,t)
     t.lexpos=linea
     print(t)
-    print("Error sintáctico en '%s'" % t.value)
+    print("Error sintáctico en: '%s'" % t.value)
      # Buscando el proximo token tipo ;
     while True:
         tok = parser.token()
            # busca el siguiente token
-        if not tok or tok.type == "PTCOMA": 
-            break
+        if not tok or tok.type == "PTCOMA": break
     parser.errok() # quita los tokens y retorna el token de  recuperacion
     return tok
 
