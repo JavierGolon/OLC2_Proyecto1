@@ -8,6 +8,7 @@ from GraficarAST import Graficadora
 import tkinter as tk
 from tkinter import simpledialog
 import Globales
+import re
  # INICIALIZO LA VARIABLE QUE VA A HCAER MI DEBBUGER
 #sys.setrecursionlimit()
 #sys.setrecursionlimit(3000)
@@ -25,7 +26,7 @@ def accion_imprimir(instr,ts):
         print("")
         
     else:
-        print(registro)
+        print(registro,end='')
 
 """ >>> Accion Obtener Valor registro Correcta """
 def Obtener_Valor_Registro(registro,ts):
@@ -91,8 +92,12 @@ def Obtener_Valor_de_Arreglo(instr,ts):
                 indexlast.append(resolver_Expresion(lista.registro,ts)) # agregando las dimensiones luego del valor en caso existan
         if len(indexlast) > 0:
             if len(indexlast) == 1:
-                valor = diccionario.get(llaveconcatenada,None)[int(indexlast[0])]
-                return valor
+                valordic = diccionario.get(llaveconcatenada,None)
+                if type(valordic) is int or type(valordic) is float:
+                    print('Error de acceso arreglo')
+                    return None
+                elif valordic !='':
+                    return  diccionario.get(llaveconcatenada,None)[int(indexlast[0])]
             else:
                 return None
         else:
@@ -126,10 +131,13 @@ def accion_asignar(instr,ts):
                 valor = diccionario.get(llaveconcatenada)
                 nuevocaracter = resolver_Expresion(instr.valor,ts)
                 # llamada a metodo exterior
-                nuevacadena = replace_str_index(valor,int(indexlast[0]),nuevocaracter[0])
-                diccionario[llaveconcatenada] = nuevacadena
-                nuevo = TS.Simbolo(TS.TIPO_DATO.ARRAY,diccionario)
-                ts.actualizar(nuevo,instr.variable.id)
+                if type(valor) is int:
+                    print('Acceso Denegado')
+                else:
+                    nuevacadena = replace_str_index(valor,int(indexlast[0]),nuevocaracter[0])
+                    diccionario[llaveconcatenada] = nuevacadena
+                    nuevo = TS.Simbolo(TS.TIPO_DATO.ARRAY,diccionario)
+                    ts.actualizar(nuevo,instr.variable.id)
             else:
                 print('Dimensiones Incorrectas')
         else: # tengo que crear una nueva llave
@@ -338,11 +346,18 @@ def resolver_Expresion(Expresion,ts):
     elif isinstance(Expresion,Read):
         
         valorconsola = simpledialog.askstring("Input","Datos")
-        if valorconsola.isnumeric() is True:
-            return int(valorconsola)
+        if re.match(r'\d+\.\d+',valorconsola) is not None:
+            try:
+                return float(valorconsola)
+            except ValueError:
+                return valorconsola
+        elif valorconsola.isnumeric() is True:
+            try:
+                return int(valorconsola)
+            except ValueError:
+                return valorconsola
         else:
             return valorconsola
-        return 0
 
     elif isinstance(Expresion,ExpresionArreglo):
         return Obtener_Valor_de_Arreglo(Expresion,ts)
@@ -445,39 +460,43 @@ def DebuggerIniciar(input):
     global ts_global
     Globales.debug=0
     ts_global=TS.TablaDeSimbolos()
-    accion_LlenarTsEtiquetas(instrdebug,ts_global) # tengo que llenar al iniciar mis etiquetas
+    if instrdebug is None:
+        print('Unnable to Compile. Please Check the Code')
+    else:
+        accion_LlenarTsEtiquetas(instrdebug,ts_global) # tengo que llenar al iniciar mis etiquetas
 
 def NextDebbuger():
     largo = len(instrdebug)
-    if isinstance(instrdebug[Globales.debug],Imprimir):
-        accion_imprimir(instrdebug[Globales.debug],ts_global)
-        Globales.debug=Globales+1
-    elif isinstance(instrdebug[Globales.debug],asignacion):
-        accion_asignar(instrdebug[Globales.debug],ts_global)
-        Globales.debug
-    elif isinstance(instrdebug[Globales.debug],declaracion):
-        accion_declaracion(instrdebug[Globales.debug],ts_global)
-        Globales.debug
-    elif isinstance(instrdebug[Globales.debug],Unset): 
-        accion_unset(instrdebug[Globales.debug].registro,ts_global)
-        Globales.debug
-    elif isinstance(instrdebug[Globales.debug],instruccionIf): 
-        estado = resolver_Expresion(instrdebug[Globales.debug].exprelogica,ts_global)
-        if estado == 0 :
-            ''' sigue el flujo del programa '''
+    if Globales.debug <largo:
+        if isinstance(instrdebug[Globales.debug],Imprimir):
+            accion_imprimir(instrdebug[Globales.debug],ts_global)
             Globales.debug+=1
-        elif estado == 1:
-            newindex = ts_global.obtener(instrdebug[Globales.debug].goto).valor # la etiqueta fijo esta en ts
-            Globales.debug= newindex # no necesito interrumpir
-        else:
-            Globales.debug
-                 
-    elif isinstance(instrdebug[Globales.debug],Goto):
-        newindex = ts_global.obtener(instrdebug[Globales.debug].label).valor #la etiqueta fijo esta en ts
-        Globales.debug=newindex
-            
-    elif isinstance(instrdebug[Globales.debug],Exit):
-        Globales.debug = largo # termina la ejecucion de mi codigo 
+        elif isinstance(instrdebug[Globales.debug],asignacion):
+            accion_asignar(instrdebug[Globales.debug],ts_global)
+            Globales.debug+=1
+        elif isinstance(instrdebug[Globales.debug],declaracion):
+            accion_declaracion(instrdebug[Globales.debug],ts_global)
+            Globales.debug+=1
+        elif isinstance(instrdebug[Globales.debug],Unset): 
+            accion_unset(instrdebug[Globales.debug].registro,ts_global)
+            Globales.debug+=1
+        elif isinstance(instrdebug[Globales.debug],instruccionIf): 
+            estado = resolver_Expresion(instrdebug[Globales.debug].exprelogica,ts_global)
+            if estado == 0 :
+                ''' sigue el flujo del programa '''
+                Globales.debug+=1
+            elif estado == 1:
+                newindex = ts_global.obtener(instrdebug[Globales.debug].goto).valor # la etiqueta fijo esta en ts
+                Globales.debug= newindex # no necesito interrumpir
+            else:
+                Globales.debug+=1
+                    
+        elif isinstance(instrdebug[Globales.debug],Goto):
+            newindex = ts_global.obtener(instrdebug[Globales.debug].label).valor #la etiqueta fijo esta en ts
+            Globales.debug=newindex
+                
+        elif isinstance(instrdebug[Globales.debug],Exit):
+            Globales.debug = largo # termina la ejecucion de mi codigo 
            
             
 def ObtenerTablaSimbolos():
@@ -493,7 +512,10 @@ def EjecutarASC(input):
     instrucciones = g.parse(input)
     global ts_global
     ts_global=TS.TablaDeSimbolos()
-    Recorrer_Instrucciones(instrucciones,ts_global)
+    if instrucciones is None:
+        print('Unnable to Compile. Please Check the Code')
+    else:
+        Recorrer_Instrucciones(instrucciones,ts_global)
 
 
 

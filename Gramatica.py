@@ -237,9 +237,6 @@ def p_asignacion(t):
     t[0]=asignacion(t[1],t[3])
     DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA')
 
-def p_asignacion_error(t):
-    'asignacion :   variable error PTCOMA'
-    print('Error variable encontrado')
 
 def p_tipo(t):
     '''tipo :   instruccionregistro
@@ -307,13 +304,19 @@ def p_instruccionregistro(t):
     elif t[2] == '<=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
     elif t[2] == '>': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
     elif t[2] == '<': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)
-    DatosGrafo.append('instruccionregistro : registro '+str(t[2]),' registro')  
+    DatosGrafo.append('instruccionregistro : registro '+str(t[2])+' registro')  
 
 
 def p_instruccion_registrounico(t):
     '''instruccionregistro  : registro'''
     t[0]=t[1]
-    DatosGrafo.append('instruccionregistro  : registro')  
+    DatosGrafo.append('instruccionregistro  : registro')
+
+def p_registro_parentesis(t):
+    '''registro :   PARIZQ registro PARDER'''
+    t[0] = t[2]
+    DatosGrafo.append('registro :   PARIZQ registro PARDER')
+
 
 def p_instruccionregistro_diferentes(t):
     '''registro  : ABS PARIZQ registro PARDER 

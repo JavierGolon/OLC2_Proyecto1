@@ -1,7 +1,3 @@
 main:
-$t1= 'jaj';
-$t3=55;
-print('hola');
-print('hola2');
-print('\n');
-$t66 = read();
+$t1[0]['javier']=548
+print($t1[0]['javier']);

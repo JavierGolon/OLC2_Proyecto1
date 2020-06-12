@@ -22,11 +22,11 @@ ReporteTablaSimbolos = {} # para el reporte de simbolos y el debuger
 
 
 #============================================ CLASE PARA UTILIZAR EL TXT COMO CONSOLA DE SALIDA Y ENTRADA ======================
-class txtAsConsole(object):
+class txtAsConsole(object): 
 	def __init__(self,text_widget):
 		self.txt = text_widget
 	def write(self,string):
-		self.txt.insert('end', string)
+		self.txt.insert('end',string)
 		self.txt.see('end')
 
 # =================================== CLASE PARA EL DIALOGO DE BUSCAR Y REMPLAZAR ========================
@@ -366,6 +366,7 @@ class Interfaz:
 		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __RLexico(self):
+		
 		newwindow = tkinter.Toplevel(self.__root)
 		v = DocViewer(newwindow)
 		v.pack(side="top", expand=1, fill="both")
