@@ -515,6 +515,8 @@ def EjecutarASC(input):
     if instrucciones is None:
         print('Unnable to Compile. Please Check the Code')
     else:
+        grafo = Graficadora()
+        grafo.Recorrer_Instrucciones_Inicio(instrucciones)
         Recorrer_Instrucciones(instrucciones,ts_global)
 
 
@@ -528,7 +530,6 @@ for i in ts_global.ObtenerTabla():
 
 """
 
-"""
-grafo = Graficadora()
-grafo.Recorrer_Instrucciones_Inicio(instrucciones)"""
+
+
 

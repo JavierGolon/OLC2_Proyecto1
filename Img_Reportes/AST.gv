@@ -1,0 +1,259 @@
+digraph {
+	A [label=Main]
+	1 [label=Asignar]
+	A -> 1
+	2 [label="="]
+	1 -> 2
+	3 [label="$t0"]
+	2 -> 3
+	4 [label="ARCHIVO BASICO\n"]
+	2 -> 4
+	5 [label=Imprimir]
+	A -> 5
+	6 [label="$t0"]
+	5 -> 6
+	7 [label=Imprimir]
+	A -> 7
+	8 [label="$t0"]
+	7 -> 8
+	9 [label="[]"]
+	8 -> 9
+	10 [label=0]
+	9 -> 10
+	11 [label=Imprimir]
+	A -> 11
+	12 [label="$t0"]
+	11 -> 12
+	13 [label="[]"]
+	12 -> 13
+	14 [label=8]
+	13 -> 14
+	15 [label=Imprimir]
+	A -> 15
+	16 [label="$t0"]
+	15 -> 16
+	17 [label="[]"]
+	16 -> 17
+	18 [label=12]
+	17 -> 18
+	19 [label=Unset]
+	A -> 19
+	20 [label="$t0"]
+	19 -> 20
+	21 [label=Imprimir]
+	A -> 21
+	22 [label="\n"]
+	21 -> 22
+	23 [label=Imprimir]
+	A -> 23
+	24 [label="Ingresa un numero: \n"]
+	23 -> 24
+	25 [label=Imprimir]
+	A -> 25
+	26 [label="\n"]
+	25 -> 26
+	27 [label=Asignar]
+	A -> 27
+	28 [label="="]
+	27 -> 28
+	29 [label="$t1"]
+	28 -> 29
+	30 [label="Read()"]
+	28 -> 30
+	31 [label=Imprimir]
+	A -> 31
+	32 [label="\n"]
+	31 -> 32
+	33 [label=Imprimir]
+	A -> 33
+	34 [label="Ingreso un segundo numero: "]
+	33 -> 34
+	35 [label=Imprimir]
+	A -> 35
+	36 [label="\n"]
+	35 -> 36
+	37 [label=Asignar]
+	A -> 37
+	38 [label="="]
+	37 -> 38
+	39 [label="$t2"]
+	38 -> 39
+	40 [label="Read()"]
+	38 -> 40
+	41 [label=Asignar]
+	A -> 41
+	42 [label="="]
+	41 -> 42
+	43 [label="$t3"]
+	42 -> 43
+	44 [label="+"]
+	42 -> 44
+	45 [label="$t1"]
+	44 -> 45
+	46 [label="$t2"]
+	44 -> 46
+	47 [label=Imprimir]
+	A -> 47
+	48 [label="La suma de los numeros es: "]
+	47 -> 48
+	49 [label=Imprimir]
+	A -> 49
+	50 [label="$t3"]
+	49 -> 50
+	51 [label=Imprimir]
+	A -> 51
+	52 [label="\n"]
+	51 -> 52
+	53 [label=Asignar]
+	A -> 53
+	54 [label="="]
+	53 -> 54
+	55 [label="$t3"]
+	54 -> 55
+	56 [label="-"]
+	54 -> 56
+	57 [label="$t1"]
+	56 -> 57
+	58 [label="$t2"]
+	56 -> 58
+	59 [label=Imprimir]
+	A -> 59
+	60 [label="La resta de los numeros es: "]
+	59 -> 60
+	61 [label=Imprimir]
+	A -> 61
+	62 [label="$t3"]
+	61 -> 62
+	63 [label=Imprimir]
+	A -> 63
+	64 [label="\n"]
+	63 -> 64
+	65 [label=Asignar]
+	A -> 65
+	66 [label="="]
+	65 -> 66
+	67 [label="$t3"]
+	66 -> 67
+	68 [label="*"]
+	66 -> 68
+	69 [label="$t1"]
+	68 -> 69
+	70 [label="$t2"]
+	68 -> 70
+	71 [label=Imprimir]
+	A -> 71
+	72 [label="La multiplicación de los numeros es: "]
+	71 -> 72
+	73 [label=Imprimir]
+	A -> 73
+	74 [label="$t3"]
+	73 -> 74
+	75 [label=Imprimir]
+	A -> 75
+	76 [label="\n"]
+	75 -> 76
+	77 [label=Asignar]
+	A -> 77
+	78 [label="="]
+	77 -> 78
+	79 [label="$t3"]
+	78 -> 79
+	80 [label="/"]
+	78 -> 80
+	81 [label="$t1"]
+	80 -> 81
+	82 [label="$t2"]
+	80 -> 82
+	83 [label=If]
+	A -> 83
+	84 [label=Expresion]
+	83 -> 84
+	85 [label="=="]
+	84 -> 85
+	86 [label="$t2"]
+	85 -> 86
+	87 [label=0]
+	85 -> 87
+	88 [label=Goto]
+	83 -> 88
+	89 [label=error]
+	88 -> 89
+	90 [label=Imprimir]
+	A -> 90
+	91 [label="La division de los numeros es: "]
+	90 -> 91
+	92 [label=Imprimir]
+	A -> 92
+	93 [label="$t3"]
+	92 -> 93
+	94 [label=Asignar]
+	A -> 94
+	95 [label="="]
+	94 -> 95
+	96 [label="$t4"]
+	95 -> 96
+	97 [label=Casteo]
+	95 -> 97
+	98 [label=int]
+	97 -> 98
+	99 [label="$t1"]
+	97 -> 99
+	100 [label=Imprimir]
+	A -> 100
+	101 [label="$t4"]
+	100 -> 101
+	102 [label=Imprimir]
+	A -> 102
+	103 [label="\n"]
+	102 -> 103
+	104 [label=Asignar]
+	A -> 104
+	105 [label="="]
+	104 -> 105
+	106 [label="$t4"]
+	105 -> 106
+	107 [label=Casteo]
+	105 -> 107
+	108 [label=float]
+	107 -> 108
+	109 [label="$t3"]
+	107 -> 109
+	110 [label=Imprimir]
+	A -> 110
+	111 [label="$t4"]
+	110 -> 111
+	112 [label=Imprimir]
+	A -> 112
+	113 [label="\n"]
+	112 -> 113
+	114 [label=Asignar]
+	A -> 114
+	115 [label="="]
+	114 -> 115
+	116 [label="$t5"]
+	115 -> 116
+	117 [label="+"]
+	115 -> 117
+	118 [label="$t4"]
+	117 -> 118
+	119 [label=1]
+	117 -> 119
+	120 [label=Imprimir]
+	A -> 120
+	121 [label="Resultado de la suma: \n"]
+	120 -> 121
+	122 [label=Imprimir]
+	A -> 122
+	123 [label="$t5"]
+	122 -> 123
+	124 [label=Etiqueta]
+	A -> 124
+	125 [label=error]
+	124 -> 125
+	126 [label=Imprimir]
+	A -> 126
+	127 [label="\nERROR: no se puede realizar una divisi�n entre 0."]
+	126 -> 127
+	128 [label=Exit]
+	A -> 128
+}

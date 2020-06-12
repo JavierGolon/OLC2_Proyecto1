@@ -19,6 +19,7 @@ findtxt = 'Empty'
 searchtxt = 'Empty'
 ReporteGramatical = ['Vacio'] # es el mismo para los dos tipos
 ReporteTablaSimbolos = {} # para el reporte de simbolos y el debuger
+ReporteErroresInfo = {} # para el reporte de los errores en general
 
 
 #============================================ CLASE PARA UTILIZAR EL TXT COMO CONSOLA DE SALIDA Y ENTRADA ======================
@@ -171,13 +172,8 @@ class Interfaz:
 									menu=self.__thisEjecutarMenu)
 
 		# ================================= DROP DOWN REPORTES ERRORES =======================================
-		self.__thisErroresMenu.add_command(label="Errores Lexicos",
-										command=self.__RLexico)
-		self.__thisErroresMenu.add_command(label="Errores Sintacticos",
-										command=self.__RSinta)
-		self.__thisErroresMenu.add_command(label="Errores Semanticos",
-										command=self.__RSema)
-
+		self.__thisErroresMenu.add_command(label="Errores General",
+										command=self.__MetodoReporteError)
 		self.__thisMenuBar.add_cascade(label="Reportes Errores",
 									menu=self.__thisErroresMenu)
 
@@ -332,7 +328,7 @@ class Interfaz:
 		if findtxt != 'Empty' and searchtxt!='Empty':
 			txtwidget.insert(END,texto.replace(findtxt,searchtxt))
 
-
+	#============================================================ REPORTE TABLA DE SIMBOLOS =======================
 	def __RTabla(self): # reporte tabla de simbolos
 		newwindow = tkinter.Toplevel(self.__root)
 		tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
@@ -344,9 +340,10 @@ class Interfaz:
 		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
 			tipo = ReporteTablaSimbolos[llave].tipo
 			valor = ReporteTablaSimbolos[llave].valor
-			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1)) 
+			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1))
 
-	def __RAst(self):
+	#============================================================ REPORTE GRAMATICAL ==================================
+	def __RGrama(self):
 		newwindow = tkinter.Toplevel(self.__root)
 		tkinter.Label(newwindow, text="Reporte Gramatical \n ASC", font=("Arial",25)).grid(row=0, columnspan=6)
 		columnas = ('No','Regla')
@@ -359,25 +356,30 @@ class Interfaz:
 		for i, (name) in enumerate(ReporteGramatical, start=1):
 			listbox.insert("", "end", values=(i, name)) 
 
-	def __RGrama(self):
+	#==================================================== REPORTE AST  ========================================
+	def __RAst(self):
 		newwindow = tkinter.Toplevel(self.__root)
 		v = DocViewer(newwindow)
 		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
+		v.display_file("./Img_Reportes/AST.gv.jpg") # cambiar por imagen pertinente 
+	#================================================= REPORTE ERRORES GENERAL =========================================
+	def __MetodoReporteError(self):
+		newwindow = tkinter.Toplevel(self.__root)
+		tkinter.Label(newwindow, text="Reporte \n Errores General", font=("Arial",25)).grid(row=0, columnspan=6)
+		columnas = ('No','Tipo','Lexema','Descripcion','Linea','Columna')
+		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+		for col in columnas:
+			listbox.heading(col,text=col)
+		listbox.grid(row=1, column=0, columnspan=4)
+		for i, (llave) in enumerate(ReporteErroresInfo, start=1):
+			tipo = llave.tipo
+			lexema = llave.lexema
+			descrip =llave.descripcion
+			linea = llave.linea
+			column =llave.columna 
+			listbox.insert("", "end", values=(i,tipo,lexema,descrip,linea,column))  	
 
-	def __RLexico(self):
-		
-		newwindow = tkinter.Toplevel(self.__root)
-		v = DocViewer(newwindow)
-		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
-	def __RSinta(self):
-		newwindow = tkinter.Toplevel(self.__root)
-		v = DocViewer(newwindow)
-		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 		
-
-	def __RSema(self):
+	def __RSema(self): # solo como ejemplo
 		newwindow = tkinter.Toplevel(self.__root)
 		v = DocViewer(newwindow)
 		v.pack(side="top", expand=1, fill="both")
@@ -393,6 +395,8 @@ class Interfaz:
 		ReporteGramatical = analisador.g.DatosGrafo
 		global ReporteTablaSimbolos
 		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		global ReporteErroresInfo
+		ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
 
 		
 
@@ -472,7 +476,7 @@ class Interfaz:
 		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
 		# abriendo la ventana que contiene la informacion
 		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
+		tkinter.Label(newwindow, text="Debbuger", font=("Arial",20)).grid(row=0, columnspan=6)
 		columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
 		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
 		for col in columnas:

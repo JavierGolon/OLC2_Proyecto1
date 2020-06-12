@@ -1,7 +1,7 @@
 from graphviz import Digraph
 from Expresiones import *
 from Instrucciones import *
-dot = Digraph(comment='The Round Table')
+dot = Digraph(format='jpg')
 
 
 
@@ -46,9 +46,8 @@ class Graficadora:
                 dot.edge('A', str(self.Actual_Indice()))
                 self.Recorre_Etiqueta(inst,str(self.Actual_Indice()))
 
-        print(dot.source)  # doctest: +NORMALIZE_WHITESPACE
-        dot.render('Img_Reportes/AST_ASC.gv')  # doctest: +SKIP
-        'Img_Reportest/AST_ASC.pdf'
+        dot.render('Img_Reportes/AST.gv')
+        'Img_Reportest/AST.gv.jpg'
 
     def New_Indice(self):
         self.indice += 1
@@ -88,12 +87,37 @@ class Graficadora:
         
 
     def Recorre_asignar(self, inst, padre):
-        dot.node(str(self.New_Indice()),'=')
-        dot.edge(padre, str(self.Actual_Indice()))
-        padre1 = str(self.Actual_Indice())
-        dot.node(str(self.New_Indice()),inst.variable)
-        dot.edge(padre1, str(self.Actual_Indice())) 
-        self.resolver_Expresion(inst.valor,padre1)
+        if isinstance(inst.valor,ExpresionReferencia):
+            
+            dot.node(str(self.New_Indice()),'=')
+            dot.edge(padre, str(self.Actual_Indice()))
+            padre1 = str(self.Actual_Indice())
+            dot.node(str(self.New_Indice()),inst.variable.registro)
+            dot.edge(padre1, str(self.Actual_Indice()))
+            dot.node(str(self.New_Indice()),'&')
+            dot.edge(padre1, str(self.Actual_Indice()))
+            padre2 = str(self.Actual_Indice())
+            self.resolver_Expresion(inst.valor.registro,padre2) 
+        elif isinstance(inst.variable,ExpresionArreglo):
+            dot.node(str(self.New_Indice()),'=')
+            dot.edge(padre, str(self.Actual_Indice()))
+            padre1 = str(self.Actual_Indice())
+            dot.node(str(self.New_Indice()),inst.variable.id)
+            dot.edge(padre1, str(self.Actual_Indice()))
+            padre2 = str(self.Actual_Indice()) 
+            for lista in inst.variable.dimension:
+                dot.node(str(self.New_Indice()),'[]')
+                dot.edge(padre2, str(self.Actual_Indice()))
+                self.resolver_Expresion(lista.registro,str(self.Actual_Indice()))
+            
+            self.resolver_Expresion(inst.valor,padre1)
+        else:
+            dot.node(str(self.New_Indice()),'=')
+            dot.edge(padre, str(self.Actual_Indice()))
+            padre1 = str(self.Actual_Indice())
+            dot.node(str(self.New_Indice()),inst.variable.registro)
+            dot.edge(padre1, str(self.Actual_Indice())) 
+            self.resolver_Expresion(inst.valor,padre1)
 
     def Recorre_declarar(self, inst, padre):
         dot.node(str(self.New_Indice()),str(inst.variable))
@@ -277,6 +301,14 @@ class Graficadora:
         elif isinstance(Expresion,Read):
             dot.node(str(self.New_Indice()),'Read()')
             dot.edge(padre, str(self.Actual_Indice()))
+        elif isinstance(Expresion,ExpresionArreglo):
+            dot.node(str(self.New_Indice()),Expresion.id)
+            dot.edge(padre, str(self.Actual_Indice()))
+            padre1 = str(self.Actual_Indice()) 
+            for lista in Expresion.dimension:
+                dot.node(str(self.New_Indice()),'[]')
+                dot.edge(padre1, str(self.Actual_Indice()))
+                self.resolver_Expresion(lista.registro,str(self.Actual_Indice()))
 
 
 

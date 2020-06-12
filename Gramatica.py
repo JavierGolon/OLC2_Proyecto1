@@ -204,17 +204,17 @@ precedence = (
 def p_init(t):
     'init  :    MAIN DOSPUNTOS listainstrucciones'
     t[0]=t[3]
-    DatosGrafo.append('init  :    MAIN DOSPUNTOS listainstrucciones')
+    DatosGrafo.append('init  :    MAIN DOSPUNTOS listainstrucciones { t[0]=t[1]}')
 
 def p_lista_instrucciones(t):
     'listainstrucciones :   listainstrucciones simpleinstrucciones'
     t[1].append(t[2])
     t[0]=t[1]
-    DatosGrafo.append('listainstrucciones :   listainstrucciones simpleinstrucciones')
+    DatosGrafo.append('listainstrucciones :   listainstrucciones simpleinstrucciones { t[1].append(t[2]) t[0]=t[1]}')
 
 def p_lista_instrucciones_simple(t):
     'listainstrucciones : simpleinstrucciones'
-    DatosGrafo.append('listainstrucciones : simpleinstrucciones')
+    DatosGrafo.append('listainstrucciones : simpleinstrucciones {t[0]=[t[1]]}')
     t[0]=[t[1]]
 def p_simpleinstrucciones(t):
     '''simpleinstrucciones    : declaracion
@@ -226,16 +226,16 @@ def p_simpleinstrucciones(t):
                               | goto
                               | unset'''
     t[0]=t[1]
-    DatosGrafo.append('simpleinstrucciones : mis instrucciones')
+    DatosGrafo.append('simpleinstrucciones :  Comandos t[0]=t[1] ')
 def p_declaracion(t):
     'declaracion   :    variable PTCOMA'
     t[0]=declaracion(t[1])
-    DatosGrafo.append('declaracion   :    variable PTCOMA')
+    DatosGrafo.append('declaracion   :    variable PTCOMA { t[0]=declaracion(t[1])}')
 
 def p_asignacion(t):
     'asignacion :   variable IGUAL tipo PTCOMA'
     t[0]=asignacion(t[1],t[3])
-    DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA')
+    DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA {t[0]=asignacion(t[1],t[3])}')
 
 
 def p_tipo(t):
@@ -243,7 +243,7 @@ def p_tipo(t):
             |   conversion
             |   arreglo'''
     t[0]=t[1]
-    DatosGrafo.append('tipo :   cambiartipos')
+    DatosGrafo.append('tipo :   cambiartipos {t[0]=t[1]}')
 
 def p_variable(t):
     '''variable :   TEMPORALES
@@ -253,7 +253,7 @@ def p_variable(t):
                 |   PILA
                 |   SP'''
     t[0]=ExpresionVariable(t[1])
-    DatosGrafo.append('variable :   misvaiable')
+    DatosGrafo.append('variable :   misvaiable {t[0]=ExpresionVariable(t[1])}')
 
 def p_variable_arreglo(t):
     '''variable :   TEMPORALES listadimension
@@ -263,7 +263,7 @@ def p_variable_arreglo(t):
                 |   PILA listadimension
                 |   SP listadimension'''
     t[0]=ExpresionArreglo(t[1],t[2])
-    DatosGrafo.append('variable :   misvaiable dimensional')
+    DatosGrafo.append('variable :   misvaiable dimensional {t[0]=ExpresionArreglo(t[1],t[2])}')
 
 def p_instruccionregistro(t):        
     '''instruccionregistro  : registro MAS registro
@@ -304,18 +304,18 @@ def p_instruccionregistro(t):
     elif t[2] == '<=': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENORIGUAL)
     elif t[2] == '>': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MAYOR) 
     elif t[2] == '<': t[0]=ExpresionBinariaRelacional(t[1],t[3],OPEREACION_RELACIONAL.MENOR)
-    DatosGrafo.append('instruccionregistro : registro '+str(t[2])+' registro')  
+    DatosGrafo.append('instruccionregistro : registro '+str(t[2])+' registro {if t[2] is operand, make decision}')  
 
 
 def p_instruccion_registrounico(t):
     '''instruccionregistro  : registro'''
     t[0]=t[1]
-    DatosGrafo.append('instruccionregistro  : registro')
+    DatosGrafo.append('instruccionregistro  : registro {t[0]=t[1]}')
 
 def p_registro_parentesis(t):
     '''registro :   PARIZQ registro PARDER'''
     t[0] = t[2]
-    DatosGrafo.append('registro :   PARIZQ registro PARDER')
+    DatosGrafo.append('registro :   PARIZQ registro PARDER {t[0] = t[2]}')
 
 
 def p_instruccionregistro_diferentes(t):
@@ -338,90 +338,90 @@ def p_registro(t):
     '''registro :   ENTERO
                 |   DECIMAL'''
     t[0]=ExpresionNumero(t[1])
-    DatosGrafo.append('registro :   ENTERO') 
+    DatosGrafo.append('registro :   ENTERO {t[0]=ExpresionNumero(t[1])}') 
 
 def p_registro_cadena(t):
     '''registro :   CADENA'''
     t[0]=ExpresionComillas(t[1])
-    DatosGrafo.append('registro :   CADENA') 
+    DatosGrafo.append('registro :   CADENA {t[0]=ExpresionComillas(t[1])}') 
 
 def p_registro_acceso(t):
     '''registro :   acceso'''
     t[0]=t[1]
-    DatosGrafo.append('registro :   acceso') 
+    DatosGrafo.append('registro :   acceso { t[0]=t[1]}') 
                 
 def p_acceso(t):
     '''acceso   :   variable'''
     t[0]=t[1]
-    DatosGrafo.append('registro :   variable') 
+    DatosGrafo.append('registro :   variable {[0]=t[1]}') 
 
 
 def p_lista_dimension(t):
     '''listadimension    :   listadimension dimension'''
     t[1].append(t[2])
     t[0] = t[1]
-    DatosGrafo.append('listadimension    :   listadimension dimension') 
+    DatosGrafo.append('listadimension    :   listadimension dimension {t[1].append(t[2])}') 
 
 def p_lista_dimnension2(t):
     '''listadimension   :   dimension'''
     t[0] = [t[1]]
-    DatosGrafo.append('listadimension   :   dimension')
+    DatosGrafo.append('listadimension   :   dimension {t[0] = [t[1]]}')
 
 def p_dimension(t):
     '''dimension    :   CORCHETEIZQ registro CORCHETEDER'''
     t[0] = ExpresionDimension(t[2])
-    DatosGrafo.append('dimension    :   CORCHETEIZQ registro CORCHETEDER')
+    DatosGrafo.append('dimension    :   CORCHETEIZQ registro CORCHETEDER { t[0] = ExpresionDimension(t[2])}')
 
 def p_conversion(t):
     'conversion   : PARIZQ eltipo PARDER registro'
     t[0]=Casteo(t[2],t[4])
-    DatosGrafo.append('conversion   : PARIZQ eltipo PARDER registro')
+    DatosGrafo.append('conversion   : PARIZQ eltipo PARDER registro {t[0]=Casteo(t[2],t[4])}')
 
 def p_arreglo(t):
     'arreglo    :   ARRAY PARIZQ PARDER'
     t[0]=Arreglo(2,2)
-    DatosGrafo.append('arreglo    :   ARRAY PARIZQ PARDER')   
+    DatosGrafo.append('arreglo    :   ARRAY PARIZQ PARDER {t[0]=Arreglo(2,2)}')   
 
 def p_eltipo(t):
     '''eltipo   :   FLOAT
                 |   INT
                 |   CHAR'''
     t[0]=t[1]
-    DatosGrafo.append('eltipo   :   FLOAT')
+    DatosGrafo.append('eltipo   :   FLOAT {t[0]=t[1]}')
 # ====================== Gramatica Para las Palabras Reservadas y funciones especiales
 def p_exit(t):
     'exit   :   EXIT PTCOMA'
     t[0]=Exit(t[1])
-    DatosGrafo.append('exit   :   EXIT PTCOMA')
+    DatosGrafo.append('exit   :   EXIT PTCOMA {t[0]=Exit(t[1])}')
 def p_print(t):
     'print  : PRINT PARIZQ registro PARDER PTCOMA'
     t[0]=Imprimir(t[3])
-    DatosGrafo.append('print  : PRINT PARIZQ registro PARDER PTCOMA')
+    DatosGrafo.append('print  : PRINT PARIZQ registro PARDER PTCOMA {t[0]=Imprimir(t[3])}')
 
 def p_etiqueta(t):
     'etiqueta   :  ETIQUETA DOSPUNTOS' #
     t[0]=Etiqueta(t[1])
-    DatosGrafo.append('etiqueta   :  ETIQUETA DOSPUNTOS') 
+    DatosGrafo.append('etiqueta   :  ETIQUETA DOSPUNTOS { t[0]=Etiqueta(t[1])}') 
 def p_goto(t):
     'goto   :   GOTO ETIQUETA PTCOMA' #
     t[0]=Goto(t[2])
-    DatosGrafo.append('goto   :   GOTO ETIQUETA PTCOMA')
+    DatosGrafo.append('goto   :   GOTO ETIQUETA PTCOMA {t[0]=Goto(t[2])}')
 
 
 def p_read(t):
     'readisntr   :   READ PARIZQ PARDER '
     t[0]=Read(t[1])
-    DatosGrafo.append('read   :   READ PARIZQ PARDER')
+    DatosGrafo.append('read   :   READ PARIZQ PARDER {t[0]=Read(t[1])}')
 
 def p_unset(t):
     'unset  :   UNSET PARIZQ acceso PARDER PTCOMA'
     t[0]=Unset(t[3])
-    DatosGrafo.append('unset  :   UNSET PARIZQ acceso PARDER PTCOMA')
+    DatosGrafo.append('unset  :   UNSET PARIZQ acceso PARDER PTCOMA {t[0]=Unset(t[3])}')
 
 def p_if(t):
     'ifcomando :    IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA'
     t[0]=instruccionIf(t[3],t[6])
-    DatosGrafo.append('ifcomando : IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA')
+    DatosGrafo.append('ifcomando : IF PARIZQ instruccionregistro PARDER GOTO ETIQUETA PTCOMA {t[0]=instruccionIf(t[3],t[6])}')
 
 
 
