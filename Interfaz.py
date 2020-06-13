@@ -60,13 +60,14 @@ class Interfaz:
 
 	__root = Tk()
 	# Creamos las imagenes para los botones de los menus
-	__imgnew = PhotoImage(file=r"./Imagenes/carpeta.png").subsample(12, 12)
-	__imgopen = PhotoImage(file=r"./Imagenes/file.png").subsample(12, 12)
-	__imgsave = PhotoImage(file=r"./Imagenes/guardar.png").subsample(12, 12)
-	__imgsalir = PhotoImage(file=r"./Imagenes/salirimg.png").subsample(12, 12)
-	__imgasc = PhotoImage(file=r"./Imagenes/asc.png").subsample(12, 12)
-	__imgdesc = PhotoImage(file=r"./Imagenes/desc.png").subsample(12, 12)
-	__imgplay = PhotoImage(file=r"./Imagenes/desc.png").subsample(20, 20)
+	
+	__imgopen = PhotoImage(file=r"Imagenes/file.png").subsample(12, 12)
+	__imgnew = PhotoImage(file=r"Imagenes/carpeta.png").subsample(12, 12)
+	__imgsave = PhotoImage(file=r"Imagenes/guardar.png").subsample(12, 12)
+	__imgsalir = PhotoImage(file=r"Imagenes/salirimg.png").subsample(12, 12)
+	__imgasc = PhotoImage(file=r"Imagenes/asc.png").subsample(12, 12)
+	__imgdesc = PhotoImage(file=r"Imagenes/desc.png").subsample(12, 12)
+	__imgplay = PhotoImage(file=r"Imagenes/desc.png").subsample(20, 20)
 	# Creamos los marcos para las distribuciones de la ventana
 	__frametop = Frame(__root)
 	__framebotton = Frame(__root, width=__root.winfo_screenwidth(),
@@ -361,7 +362,7 @@ class Interfaz:
 		newwindow = tkinter.Toplevel(self.__root)
 		v = DocViewer(newwindow)
 		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Img_Reportes/AST.gv.jpg") # cambiar por imagen pertinente 
+		v.display_file("Imagenes/AST.gv.jpg") # cambiar por imagen pertinente 
 	#================================================= REPORTE ERRORES GENERAL =========================================
 	def __MetodoReporteError(self):
 		newwindow = tkinter.Toplevel(self.__root)
@@ -383,10 +384,17 @@ class Interfaz:
 		newwindow = tkinter.Toplevel(self.__root)
 		v = DocViewer(newwindow)
 		v.pack(side="top", expand=1, fill="both")
-		v.display_file("./Imagenes/carpeta.png") # cambiar por imagen pertinente 
+		v.display_file("Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __FormaDESC(self):
-		pass
+		entrada = self.__GetSelectedText().get(1.0,END)
+		analisador.EjecutarDESC(entrada)
+		global ReporteGramatical
+		ReporteGramatical = analisador.FormaDesc.DatosGrafo
+		global ReporteTablaSimbolos
+		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		global ReporteErroresInfo
+		ReporteErroresInfo = analisador.FormaDesc.ListaE.ObtenerLista()
 	def __FormaASC(self):
 		
 		entrada = self.__GetSelectedText().get(1.0,END)

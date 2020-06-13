@@ -1,7 +1,7 @@
 from graphviz import Digraph
 from Expresiones import *
 from Instrucciones import *
-dot = Digraph(format='jpg')
+dot = "" 
 
 
 
@@ -10,7 +10,8 @@ class Graficadora:
         self.indice = 0
 
     def Recorrer_Instrucciones_Inicio(self, instrucciones):
-
+        global dot 
+        dot = Digraph(format='jpg')
         dot.node('A', 'Main')
         for inst in instrucciones:
             if isinstance(inst, Imprimir):
@@ -46,8 +47,8 @@ class Graficadora:
                 dot.edge('A', str(self.Actual_Indice()))
                 self.Recorre_Etiqueta(inst,str(self.Actual_Indice()))
 
-        dot.render('Img_Reportes/AST.gv')
-        'Img_Reportest/AST.gv.jpg'
+        dot.render('Imagenes/AST.gv')
+        'Imagenes/AST.gv.jpg'
 
     def New_Indice(self):
         self.indice += 1

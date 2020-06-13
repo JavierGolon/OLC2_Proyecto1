@@ -1,4 +1,5 @@
-import Gramatica as g
+import Gramatica as g # gramatica asc
+import GramaticaDESC as FormaDesc
 import TablaSimbolos as TS
 from operator import xor
 from Metodos_Complementarios import *
@@ -514,6 +515,17 @@ def EjecutarASC(input):
     ts_global=TS.TablaDeSimbolos()
     if instrucciones is None:
         print('Unnable to Compile. Please Check the Code')
+    else:
+        grafo = Graficadora()
+        grafo.Recorrer_Instrucciones_Inicio(instrucciones)
+        Recorrer_Instrucciones(instrucciones,ts_global)
+
+def EjecutarDESC(input):
+    instrucciones = FormaDesc.parse(input)
+    global ts_global
+    ts_global = TS.TablaDeSimbolos()
+    if instrucciones is None:
+        print('Unnable to Compile. Please check the code')
     else:
         grafo = Graficadora()
         grafo.Recorrer_Instrucciones_Inicio(instrucciones)

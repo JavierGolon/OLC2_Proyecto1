@@ -237,6 +237,10 @@ def p_asignacion(t):
     t[0]=asignacion(t[1],t[3])
     DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA {t[0]=asignacion(t[1],t[3])}')
 
+def p_asignacion_error(t):
+    ''' asignacion  :   error PTCOMA'''
+    print('error en asignacion')
+
 
 def p_tipo(t):
     '''tipo :   instruccionregistro
@@ -426,21 +430,9 @@ def p_if(t):
 
 
 def p_error(t):
-    if not t:
-        print("EOF")
-        return
-   
-    linea =find_column(entrada,t)
-    t.lexpos=linea
-    print(t)
-    print("Error sintáctico en: '%s'" % t.value)
-     # Buscando el proximo token tipo ;
-    while True:
-        tok = parser.token()
-           # busca el siguiente token
-        if not tok or tok.type == "PTCOMA": break
-    parser.errok() # quita los tokens y retorna el token de  recuperacion
-    return tok
+    print('Error Sintactico')
+    t.lexer.skip(1)
+    
 
 parser = yacc.yacc()
 
@@ -451,3 +443,4 @@ def parse(input) :
     global entrada
     entrada=input
     return parser.parse(input)
+
