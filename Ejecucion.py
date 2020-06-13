@@ -66,13 +66,18 @@ def Comprobar_Crear_Arreglo(registro,ts):
 
 def Obtener_Valor_de_Arreglo(instr,ts):
     diccionario = ts.obtener(instr.id).valor
-    if type(diccionario) is str:
+    if type(diccionario) is str: # esta ves diccionario es una cadena
         indexes = []
         for keys in instr.dimension:
             llave = resolver_Expresion(keys.registro,ts)
             indexes.append(llave)
         if len(indexes) == 1:
-            return diccionario[indexes[0]]
+            largo = len(diccionario)
+            if indexes > largo:
+                print('Errro, IndexOutOfRange')
+                return None
+            else:
+                return diccionario[indexes[0]]
         else:
             return None
     elif type(diccionario) is  None:
@@ -259,14 +264,14 @@ def resolver_Expresion(Expresion,ts):
         
         try:
             if Expresion.operador == OPERACION_LOGICA.AND :
-                return bool(izq) and bool(der)
+                return int(bool(izq) and bool(der)) # &&
             elif Expresion.operador == OPERACION_LOGICA.OR :
-                return bool(izq) or bool(der)
+                return int(bool(izq) or bool(der)) # || 
             elif Expresion.operador == OPERACION_LOGICA.XOR :
-                return xor(bool(izq),bool(der))
+                return int(xor(bool(izq),bool(der))) # xor
 
         except Exception as ext:
-            print('Error,',ext)
+            print('Error, Non Numeric Value Encountered! [Bit Operation]')
             return '@400@'
         
     #============================== OPERACIONES BINARIAS BIT ========================
@@ -277,17 +282,18 @@ def resolver_Expresion(Expresion,ts):
         der = resolver_Expresion(Expresion.exp2,ts)
         try:
             if(Expresion.operador ==OPERACION_BIT.AND):
-                return izq & der
+                return int(izq) & int(der)
             elif(Expresion.operador ==OPERACION_BIT.OR):
-                return izq | der
+                return int(izq) | int(der)
             elif(Expresion.operador ==OPERACION_BIT.XOR):
-                return izq ^ der
+                return int(izq) ^ int(der)
             elif(Expresion.operador ==OPERACION_BIT.SHIFTIZQ):
-                return izq << der
+                return int(izq) << int(der)
             elif(Expresion.operador ==OPERACION_BIT.SHIFTDER):
-                return izq >> der
+                return int(izq) >> int(der)
         except:
-            print('Error en el tipo de conversion')
+            print('Error, Non Numeric Value Encountered! [Bit Operation]')
+            return None
         
     #================================================ MONO ===========================================        
     elif isinstance(Expresion,ExpresionMonoLogica):
