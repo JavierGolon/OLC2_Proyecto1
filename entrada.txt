@@ -1,3 +1,10 @@
 main:
-$t1[0]['javier']=548;
-print($t1[0]['javier']);
+
+if ( 1 > 0 ) goto hola;
+goto funciona;
+hola:
+print('gunciona');
+exit;
+
+funciona:
+print('javier');

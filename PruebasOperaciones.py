@@ -1,5 +1,11 @@
 
 import re
 
-print( bool(2) and bool(2))
+print("javier"<"luiios")
 
+prueba = {'javier':6}
+
+izq = 'javier'
+der =8
+
+print(len(prueba))

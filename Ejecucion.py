@@ -69,15 +69,15 @@ def Obtener_Valor_de_Arreglo(instr,ts):
     if type(diccionario) is str: # esta ves diccionario es una cadena
         indexes = []
         for keys in instr.dimension:
-            llave = resolver_Expresion(keys.registro,ts)
+            llave = resolver_Expresion(keys.registro,ts) # ya tengo el numero que debo insertar
             indexes.append(llave)
         if len(indexes) == 1:
             largo = len(diccionario)
-            if indexes > largo:
-                print('Errro, IndexOutOfRange')
+            if int(indexes[0]) > largo or int(indexes[0]) < 0:
+                print('Error, IndexOutOfRange')
                 return None
             else:
-                return diccionario[indexes[0]]
+                return diccionario[int(indexes[0])]
         else:
             return None
     elif type(diccionario) is  None:
@@ -197,26 +197,26 @@ def resolver_Expresion(Expresion,ts):
             if Expresion.operador == OPERACION_ARITMETICA.MAS :
                 if type(izq) is str == type(der) is str:
                     return izq + der
-                elif (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
-                    return int(izq) + int(der)
+                elif (type(izq) in (int,float)) and (type(der) in (int,float)):
+                    return izq + der
             elif Expresion.operador == OPERACION_ARITMETICA.MENOS:
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
-                    return int(izq) - int(der)
+                if (type(izq) in (int,float)) and (type(der) in (int,float)):
+                    return izq - der
             elif Expresion.operador == OPERACION_ARITMETICA.POR:
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
-                    return int(izq) * int(der)
+                if (type(izq) in (int,float)) and (type(der) in (int,float)):
+                    return izq * der
             elif Expresion.operador == OPERACION_ARITMETICA.DIVIDIDO:
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
+                if (type(izq) in (int,float)) and (type(der) in (int,float)):
                     if izq == 0:
-                        return '@400@'
+                        return None
                     else:
-                        return round(int(izq) / int(der),1)
+                        return round(izq / der,1)
             elif Expresion.operador == OPERACION_ARITMETICA.RESIDUO:
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
-                    return int(izq) % int(der)
+                if (type(izq) in (int,float)) and (type(der) in (int,float)):
+                    return izq % der
         except Exception as ext:
             print('Error,',ext)
-            return '@400@'
+            return None
 
     elif isinstance(Expresion,ExpresionBinariaRelacional):
         izq = resolver_Expresion(Expresion.exp1,ts)
@@ -224,38 +224,19 @@ def resolver_Expresion(Expresion,ts):
         #========================================= OPERACIONES BINARIAS RELACIONALES ==========================
         try:
             if Expresion.operador == OPEREACION_RELACIONAL.IGUAL :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
                     return int(izq==der)
-                elif (type(izq) is str) and (type(der) is str):
-                    return int(izq==der)
-            if Expresion.operador == OPEREACION_RELACIONAL.DIFERENTE :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
+            elif Expresion.operador == OPEREACION_RELACIONAL.DIFERENTE :
                     return int(izq!=der)
-                elif (type(izq) is str) and (type(der) is str):
-                    return int(izq!=der)
-            if Expresion.operador == OPEREACION_RELACIONAL.MAYORIGUAL :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
+            elif Expresion.operador == OPEREACION_RELACIONAL.MAYORIGUAL :
                     return int(izq>=der)
-                elif (type(izq) is str) and (type(der) is str):
-                    return int(izq>=der)
-            if Expresion.operador == OPEREACION_RELACIONAL.MENORIGUAL :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
+            elif Expresion.operador == OPEREACION_RELACIONAL.MENORIGUAL :
                     return int(izq<=der)
-                elif (type(izq) is str) and (type(der) is str):
-                    return int(izq<=der)
-            if Expresion.operador == OPEREACION_RELACIONAL.MAYOR :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
+            elif Expresion.operador == OPEREACION_RELACIONAL.MAYOR :
                     return int(izq>der)
-                elif (type(izq) is str) and (type(der) is str):
-                    return int(izq>der)
-            if Expresion.operador == OPEREACION_RELACIONAL.MENOR :
-                if (type(izq) is int or type(izq) is float) and (type(der) is int or type(der) is float):
-                    return int(izq<der)
-                elif (type(izq) is str) and (type(der) is str):
+            elif Expresion.operador == OPEREACION_RELACIONAL.MENOR :
                     return int(izq<der)
         except Exception as ext:
-            print('Error,',ext)
-            return '@400@'
+            return 0 # al ser operaciones relaciones en php si no se puede retorna false
     #================================================== OPERACIONES LOGICAS BINARIAS ================================
 
     elif isinstance(Expresion,ExpresionBinarioLogica): # no importa tipo de dato igual coloco try cath
@@ -272,7 +253,7 @@ def resolver_Expresion(Expresion,ts):
 
         except Exception as ext:
             print('Error, Non Numeric Value Encountered! [Bit Operation]')
-            return '@400@'
+            return None
         
     #============================== OPERACIONES BINARIAS BIT ========================
 
@@ -300,30 +281,31 @@ def resolver_Expresion(Expresion,ts):
         return int (not bool(resolver_Expresion(Expresion.exp,ts)))
     elif isinstance(Expresion,ExpresionMonoBit):
         exp = resolver_Expresion(Expresion.exp,ts)
-        if type(exp) is int or type(exp)  is float:
+        if type(exp) in (int,float):
             return (~int(exp))
         else:
-            return "@400@"
+            print('Error, En operacion Not Bit')
+            return None
     elif isinstance(Expresion,ExpresionNumero):
         return Expresion.valor
     elif isinstance(Expresion,ExpresionComillas):
         return Expresion.valor
     elif isinstance(Expresion,ExpresionNegativo):
         exp = resolver_Expresion(Expresion.exp,ts)
-        if type(exp) is int or type(exp) is float:
+        if type(exp) in (int,float):
             return exp*-1
         else:
-            return "@400@"
+            return None
     elif isinstance(Expresion,ExpresionAbs):
         exp = resolver_Expresion(Expresion.exp,ts)
-        if type(exp) is int or type(exp) is float:
+        if type(exp) in (int,float):
             return abs(exp)
         else:
-            return "@400@"
+            return None
     elif isinstance(Expresion,ExpresionVariable):
         valor = ts.obtener(Expresion.registro)
         if valor is None:
-            return "@400@"
+            return None
         else:
             return valor.valor
     #================= Instancias de los Casteos o de la declaracion de arreglo (FALTA ARREGLOS) ======================
@@ -332,6 +314,15 @@ def resolver_Expresion(Expresion,ts):
     elif isinstance(Expresion,Casteo):
         tipo = Expresion.tipo
         valor =resolver_Expresion(Expresion.valor,ts)
+        if type(valor) is dict:
+            if len(valor) >0:
+                 valores = valor.values()
+                 iterador = iter(valores)
+                 primervalor = next(iterador)
+                 valor = primervalor
+            else:
+                return None
+
         if tipo == 'int':
             if type(valor) is str and valor != '':
                 return int(ord(valor[0]))
