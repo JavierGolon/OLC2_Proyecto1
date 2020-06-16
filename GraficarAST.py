@@ -10,7 +10,8 @@ class Graficadora:
         self.indice = 0
 
     def Recorrer_Instrucciones_Inicio(self, instrucciones):
-        global dot 
+        global dot
+        self.indice=0 
         dot = Digraph(format='jpg')
         dot.node('A', 'Main')
         for inst in instrucciones:

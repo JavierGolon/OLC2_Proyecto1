@@ -331,54 +331,69 @@ class Interfaz:
 
 	#============================================================ REPORTE TABLA DE SIMBOLOS =======================
 	def __RTabla(self): # reporte tabla de simbolos
-		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
-		columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
-		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
-		for col in columnas:
-			listbox.heading(col,text=col)
-		listbox.grid(row=1, column=0, columnspan=4)
-		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
-			tipo = ReporteTablaSimbolos[llave].tipo
-			valor = ReporteTablaSimbolos[llave].valor
-			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1))
+		try:
+			newwindow = tkinter.Toplevel(self.__root)
+			tkinter.Label(newwindow, text="Reporte \n Tabla de Simbolos", font=("Arial",25)).grid(row=0, columnspan=6)
+			columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
+			listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+			for col in columnas:
+				listbox.heading(col,text=col)
+			listbox.grid(row=1, column=0, columnspan=4)
+			for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+				tipo = ReporteTablaSimbolos[llave].tipo
+				valor = ReporteTablaSimbolos[llave].valor
+				dimension = 1
+				if type(valor) is dict:
+					dimension=len(valor)
+				listbox.insert("", "end", values=(i,llave,tipo,valor,'main',dimension))
+		except:
+			print('Ha Ocurrido Un Error Al Mostrar El Reporte De La Tabla De Simbolos')
 
 	#============================================================ REPORTE GRAMATICAL ==================================
 	def __RGrama(self):
-		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Reporte Gramatical \n ASC", font=("Arial",25)).grid(row=0, columnspan=6)
-		columnas = ('No','Regla')
-		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
-		listbox.column("No", width=50)
-		listbox.column("Regla", width=600)
-		for col in columnas:
-			listbox.heading(col,text=col)
-		listbox.grid(row=1, column=0, columnspan=4)
-		for i, (name) in enumerate(ReporteGramatical, start=1):
-			listbox.insert("", "end", values=(i, name)) 
+		try:
+			newwindow = tkinter.Toplevel(self.__root)
+			tkinter.Label(newwindow, text="Reporte Gramatical", font=("Arial",25)).grid(row=0, columnspan=6)
+			columnas = ('No','Regla')
+			listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+			listbox.column("No", width=50)
+			listbox.column("Regla", width=600)
+			for col in columnas:
+				listbox.heading(col,text=col)
+			listbox.grid(row=1, column=0, columnspan=4)
+			for i, (name) in enumerate(ReporteGramatical, start=1):
+				listbox.insert("", "end", values=(i, name))
+		except:
+			print('Ha Ocurrido Un Error Al Mostrar El Reporte Gramatical') 
 
 	#==================================================== REPORTE AST  ========================================
 	def __RAst(self):
-		newwindow = tkinter.Toplevel(self.__root)
-		v = DocViewer(newwindow)
-		v.pack(side="top", expand=1, fill="both")
-		v.display_file("Imagenes/AST.gv.jpg") # cambiar por imagen pertinente 
+		try:
+			newwindow = tkinter.Toplevel(self.__root)
+			v = DocViewer(newwindow)
+			v.pack(side="top", expand=1, fill="both")
+			v.display_file("Imagenes/AST.gv.jpg") # cambiar por imagen pertinente
+		except:
+			print('Ha Ocurrido Un Problema Al Mostrar El Reporte AST') 
 	#================================================= REPORTE ERRORES GENERAL =========================================
 	def __MetodoReporteError(self):
-		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Reporte \n Errores General", font=("Arial",25)).grid(row=0, columnspan=6)
-		columnas = ('No','Tipo','Lexema','Descripcion','Linea','Columna')
-		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
-		for col in columnas:
-			listbox.heading(col,text=col)
-		listbox.grid(row=1, column=0, columnspan=4)
-		for i, (llave) in enumerate(ReporteErroresInfo, start=1):
-			tipo = llave.tipo
-			lexema = llave.lexema
-			descrip =llave.descripcion
-			linea = llave.linea
-			column =llave.columna 
-			listbox.insert("", "end", values=(i,tipo,lexema,descrip,linea,column))  	
+		try:
+			newwindow = tkinter.Toplevel(self.__root)
+			tkinter.Label(newwindow, text="Reporte \n Errores General", font=("Arial",25)).grid(row=0, columnspan=6)
+			columnas = ('No','Tipo','Lexema','Descripcion','Linea','Columna')
+			listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+			for col in columnas:
+				listbox.heading(col,text=col)
+			listbox.grid(row=1, column=0, columnspan=4)
+			for i, (llave) in enumerate(ReporteErroresInfo, start=1):
+				tipo = llave.tipo
+				lexema = llave.lexema
+				descrip =llave.descripcion
+				linea = llave.linea
+				column =llave.columna 
+				listbox.insert("", "end", values=(i,tipo,lexema,descrip,linea,column))
+		except:
+			print('Ha Ocurrido Un Error Al Mostrar El Reporte De Errores')  	
 
 	def __RSema(self): # solo como ejemplo
 		newwindow = tkinter.Toplevel(self.__root)
@@ -387,24 +402,29 @@ class Interfaz:
 		v.display_file("Imagenes/carpeta.png") # cambiar por imagen pertinente 
 
 	def __FormaDESC(self):
-		entrada = self.__GetSelectedText().get(1.0,END)
-		analisador.EjecutarDESC(entrada)
-		global ReporteGramatical
-		ReporteGramatical = analisador.FormaDesc.DatosGrafo
-		global ReporteTablaSimbolos
-		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
-		global ReporteErroresInfo
-		ReporteErroresInfo = analisador.FormaDesc.ListaE.ObtenerLista()
+		try:
+			entrada = self.__GetSelectedText().get(1.0,END)
+			analisador.EjecutarDESC(entrada)
+			global ReporteGramatical
+			ReporteGramatical = analisador.FormaDesc.DatosGrafo
+			global ReporteTablaSimbolos
+			ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+			global ReporteErroresInfo
+			ReporteErroresInfo = analisador.FormaDesc.ListaE.ObtenerLista()
+		except:
+			print('Exception: Ha ocurrido un error el analisis (Revisar Codigo)')
 	def __FormaASC(self):
-		
-		entrada = self.__GetSelectedText().get(1.0,END)
-		analisador.EjecutarASC(entrada)
-		global ReporteGramatical
-		ReporteGramatical = analisador.g.DatosGrafo
-		global ReporteTablaSimbolos
-		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
-		global ReporteErroresInfo
-		ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
+		try:
+			entrada = self.__GetSelectedText().get(1.0,END)
+			analisador.EjecutarASC(entrada)
+			global ReporteGramatical
+			ReporteGramatical = analisador.g.DatosGrafo
+			global ReporteTablaSimbolos
+			ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+			global ReporteErroresInfo
+			ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
+		except:
+			print('Exception: Ha ocurrido un error el analisis (Revisar Codigo)')
 
 		
 
@@ -445,7 +465,6 @@ class Interfaz:
 	r'(\d+)':'blue',
 	r'(\d+\.\d+)':'blue',
 	r'\$(t|s|a|v|r)(\d+)':'#088A68',
-	r'\#.*\n':'green',
 	r'(\'|\").*?(\'|\")':'#DF7401'}
 	def __highlighter(self,event):
 		'''the highlight function, called when a Key-press event occurs'''
@@ -462,42 +481,56 @@ class Interfaz:
 				else:
 					break
 	def AgregarATabla(self,treeview):
-		analisador.NextDebbuger()
-		# actualizo la tabla de simbolos
-		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		try:
+			analisador.NextDebbuger()
+			# actualizo la tabla de simbolos
+			ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+			
+			for i in treeview.get_children():
+				treeview.delete(i)
+			for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+				tipo = ReporteTablaSimbolos[llave].tipo
+				valor = ReporteTablaSimbolos[llave].valor
+				treeview.insert("", "end", values=(i,llave,tipo,valor,'main',1))
+		except:
+			print('Ha Ocurrido Un Error En El Paso Del Debugger')
 		
-		for i in treeview.get_children():
-			treeview.delete(i)
-		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
-			tipo = ReporteTablaSimbolos[llave].tipo
-			valor = ReporteTablaSimbolos[llave].valor
-			treeview.insert("", "end", values=(i,llave,tipo,valor,'main',1))
 
 
 	def __debugear(self):
 		# antes tengo que mandar a analizar la primera instruccion y traer los datos
-		entrada = self.__GetSelectedText().get(1.0,END)
-		analisador.DebuggerIniciar(entrada)
-		global ReporteGramatical
-		ReporteGramatical = analisador.g.DatosGrafo
-		global ReporteTablaSimbolos
-		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
-		# abriendo la ventana que contiene la informacion
-		newwindow = tkinter.Toplevel(self.__root)
-		tkinter.Label(newwindow, text="Debbuger", font=("Arial",20)).grid(row=0, columnspan=6)
-		columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
-		listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
-		for col in columnas:
-			listbox.heading(col,text=col)
-		listbox.grid(row=1, column=0, columnspan=4)
-		for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
-			tipo = ReporteTablaSimbolos[llave].tipo
-			valor = ReporteTablaSimbolos[llave].valor
-			listbox.insert("", "end", values=(i,llave,tipo,valor,'main',1))
-		tkinter.Button(newwindow, text="Next", width=15, command=lambda:self.AgregarATabla(listbox)).grid(row=4, column=0)
-		tkinter.Button(newwindow, text="Finish", width=15, command=None).grid(row=4, column=1)
+		try:
+			entrada = self.__GetSelectedText().get(1.0,END)
+			analisador.DebuggerIniciar(entrada)
+			global ReporteGramatical
+			ReporteGramatical = analisador.g.DatosGrafo
+			global ReporteTablaSimbolos
+			ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+			# abriendo la ventana que contiene la informacion
+			newwindow = tkinter.Toplevel(self.__root)
+			tkinter.Label(newwindow, text="Debbuger", font=("Arial",20)).grid(row=0, columnspan=6)
+			columnas = ('Referencia','Nombre','Tipo','Valor','Ambito','Dimension')
+			listbox = tkinter.ttk.Treeview(newwindow,columns=columnas,show='headings')
+			for col in columnas:
+				listbox.heading(col,text=col)
+			listbox.grid(row=1, column=0, columnspan=4)
+			for i, (llave) in enumerate(ReporteTablaSimbolos, start=1):
+				tipo = ReporteTablaSimbolos[llave].tipo
+				valor = ReporteTablaSimbolos[llave].valor
+				dimension = 1
+				if type(valor) is dict:
+					dimension=len(valor)
+					
+				listbox.insert("", "end", values=(i,llave,tipo,valor,'main',dimension))
+			tkinter.Button(newwindow, text="Next", width=15, command=lambda:self.AgregarATabla(listbox)).grid(row=4, column=0)
+			tkinter.Button(newwindow, text="Finish", width=15, command=lambda:self.__TerminarDebbuger()).grid(row=4, column=1)
+		except:
+			print('Ha Ocurrido Un Error Al Debuggear, Revisar Entrada O Volver A Iniciar')
 
-	
+	def __TerminarDebbuger(self):
+		analisador.Terminar=True
+		analisador.NextDebbuger()
+
 	def __ThisNext(self):
 		pass
 	def __ThisStop(self):

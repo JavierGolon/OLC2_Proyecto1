@@ -13,7 +13,7 @@ import re
  # INICIALIZO LA VARIABLE QUE VA A HCAER MI DEBBUGER
 #sys.setrecursionlimit()
 #sys.setrecursionlimit(3000)
-
+Terminar =  False
 
 """ >>> Accion Imprimir Correcta """
 def accion_imprimir(instr,ts):
@@ -341,6 +341,7 @@ def resolver_Expresion(Expresion,ts):
                     return str(chr(int(valor)%256))
                 elif valor > 0 and valor <=255:
                     return str(chr(int(valor)))
+        return None
     elif isinstance(Expresion,Read):
         
         valorconsola = simpledialog.askstring("Input","Datos")
@@ -375,84 +376,92 @@ def accion_etiqueta(inst,ts,posicion):
 
 
 def accion_LlenarTsEtiquetas(instrucciones,ts):
-    size = len(instrucciones)
-    i = 0
-    lastflagnane = ""
-    flagetiq = False
-    while(i<size):
-        if isinstance(instrucciones[i],Etiqueta):
-            accion_etiqueta(instrucciones[i],ts,i)
-            lastflagnane = instrucciones[i].iden
-            flagetiq=True
-        if isinstance(instrucciones[i],declaracion):
-            var = instrucciones[i].variable.registro
-            if '$a' in var:
-                if flagetiq is True:
-                    lastindex = ts.obtener(lastflagnane).valor
-                    simbolo=TS.Simbolo(TS.TIPO_DATO.METODO,lastindex)
-                    ts.actualizar(simbolo,lastflagnane)
-                    
-            elif '$v' in var:
-                if flagetiq is True:
-                    lastindex = ts.obtener(lastflagnane).valor
-                    simbolo=TS.Simbolo(TS.TIPO_DATO.FUNCION,lastindex)
-                    ts.actualizar(simbolo,lastflagnane)
-                    
-        if isinstance(instrucciones[i],asignacion):
-            var=""
-            if isinstance(instrucciones[i].variable,ExpresionArreglo):
-                var=instrucciones[i].variable.id
-            else:
+    try:
+        size = len(instrucciones)
+        i = 0
+        lastflagnane = ""
+        flagetiq = False
+        while(i<size):
+            if isinstance(instrucciones[i],Etiqueta):
+                accion_etiqueta(instrucciones[i],ts,i)
+                lastflagnane = instrucciones[i].iden
+                flagetiq=True
+            if isinstance(instrucciones[i],declaracion):
                 var = instrucciones[i].variable.registro
-            if '$a' in var:
-                if flagetiq is True:
-                    lastindex = ts.obtener(lastflagnane).valor
-                    simbolo=TS.Simbolo(TS.TIPO_DATO.METODO,lastindex)
-                    ts.actualizar(simbolo,lastflagnane)
-                    
-            elif '$v' in var:
-                if flagetiq is True:
-                    lastindex = ts.obtener(lastflagnane).valor
-                    simbolo=TS.Simbolo(TS.TIPO_DATO.FUNCION,lastindex)
-                    ts.actualizar(simbolo,lastflagnane)
-                    
-        if isinstance(instrucciones[i],Goto):
-            pass
-        i+=1
+                if '$a' in var:
+                    if flagetiq is True:
+                        lastindex = ts.obtener(lastflagnane).valor
+                        simbolo=TS.Simbolo(TS.TIPO_DATO.METODO,lastindex)
+                        ts.actualizar(simbolo,lastflagnane)
+                        
+                elif '$v' in var:
+                    if flagetiq is True:
+                        lastindex = ts.obtener(lastflagnane).valor
+                        simbolo=TS.Simbolo(TS.TIPO_DATO.FUNCION,lastindex)
+                        ts.actualizar(simbolo,lastflagnane)
+                        
+            if isinstance(instrucciones[i],asignacion):
+                var=""
+                if isinstance(instrucciones[i].variable,ExpresionArreglo):
+                    var=instrucciones[i].variable.id
+                else:
+                    var = instrucciones[i].variable.registro
+                if '$a' in var:
+                    if flagetiq is True:
+                        lastindex = ts.obtener(lastflagnane).valor
+                        simbolo=TS.Simbolo(TS.TIPO_DATO.METODO,lastindex)
+                        ts.actualizar(simbolo,lastflagnane)
+                        
+                elif '$v' in var:
+                    if flagetiq is True:
+                        lastindex = ts.obtener(lastflagnane).valor
+                        simbolo=TS.Simbolo(TS.TIPO_DATO.FUNCION,lastindex)
+                        ts.actualizar(simbolo,lastflagnane)
+                        
+            if isinstance(instrucciones[i],Goto):
+                pass
+            i+=1
+    except:
+        print('Error En Primera Pasada')
 
 
 def Recorrer_Instrucciones(instrucciones,ts):
-    accion_LlenarTsEtiquetas(instrucciones,ts) # mando a llenar la ts con todas mis etiquetas
-    largo = len(instrucciones)
-    i = 0
-    l = resetable_range(largo)
-    for i in l:
-        if isinstance(instrucciones[i],Imprimir): accion_imprimir(instrucciones[i],ts)
-        elif isinstance(instrucciones[i],asignacion): accion_asignar(instrucciones[i],ts)
-        elif isinstance(instrucciones[i],declaracion): accion_declaracion(instrucciones[i],ts)
-        elif isinstance(instrucciones[i],Unset): accion_unset(instrucciones[i].registro,ts)
-        elif isinstance(instrucciones[i],instruccionIf): 
-            estado = resolver_Expresion(instrucciones[i].exprelogica,ts)
-            if estado == 0 :
-                ''' sigue el flujo del programa '''
-            elif estado == 1:
-                newindex = ts.obtener(instrucciones[i].goto).valor # la etiqueta fijo esta en ts
-                i= newindex # salto a la posicion donde viene la etiqueta para hacer los saltos
+    try:
+        accion_LlenarTsEtiquetas(instrucciones,ts) # mando a llenar la ts con todas mis etiquetas
+        largo = len(instrucciones)
+        i = 0
+        l = resetable_range(largo)
+        for i in l:
+            if isinstance(instrucciones[i],Imprimir): accion_imprimir(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],asignacion): accion_asignar(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],declaracion): accion_declaracion(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],Unset): accion_unset(instrucciones[i].registro,ts)
+            elif isinstance(instrucciones[i],instruccionIf): 
+                estado = resolver_Expresion(instrucciones[i].exprelogica,ts)
+                if estado == 0 :
+                    ''' sigue el flujo del programa '''
+                elif estado == 1:
+                    newindex = ts.obtener(instrucciones[i].goto).valor # la etiqueta fijo esta en ts
+                    i= newindex # salto a la posicion donde viene la etiqueta para hacer los saltos
+                    l.reset(i)
+                    continue 
+            elif isinstance(instrucciones[i],Goto):
+                newindex = ts.obtener(instrucciones[i].label).valor #la etiqueta fijo esta en ts
+                i=newindex
                 l.reset(i)
-                continue 
-        elif isinstance(instrucciones[i],Goto):
-            newindex = ts.obtener(instrucciones[i].label).valor #la etiqueta fijo esta en ts
-            i=newindex
-            l.reset(i)
-            continue
-        elif isinstance(instrucciones[i],Exit):
-            i = largo # termina la ejecucion de mi codigo
-            l.reset(i)
+                continue
+            elif isinstance(instrucciones[i],Exit):
+                i = largo # termina la ejecucion de mi codigo
+                l.reset(i)
+    except:
+        print('Error En El Analisis Interno')
 
 
  #============================================= METODO PAR EL DEBBUGER ===========================================
 instrdebug=[]
 def DebuggerIniciar(input):
+    global Terminar
+    Terminar=False
     global instrdebug 
     instrdebug =g.parse(input)
     global ts_global
@@ -464,38 +473,84 @@ def DebuggerIniciar(input):
         accion_LlenarTsEtiquetas(instrdebug,ts_global) # tengo que llenar al iniciar mis etiquetas
 
 def NextDebbuger():
-    largo = len(instrdebug)
-    if Globales.debug <largo:
-        if isinstance(instrdebug[Globales.debug],Imprimir):
-            accion_imprimir(instrdebug[Globales.debug],ts_global)
-            Globales.debug+=1
-        elif isinstance(instrdebug[Globales.debug],asignacion):
-            accion_asignar(instrdebug[Globales.debug],ts_global)
-            Globales.debug+=1
-        elif isinstance(instrdebug[Globales.debug],declaracion):
-            accion_declaracion(instrdebug[Globales.debug],ts_global)
-            Globales.debug+=1
-        elif isinstance(instrdebug[Globales.debug],Unset): 
-            accion_unset(instrdebug[Globales.debug].registro,ts_global)
-            Globales.debug+=1
-        elif isinstance(instrdebug[Globales.debug],instruccionIf): 
-            estado = resolver_Expresion(instrdebug[Globales.debug].exprelogica,ts_global)
-            if estado == 0 :
-                ''' sigue el flujo del programa '''
+    try:
+        global Terminar
+        if Terminar == True:
+            Terminar =  False
+            nuevoindice = Globales.debug
+            Globales.debug = len(instrdebug)+1
+            TerminarDebbuger(instrdebug,ts_global,nuevoindice)
+            
+        largo = len(instrdebug)
+        if Globales.debug <largo:
+            if isinstance(instrdebug[Globales.debug],Imprimir):
+                accion_imprimir(instrdebug[Globales.debug],ts_global)
                 Globales.debug+=1
-            elif estado == 1:
-                newindex = ts_global.obtener(instrdebug[Globales.debug].goto).valor # la etiqueta fijo esta en ts
-                Globales.debug= newindex # no necesito interrumpir
-            else:
+            elif isinstance(instrdebug[Globales.debug],asignacion):
+                accion_asignar(instrdebug[Globales.debug],ts_global)
                 Globales.debug+=1
+            elif isinstance(instrdebug[Globales.debug],declaracion):
+                accion_declaracion(instrdebug[Globales.debug],ts_global)
+                Globales.debug+=1
+            elif isinstance(instrdebug[Globales.debug],Unset): 
+                accion_unset(instrdebug[Globales.debug].registro,ts_global)
+                Globales.debug+=1
+            elif isinstance(instrdebug[Globales.debug],instruccionIf): 
+                estado = resolver_Expresion(instrdebug[Globales.debug].exprelogica,ts_global)
+                if estado == 0 :
+                    ''' sigue el flujo del programa '''
+                    Globales.debug+=1
+                elif estado == 1:
+                    newindex = ts_global.obtener(instrdebug[Globales.debug].goto).valor # la etiqueta fijo esta en ts
+                    Globales.debug= newindex # no necesito interrumpir
+                else:
+                    Globales.debug+=1
+                        
+            elif isinstance(instrdebug[Globales.debug],Goto):
+                newindex = ts_global.obtener(instrdebug[Globales.debug].label).valor #la etiqueta fijo esta en ts
+                Globales.debug=newindex
                     
-        elif isinstance(instrdebug[Globales.debug],Goto):
-            newindex = ts_global.obtener(instrdebug[Globales.debug].label).valor #la etiqueta fijo esta en ts
-            Globales.debug=newindex
-                
-        elif isinstance(instrdebug[Globales.debug],Exit):
-            Globales.debug = largo # termina la ejecucion de mi codigo 
-           
+            elif isinstance(instrdebug[Globales.debug],Exit):
+                Globales.debug = largo # termina la ejecucion de mi codigo
+    except Exception as error:
+        print('Error en el Debugger Interno',error) 
+
+# =============================================================== METODO PARA TERMINAR EL DEBUGGER ===================================
+def TerminarDebbuger(instrucciones,ts,index):
+    try:
+        largo = len(instrucciones)
+        i = index
+        l = resetable_range(largo)
+        l.reset(i)
+        for i in l:
+            if isinstance(instrucciones[i],Imprimir): accion_imprimir(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],asignacion): accion_asignar(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],declaracion): accion_declaracion(instrucciones[i],ts)
+            elif isinstance(instrucciones[i],Unset): accion_unset(instrucciones[i].registro,ts)
+            elif isinstance(instrucciones[i],instruccionIf): 
+                estado = resolver_Expresion(instrucciones[i].exprelogica,ts)
+                if estado == 0 :
+                    ''' sigue el flujo del programa '''
+                elif estado == 1:
+                    newindex = ts.obtener(instrucciones[i].goto).valor # la etiqueta fijo esta en ts
+                    i= newindex # salto a la posicion donde viene la etiqueta para hacer los saltos
+                    l.reset(i)
+                    continue 
+            elif isinstance(instrucciones[i],Goto):
+                newindex = ts.obtener(instrucciones[i].label).valor #la etiqueta fijo esta en ts
+                i=newindex
+                l.reset(i)
+                continue
+            elif isinstance(instrucciones[i],Exit):
+                i = largo # termina la ejecucion de mi codigo
+                l.reset(i)
+    except:
+        print('Error En El Analisis Interno')
+
+def SetFinishDebugger():
+    Terminar =  True
+    NextDebbuger()
+
             
 def ObtenerTablaSimbolos():
     return ts_global.ObtenerTabla()      
