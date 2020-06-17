@@ -2,7 +2,7 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import ListaErrores as LErrores
-
+entrada = ""
 ListaE = LErrores.ListaError()
 DatosGrafo = []
 
@@ -452,21 +452,14 @@ def p_if(t):
 
 
 def p_error(t):
-    if not t:
-        print("EOF")
-        return
-   
-    linea =find_column(entrada,t)
-    t.lexpos=linea
-    print(t)
-    print("Error sintáctico en: '%s'" % t.value)
-     # Buscando el proximo token tipo ;
-    while True:
-        tok = parser.token()
-           # busca el siguiente token
-        if not tok or tok.type == "PTCOMA": break
-    parser.errok() # quita los tokens y retorna el token de  recuperacion
-    return tok
+    if t:
+        print("Syntax error at token", t.type)
+        # Just discard the token and tell the parser it's okay.
+        mistake=LErrores.Error('Sintax Error',str(t.value),t.type,t.lexer.lineno,find_column(entrada,t))
+        ListaE.AddError(mistake)
+        parser.errok()
+    else:
+        print("Syntax error at EOF")
 
 parser = yacc.yacc()
 
@@ -474,6 +467,6 @@ parser = yacc.yacc()
 
 # Funcion que corre nuestro parse
 def parse(input) :
-    global entrada
+
     entrada=input
     return parser.parse(input)

@@ -2,8 +2,8 @@
 import ply.lex as lex
 import ply.yacc as yacc
 import ListaErrores as LErrores
-
-ListaE = LErrores.ListaError()
+entrada = ""
+ListaE = {}
 DatosGrafo = []
 
 # ESTRUCTURA CON LAS PALABRAS RESERVADAS DE NUESTRO LENGUAJE
@@ -217,6 +217,7 @@ def p_lista_instrucciones_simple(t):
     DatosGrafo.append('listainstrucciones : simpleinstrucciones {t[0]=[t[1]]}')
     t[0]=[t[1]]
 def p_simpleinstrucciones(t):
+   
     '''simpleinstrucciones    : declaracion
                               | asignacion
                               | ifcomando
@@ -224,22 +225,25 @@ def p_simpleinstrucciones(t):
                               | print
                               | etiqueta
                               | goto
-                              | unset'''
+                              | unset'''                          
     t[0]=t[1]
     DatosGrafo.append('simpleinstrucciones :  Comandos t[0]=t[1] ')
+
 def p_declaracion(t):
     'declaracion   :    variable PTCOMA'
     t[0]=declaracion(t[1])
     DatosGrafo.append('declaracion   :    variable PTCOMA { t[0]=declaracion(t[1])}')
+
+  
 
 def p_asignacion(t):
     'asignacion :   variable IGUAL tipo PTCOMA'
     t[0]=asignacion(t[1],t[3])
     DatosGrafo.append('asignacion :   variable IGUAL tipo PTCOMA {t[0]=asignacion(t[1],t[3])}')
 
-def p_asignacion_error(t):
-    ''' asignacion  :   error PTCOMA'''
-    print('error en asignacion')
+
+
+    
 
 
 def p_tipo(t):
@@ -397,6 +401,9 @@ def p_exit(t):
     'exit   :   EXIT PTCOMA'
     t[0]=Exit(t[1])
     DatosGrafo.append('exit   :   EXIT PTCOMA {t[0]=Exit(t[1])}')
+
+
+
 def p_print(t):
     'print  : PRINT PARIZQ registro PARDER PTCOMA'
     t[0]=Imprimir(t[3])
@@ -405,7 +412,12 @@ def p_print(t):
 def p_etiqueta(t):
     'etiqueta   :  ETIQUETA DOSPUNTOS' #
     t[0]=Etiqueta(t[1])
-    DatosGrafo.append('etiqueta   :  ETIQUETA DOSPUNTOS { t[0]=Etiqueta(t[1])}') 
+    DatosGrafo.append('etiqueta   :  ETIQUETA DOSPUNTOS { t[0]=Etiqueta(t[1])}')
+
+
+
+
+
 def p_goto(t):
     'goto   :   GOTO ETIQUETA PTCOMA' #
     t[0]=Goto(t[2])
@@ -430,9 +442,13 @@ def p_if(t):
 
 
 def p_error(t):
-    print('Error Sintactico')
-    t.lexer.skip(1)
-    
+    if t:
+        print("Syntax error at token", t.type)
+        mistake=LErrores.Error('Sintax Error',str(t.value),t.type,t.lexer.lineno,find_column(entrada,t))
+        ListaE.AddError(mistake)
+        parser.errok()
+    else:
+        print("Syntax error at EOF")  
 
 parser = yacc.yacc()
 
@@ -440,7 +456,8 @@ parser = yacc.yacc()
 
 # Funcion que corre nuestro parse
 def parse(input) :
-    global entrada
+    global ListaE
+    ListaE =  LErrores.ListaError()
     entrada=input
     return parser.parse(input)
 

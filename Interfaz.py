@@ -414,17 +414,17 @@ class Interfaz:
 		except:
 			print('Exception: Ha ocurrido un error el analisis (Revisar Codigo)')
 	def __FormaASC(self):
-		try:
-			entrada = self.__GetSelectedText().get(1.0,END)
-			analisador.EjecutarASC(entrada)
-			global ReporteGramatical
-			ReporteGramatical = analisador.g.DatosGrafo
-			global ReporteTablaSimbolos
-			ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
-			global ReporteErroresInfo
-			ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
-		except:
-			print('Exception: Ha ocurrido un error el analisis (Revisar Codigo)')
+		
+		entrada = self.__GetSelectedText().get(1.0,END)
+		analisador.EjecutarASC(entrada)
+		global ReporteGramatical
+		ReporteGramatical = analisador.g.DatosGrafo
+		global ReporteTablaSimbolos
+		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
+		global ReporteErroresInfo
+		
+		ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
+		
 
 		
 

@@ -1,10 +1,6 @@
 main:
-
-if ( 1 > 0 ) goto hola;
-goto funciona;
-hola:
-print('gunciona');
-exit;
-
-funciona:
+@
+$t1  =  5;
+print('golon');
+$t2 = 6;
 print('javier');
