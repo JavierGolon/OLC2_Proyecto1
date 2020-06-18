@@ -22,7 +22,7 @@ digraph {
 	9 -> 10
 	11 [label="$a0"]
 	10 -> 11
-	12 [label=3]
+	12 [label=2]
 	10 -> 12
 	13 [label=Asignar]
 	A -> 13
@@ -30,7 +30,7 @@ digraph {
 	13 -> 14
 	15 [label="$a1"]
 	14 -> 15
-	16 [label=6]
+	16 [label=3]
 	14 -> 16
 	17 [label=Asignar]
 	A -> 17
