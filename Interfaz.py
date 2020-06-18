@@ -423,7 +423,7 @@ class Interfaz:
 		ReporteTablaSimbolos = analisador.ObtenerTablaSimbolos()
 		global ReporteErroresInfo
 		
-		ReporteErroresInfo = analisador.g.ListaE.ObtenerLista()
+		ReporteErroresInfo = analisador.g.GetListaErrores().ObtenerLista()
 		
 
 		
@@ -528,6 +528,7 @@ class Interfaz:
 			print('Ha Ocurrido Un Error Al Debuggear, Revisar Entrada O Volver A Iniciar')
 
 	def __TerminarDebbuger(self):
+		print('Terminando Debbuger')
 		analisador.Terminar=True
 		analisador.NextDebbuger()
 
@@ -546,5 +547,5 @@ class Interfaz:
 
 
 # Run main application 
-Interfaz = Interfaz(width=1100,height=800) 
+Interfaz = Interfaz(width=1100,height=700) 
 Interfaz.run() 

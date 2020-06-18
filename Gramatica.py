@@ -3,7 +3,7 @@ import ply.lex as lex
 import ply.yacc as yacc
 import ListaErrores as LErrores
 entrada = ""
-ListaE = {}
+
 DatosGrafo = []
 
 # ESTRUCTURA CON LAS PALABRAS RESERVADAS DE NUESTRO LENGUAJE
@@ -173,6 +173,7 @@ def t_error(t):
     
     print("Illegal character '%s'" % t.value[0])
     mistake=LErrores.Error('Lexical Error',str(t.value[0]),'Ilegal Character',t.lexer.lineno,find_column(entrada,t))
+    global ListaE
     ListaE.AddError(mistake)
     t.lexer.skip(1)     
 
@@ -445,19 +446,26 @@ def p_error(t):
     if t:
         print("Syntax error at token", t.type)
         mistake=LErrores.Error('Sintax Error',str(t.value),t.type,t.lexer.lineno,find_column(entrada,t))
+        global ListaE
         ListaE.AddError(mistake)
         parser.errok()
     else:
         print("Syntax error at EOF")  
 
+
 parser = yacc.yacc()
 
 
-
+ListaE = {}
 # Funcion que corre nuestro parse
 def parse(input) :
     global ListaE
+    ListaE = {}
     ListaE =  LErrores.ListaError()
     entrada=input
     return parser.parse(input)
+
+def GetListaErrores():
+    global ListaE
+    return ListaE
 

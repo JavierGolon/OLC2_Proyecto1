@@ -1,6 +1,0 @@
-main:
-@
-$t1  =  5;
-print('golon');
-$t2 = 6;
-print('javier');
