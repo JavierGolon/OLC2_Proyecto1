@@ -27,7 +27,8 @@ def accion_imprimir(instr,ts):
         print("")
         
     else:
-        print(registro,end='')
+        decode = bytes(registro,"utf-8").decode("unicode_escape")
+        print(decode,end='')
 
 """ >>> Accion Obtener Valor registro Correcta """
 def Obtener_Valor_Registro(registro,ts):

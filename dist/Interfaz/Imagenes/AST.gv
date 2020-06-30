@@ -10,7 +10,7 @@ digraph {
 	A -> 4
 	5 [label="="]
 	4 -> 5
-	6 [label="$sp"]
+	6 [label="$ra"]
 	5 -> 6
 	7 [label="-"]
 	5 -> 7
@@ -20,189 +20,189 @@ digraph {
 	A -> 9
 	10 [label="="]
 	9 -> 10
-	11 [label="$a0"]
+	11 [label="$t1"]
 	10 -> 11
-	12 [label=2]
-	10 -> 12
-	13 [label=Asignar]
-	A -> 13
-	14 [label="="]
+	12 [label=Asignar]
+	A -> 12
+	13 [label="="]
+	12 -> 13
+	14 [label="$t1"]
 	13 -> 14
-	15 [label="$a1"]
+	15 [label="[]"]
 	14 -> 15
-	16 [label=3]
-	14 -> 16
-	17 [label=Asignar]
-	A -> 17
-	18 [label="="]
-	17 -> 18
-	19 [label="$sp"]
+	16 [label=0]
+	15 -> 16
+	17 [label=658]
+	13 -> 17
+	18 [label=Asignar]
+	A -> 18
+	19 [label="="]
 	18 -> 19
-	20 [label="+"]
-	18 -> 20
-	21 [label="$sp"]
+	20 [label="$t1"]
+	19 -> 20
+	21 [label="[]"]
 	20 -> 21
 	22 [label=1]
-	20 -> 22
-	23 [label=Asignar]
-	A -> 23
-	24 [label="="]
-	23 -> 24
-	25 [label="$s0"]
+	21 -> 22
+	23 [label=245]
+	19 -> 23
+	24 [label=Asignar]
+	A -> 24
+	25 [label="="]
 	24 -> 25
-	26 [label="[]"]
+	26 [label="$t1"]
 	25 -> 26
-	27 [label="$sp"]
+	27 [label="[]"]
 	26 -> 27
-	28 [label="$a0"]
-	24 -> 28
-	29 [label=Goto]
-	A -> 29
-	30 [label=ack]
-	29 -> 30
-	31 [label=Etiqueta]
-	A -> 31
-	32 [label=ret0]
+	28 [label=2]
+	27 -> 28
+	29 [label=654]
+	25 -> 29
+	30 [label=Asignar]
+	A -> 30
+	31 [label="="]
+	30 -> 31
+	32 [label="$t1"]
 	31 -> 32
-	33 [label=Imprimir]
-	A -> 33
-	34 [label="Ackerman\n"]
+	33 [label="[]"]
+	32 -> 33
+	34 [label=3]
 	33 -> 34
-	35 [label=Imprimir]
-	A -> 35
-	36 [label="$v0"]
-	35 -> 36
-	37 [label=Imprimir]
-	A -> 37
-	38 [label="\n"]
+	35 [label=956]
+	31 -> 35
+	36 [label=Asignar]
+	A -> 36
+	37 [label="="]
+	36 -> 37
+	38 [label="$t1"]
 	37 -> 38
-	39 [label=Goto]
-	A -> 39
-	40 [label=factorial]
+	39 [label="[]"]
+	38 -> 39
+	40 [label=4]
 	39 -> 40
-	41 [label=Etiqueta]
-	A -> 41
-	42 [label=ack]
-	41 -> 42
-	43 [label=If]
-	A -> 43
-	44 [label=Expresion]
+	41 [label=5]
+	37 -> 41
+	42 [label=Asignar]
+	A -> 42
+	43 [label="="]
+	42 -> 43
+	44 [label="$t1"]
 	43 -> 44
-	45 [label="<"]
+	45 [label="[]"]
 	44 -> 45
-	46 [label="$sp"]
+	46 [label=5]
 	45 -> 46
-	47 [label=0]
-	45 -> 47
-	48 [label=Goto]
-	43 -> 48
-	49 [label=ret3]
+	47 [label=754]
+	43 -> 47
+	48 [label=Asignar]
+	A -> 48
+	49 [label="="]
 	48 -> 49
-	50 [label=Asignar]
-	A -> 50
-	51 [label="="]
+	50 [label="$t1"]
+	49 -> 50
+	51 [label="[]"]
 	50 -> 51
-	52 [label="$a0"]
+	52 [label=6]
 	51 -> 52
-	53 [label="$s0"]
-	51 -> 53
-	54 [label="[]"]
-	53 -> 54
-	55 [label="$sp"]
+	53 [label=100]
+	49 -> 53
+	54 [label=Asignar]
+	A -> 54
+	55 [label="="]
 	54 -> 55
-	56 [label=Asignar]
-	A -> 56
-	57 [label="="]
+	56 [label="$t1"]
+	55 -> 56
+	57 [label="[]"]
 	56 -> 57
-	58 [label="$sp"]
+	58 [label=7]
 	57 -> 58
-	59 [label="-"]
-	57 -> 59
-	60 [label="$sp"]
-	59 -> 60
-	61 [label=1]
-	59 -> 61
-	62 [label=If]
-	A -> 62
-	63 [label=Expresion]
+	59 [label=89]
+	55 -> 59
+	60 [label=Asignar]
+	A -> 60
+	61 [label="="]
+	60 -> 61
+	62 [label="$t1"]
+	61 -> 62
+	63 [label="[]"]
 	62 -> 63
-	64 [label="!="]
+	64 [label=8]
 	63 -> 64
-	65 [label="$a0"]
-	64 -> 65
-	66 [label=0]
-	64 -> 66
-	67 [label=Goto]
-	62 -> 67
-	68 [label=ret1]
+	65 [label=98]
+	61 -> 65
+	66 [label=Asignar]
+	A -> 66
+	67 [label="="]
+	66 -> 67
+	68 [label="$t1"]
 	67 -> 68
-	69 [label=Asignar]
-	A -> 69
-	70 [label="="]
+	69 [label="[]"]
+	68 -> 69
+	70 [label=9]
 	69 -> 70
-	71 [label="$t4"]
-	70 -> 71
-	72 [label="+"]
-	70 -> 72
-	73 [label="$a0"]
+	71 [label=120]
+	67 -> 71
+	72 [label=Asignar]
+	A -> 72
+	73 [label="="]
 	72 -> 73
-	74 [label=1]
-	72 -> 74
-	75 [label=Asignar]
-	A -> 75
-	76 [label="="]
-	75 -> 76
-	77 [label="$a1"]
+	74 [label="$t2"]
+	73 -> 74
+	75 [label=10]
+	73 -> 75
+	76 [label=Goto]
+	A -> 76
+	77 [label=MainTag]
 	76 -> 77
-	78 [label="+"]
-	76 -> 78
-	79 [label="$a1"]
+	78 [label=Etiqueta]
+	A -> 78
+	79 [label=Tagburbuja10]
 	78 -> 79
-	80 [label="$t4"]
-	78 -> 80
-	81 [label=Goto]
-	A -> 81
-	82 [label=ack]
+	80 [label=Asignar]
+	A -> 80
+	81 [label="="]
+	80 -> 81
+	82 [label="$t3"]
 	81 -> 82
-	83 [label=Etiqueta]
-	A -> 83
-	84 [label=ret1]
-	83 -> 84
-	85 [label=If]
-	A -> 85
-	86 [label=Expresion]
+	83 [label=0]
+	81 -> 83
+	84 [label=Asignar]
+	A -> 84
+	85 [label="="]
+	84 -> 85
+	86 [label="$t4"]
 	85 -> 86
-	87 [label="!="]
-	86 -> 87
-	88 [label="$a1"]
-	87 -> 88
-	89 [label=0]
-	87 -> 89
-	90 [label=Goto]
-	85 -> 90
-	91 [label=ret2]
-	90 -> 91
+	87 [label=0]
+	85 -> 87
+	88 [label=Asignar]
+	A -> 88
+	89 [label="="]
+	88 -> 89
+	90 [label="$t5"]
+	89 -> 90
+	91 [label=0]
+	89 -> 91
 	92 [label=Asignar]
 	A -> 92
 	93 [label="="]
 	92 -> 93
-	94 [label="$a1"]
+	94 [label="$t3"]
 	93 -> 94
-	95 [label="+"]
+	95 [label=0]
 	93 -> 95
-	96 [label="$a1"]
-	95 -> 96
-	97 [label=1]
-	95 -> 97
+	96 [label=Etiqueta]
+	A -> 96
+	97 [label=for1]
+	96 -> 97
 	98 [label=Asignar]
 	A -> 98
 	99 [label="="]
 	98 -> 99
-	100 [label="$a0"]
+	100 [label="$t6"]
 	99 -> 100
 	101 [label="-"]
 	99 -> 101
-	102 [label="$a0"]
+	102 [label="$t2"]
 	101 -> 102
 	103 [label=1]
 	101 -> 103
@@ -210,320 +210,532 @@ digraph {
 	A -> 104
 	105 [label="="]
 	104 -> 105
-	106 [label="$sp"]
+	106 [label="$t7"]
 	105 -> 106
-	107 [label="+"]
+	107 [label="<"]
 	105 -> 107
-	108 [label="$sp"]
+	108 [label="$t3"]
 	107 -> 108
-	109 [label=1]
+	109 [label="$t6"]
 	107 -> 109
-	110 [label=Asignar]
+	110 [label=If]
 	A -> 110
-	111 [label="="]
+	111 [label=Expresion]
 	110 -> 111
-	112 [label="$s0"]
+	112 [label="!"]
 	111 -> 112
-	113 [label="[]"]
+	113 [label="$t7"]
 	112 -> 113
-	114 [label="$sp"]
-	113 -> 114
-	115 [label="$a0"]
-	111 -> 115
-	116 [label=Goto]
+	114 [label=Goto]
+	110 -> 114
+	115 [label=endfor1]
+	114 -> 115
+	116 [label=Asignar]
 	A -> 116
-	117 [label=ack]
+	117 [label="="]
 	116 -> 117
-	118 [label=Etiqueta]
-	A -> 118
-	119 [label=ret2]
-	118 -> 119
-	120 [label=Asignar]
+	118 [label="$t4"]
+	117 -> 118
+	119 [label=0]
+	117 -> 119
+	120 [label=Etiqueta]
 	A -> 120
-	121 [label="="]
+	121 [label=for2]
 	120 -> 121
-	122 [label="$a0"]
-	121 -> 122
-	123 [label="-"]
-	121 -> 123
-	124 [label="$a0"]
+	122 [label=Asignar]
+	A -> 122
+	123 [label="="]
+	122 -> 123
+	124 [label="$t8"]
 	123 -> 124
-	125 [label=1]
+	125 [label="-"]
 	123 -> 125
-	126 [label=Asignar]
-	A -> 126
-	127 [label="="]
-	126 -> 127
-	128 [label="$sp"]
-	127 -> 128
-	129 [label="+"]
-	127 -> 129
-	130 [label="$sp"]
+	126 [label="$t2"]
+	125 -> 126
+	127 [label="$t3"]
+	125 -> 127
+	128 [label=Asignar]
+	A -> 128
+	129 [label="="]
+	128 -> 129
+	130 [label="$t9"]
 	129 -> 130
-	131 [label=1]
+	131 [label="-"]
 	129 -> 131
-	132 [label=Asignar]
-	A -> 132
-	133 [label="="]
-	132 -> 133
-	134 [label="$s0"]
-	133 -> 134
-	135 [label="[]"]
+	132 [label="$t8"]
+	131 -> 132
+	133 [label=1]
+	131 -> 133
+	134 [label=Asignar]
+	A -> 134
+	135 [label="="]
 	134 -> 135
-	136 [label="$sp"]
+	136 [label="$t10"]
 	135 -> 136
-	137 [label="$a0"]
-	133 -> 137
-	138 [label=Asignar]
-	A -> 138
-	139 [label="="]
-	138 -> 139
-	140 [label="$a0"]
-	139 -> 140
-	141 [label="+"]
-	139 -> 141
-	142 [label="$a0"]
+	137 [label="<"]
+	135 -> 137
+	138 [label="$t4"]
+	137 -> 138
+	139 [label="$t9"]
+	137 -> 139
+	140 [label=If]
+	A -> 140
+	141 [label=Expresion]
+	140 -> 141
+	142 [label="!"]
 	141 -> 142
-	143 [label=1]
-	141 -> 143
-	144 [label=Asignar]
-	A -> 144
-	145 [label="="]
+	143 [label="$t10"]
+	142 -> 143
+	144 [label=Goto]
+	140 -> 144
+	145 [label=endfor2]
 	144 -> 145
-	146 [label="$sp"]
-	145 -> 146
-	147 [label="+"]
-	145 -> 147
-	148 [label="$sp"]
+	146 [label=Asignar]
+	A -> 146
+	147 [label="="]
+	146 -> 147
+	148 [label="$t11"]
 	147 -> 148
-	149 [label=1]
+	149 [label="+"]
 	147 -> 149
-	150 [label=Asignar]
-	A -> 150
-	151 [label="="]
-	150 -> 151
-	152 [label="$s0"]
-	151 -> 152
-	153 [label="[]"]
+	150 [label="$t4"]
+	149 -> 150
+	151 [label=1]
+	149 -> 151
+	152 [label=Asignar]
+	A -> 152
+	153 [label="="]
 	152 -> 153
-	154 [label="$sp"]
+	154 [label="$t12"]
 	153 -> 154
-	155 [label="$a0"]
-	151 -> 155
-	156 [label=Asignar]
-	A -> 156
-	157 [label="="]
+	155 [label="<"]
+	153 -> 155
+	156 [label="$t1"]
+	155 -> 156
+	157 [label="[]"]
 	156 -> 157
-	158 [label="$a1"]
+	158 [label="$t11"]
 	157 -> 158
-	159 [label="-"]
-	157 -> 159
-	160 [label="$a1"]
+	159 [label="$t1"]
+	155 -> 159
+	160 [label="[]"]
 	159 -> 160
-	161 [label=1]
-	159 -> 161
-	162 [label=Goto]
+	161 [label="$t4"]
+	160 -> 161
+	162 [label=If]
 	A -> 162
-	163 [label=ack]
+	163 [label=Expresion]
 	162 -> 163
-	164 [label=Etiqueta]
-	A -> 164
-	165 [label=ret3]
+	164 [label="!"]
+	163 -> 164
+	165 [label="$t12"]
 	164 -> 165
-	166 [label=Asignar]
-	A -> 166
-	167 [label="="]
+	166 [label=Goto]
+	162 -> 166
+	167 [label=next1]
 	166 -> 167
-	168 [label="$v0"]
-	167 -> 168
-	169 [label="$a1"]
-	167 -> 169
-	170 [label=Goto]
-	A -> 170
-	171 [label=ret0]
-	170 -> 171
-	172 [label=Etiqueta]
-	A -> 172
-	173 [label=factorial]
-	172 -> 173
+	168 [label=Asignar]
+	A -> 168
+	169 [label="="]
+	168 -> 169
+	170 [label="$t13"]
+	169 -> 170
+	171 [label="+"]
+	169 -> 171
+	172 [label="$t4"]
+	171 -> 172
+	173 [label=1]
+	171 -> 173
 	174 [label=Asignar]
 	A -> 174
 	175 [label="="]
 	174 -> 175
-	176 [label="$a0"]
+	176 [label="$t5"]
 	175 -> 176
-	177 [label=6]
+	177 [label="$t1"]
 	175 -> 177
-	178 [label=Asignar]
-	A -> 178
-	179 [label="="]
+	178 [label="[]"]
+	177 -> 178
+	179 [label="$t13"]
 	178 -> 179
-	180 [label="$ra"]
-	179 -> 180
-	181 [label=0]
-	179 -> 181
-	182 [label=Goto]
-	A -> 182
-	183 [label=fact]
-	182 -> 183
-	184 [label=Etiqueta]
-	A -> 184
-	185 [label=ret01]
-	184 -> 185
-	186 [label=Imprimir]
+	180 [label=Asignar]
+	A -> 180
+	181 [label="="]
+	180 -> 181
+	182 [label="$t14"]
+	181 -> 182
+	183 [label="+"]
+	181 -> 183
+	184 [label="$t4"]
+	183 -> 184
+	185 [label=1]
+	183 -> 185
+	186 [label=Asignar]
 	A -> 186
-	187 [label="Factorial\n"]
+	187 [label="="]
 	186 -> 187
-	188 [label=Imprimir]
-	A -> 188
-	189 [label="$v0"]
+	188 [label="$t1"]
+	187 -> 188
+	189 [label="[]"]
 	188 -> 189
-	190 [label=Exit]
-	A -> 190
-	191 [label=Etiqueta]
-	A -> 191
-	192 [label=fact]
+	190 [label="$t14"]
+	189 -> 190
+	191 [label="$t1"]
+	187 -> 191
+	192 [label="[]"]
 	191 -> 192
-	193 [label=If]
-	A -> 193
-	194 [label=Expresion]
-	193 -> 194
-	195 [label=">"]
+	193 [label="$t4"]
+	192 -> 193
+	194 [label=Asignar]
+	A -> 194
+	195 [label="="]
 	194 -> 195
-	196 [label="$a0"]
+	196 [label="$t1"]
 	195 -> 196
-	197 [label=1]
-	195 -> 197
-	198 [label=Goto]
-	193 -> 198
-	199 [label=sino]
-	198 -> 199
-	200 [label=Asignar]
+	197 [label="[]"]
+	196 -> 197
+	198 [label="$t4"]
+	197 -> 198
+	199 [label="$t5"]
+	195 -> 199
+	200 [label=Goto]
 	A -> 200
-	201 [label="="]
+	201 [label=end1]
 	200 -> 201
-	202 [label="$v0"]
-	201 -> 202
-	203 [label=1]
-	201 -> 203
-	204 [label=If]
+	202 [label=Etiqueta]
+	A -> 202
+	203 [label=next1]
+	202 -> 203
+	204 [label=Etiqueta]
 	A -> 204
-	205 [label=Expresion]
+	205 [label=end1]
 	204 -> 205
-	206 [label="=="]
-	205 -> 206
-	207 [label="$ra"]
+	206 [label=Asignar]
+	A -> 206
+	207 [label="="]
 	206 -> 207
-	208 [label=0]
-	206 -> 208
-	209 [label=Goto]
-	204 -> 209
-	210 [label=ret01]
+	208 [label="$t4"]
+	207 -> 208
+	209 [label="+"]
+	207 -> 209
+	210 [label="$t4"]
 	209 -> 210
-	211 [label=Asignar]
-	A -> 211
-	212 [label="="]
-	211 -> 212
-	213 [label="$ra"]
+	211 [label=1]
+	209 -> 211
+	212 [label=Goto]
+	A -> 212
+	213 [label=for2]
 	212 -> 213
-	214 [label="-"]
-	212 -> 214
-	215 [label="$ra"]
+	214 [label=Etiqueta]
+	A -> 214
+	215 [label=endfor2]
 	214 -> 215
-	216 [label=1]
-	214 -> 216
-	217 [label=Goto]
-	A -> 217
-	218 [label=ret11]
+	216 [label=Asignar]
+	A -> 216
+	217 [label="="]
+	216 -> 217
+	218 [label="$t3"]
 	217 -> 218
-	219 [label=Etiqueta]
-	A -> 219
-	220 [label=sino]
+	219 [label="+"]
+	217 -> 219
+	220 [label="$t3"]
 	219 -> 220
-	221 [label=Asignar]
-	A -> 221
-	222 [label="="]
-	221 -> 222
-	223 [label="$a0"]
+	221 [label=1]
+	219 -> 221
+	222 [label=Goto]
+	A -> 222
+	223 [label=for1]
 	222 -> 223
-	224 [label="-"]
-	222 -> 224
-	225 [label="$a0"]
+	224 [label=Etiqueta]
+	A -> 224
+	225 [label=endfor1]
 	224 -> 225
-	226 [label=1]
-	224 -> 226
-	227 [label=Asignar]
-	A -> 227
-	228 [label="="]
-	227 -> 228
-	229 [label="$ra"]
+	226 [label=Goto]
+	A -> 226
+	227 [label=retorno]
+	226 -> 227
+	228 [label=Etiqueta]
+	A -> 228
+	229 [label=TagimprimirBurbuja10]
 	228 -> 229
-	230 [label="+"]
-	228 -> 230
-	231 [label="$ra"]
+	230 [label=Asignar]
+	A -> 230
+	231 [label="="]
 	230 -> 231
-	232 [label=1]
-	230 -> 232
-	233 [label=Goto]
-	A -> 233
-	234 [label=fact]
-	233 -> 234
-	235 [label=Etiqueta]
-	A -> 235
-	236 [label=ret11]
-	235 -> 236
-	237 [label=Asignar]
-	A -> 237
-	238 [label="="]
+	232 [label="$t15"]
+	231 -> 232
+	233 [label=0]
+	231 -> 233
+	234 [label=Etiqueta]
+	A -> 234
+	235 [label=for3]
+	234 -> 235
+	236 [label=Asignar]
+	A -> 236
+	237 [label="="]
+	236 -> 237
+	238 [label="$t16"]
 	237 -> 238
-	239 [label="$a0"]
-	238 -> 239
-	240 [label="+"]
-	238 -> 240
-	241 [label="$a0"]
-	240 -> 241
-	242 [label=1]
-	240 -> 242
-	243 [label=Asignar]
-	A -> 243
-	244 [label="="]
+	239 [label="<"]
+	237 -> 239
+	240 [label="$t15"]
+	239 -> 240
+	241 [label="$t2"]
+	239 -> 241
+	242 [label=If]
+	A -> 242
+	243 [label=Expresion]
+	242 -> 243
+	244 [label="!"]
 	243 -> 244
-	245 [label="$v0"]
+	245 [label="$t16"]
 	244 -> 245
-	246 [label="*"]
-	244 -> 246
-	247 [label="$a0"]
+	246 [label=Goto]
+	242 -> 246
+	247 [label=endfor3]
 	246 -> 247
-	248 [label="$v0"]
-	246 -> 248
-	249 [label=If]
-	A -> 249
-	250 [label=Expresion]
+	248 [label=Imprimir]
+	A -> 248
+	249 [label="$t1"]
+	248 -> 249
+	250 [label="[]"]
 	249 -> 250
-	251 [label="=="]
+	251 [label="$t15"]
 	250 -> 251
-	252 [label="$ra"]
-	251 -> 252
-	253 [label=0]
-	251 -> 253
-	254 [label=Goto]
-	249 -> 254
-	255 [label=ret01]
+	252 [label=Imprimir]
+	A -> 252
+	253 [label="\n"]
+	252 -> 253
+	254 [label=Asignar]
+	A -> 254
+	255 [label="="]
 	254 -> 255
-	256 [label=Asignar]
-	A -> 256
-	257 [label="="]
-	256 -> 257
-	258 [label="$ra"]
+	256 [label="$t15"]
+	255 -> 256
+	257 [label="+"]
+	255 -> 257
+	258 [label="$t15"]
 	257 -> 258
-	259 [label="-"]
+	259 [label=1]
 	257 -> 259
-	260 [label="$ra"]
-	259 -> 260
-	261 [label=1]
-	259 -> 261
-	262 [label=Goto]
+	260 [label=Goto]
+	A -> 260
+	261 [label=for3]
+	260 -> 261
+	262 [label=Etiqueta]
 	A -> 262
-	263 [label=ret11]
+	263 [label=endfor3]
 	262 -> 263
+	264 [label=Goto]
+	A -> 264
+	265 [label=retorno]
+	264 -> 265
+	266 [label=Etiqueta]
+	A -> 266
+	267 [label=MainTag]
+	266 -> 267
+	268 [label=Imprimir]
+	A -> 268
+	269 [label="Arreglo Desordenado\n"]
+	268 -> 269
+	270 [label=Asignar]
+	A -> 270
+	271 [label="="]
+	270 -> 271
+	272 [label="$ra"]
+	271 -> 272
+	273 [label="+"]
+	271 -> 273
+	274 [label="$ra"]
+	273 -> 274
+	275 [label=1]
+	273 -> 275
+	276 [label=Asignar]
+	A -> 276
+	277 [label="="]
+	276 -> 277
+	278 [label="$s0"]
+	277 -> 278
+	279 [label="[]"]
+	278 -> 279
+	280 [label="$ra"]
+	279 -> 280
+	281 [label=0]
+	277 -> 281
+	282 [label=Goto]
+	A -> 282
+	283 [label=TagimprimirBurbuja10]
+	282 -> 283
+	284 [label=Etiqueta]
+	A -> 284
+	285 [label=Ret0]
+	284 -> 285
+	286 [label=Asignar]
+	A -> 286
+	287 [label="="]
+	286 -> 287
+	288 [label="$ra"]
+	287 -> 288
+	289 [label="-"]
+	287 -> 289
+	290 [label="$ra"]
+	289 -> 290
+	291 [label=1]
+	289 -> 291
+	292 [label=Imprimir]
+	A -> 292
+	293 [label="---------------------------\n"]
+	292 -> 293
+	294 [label=Asignar]
+	A -> 294
+	295 [label="="]
+	294 -> 295
+	296 [label="$ra"]
+	295 -> 296
+	297 [label="+"]
+	295 -> 297
+	298 [label="$ra"]
+	297 -> 298
+	299 [label=1]
+	297 -> 299
+	300 [label=Asignar]
+	A -> 300
+	301 [label="="]
+	300 -> 301
+	302 [label="$s0"]
+	301 -> 302
+	303 [label="[]"]
+	302 -> 303
+	304 [label="$ra"]
+	303 -> 304
+	305 [label=1]
+	301 -> 305
+	306 [label=Goto]
+	A -> 306
+	307 [label=Tagburbuja10]
+	306 -> 307
+	308 [label=Etiqueta]
+	A -> 308
+	309 [label=Ret1]
+	308 -> 309
+	310 [label=Asignar]
+	A -> 310
+	311 [label="="]
+	310 -> 311
+	312 [label="$ra"]
+	311 -> 312
+	313 [label="-"]
+	311 -> 313
+	314 [label="$ra"]
+	313 -> 314
+	315 [label=1]
+	313 -> 315
+	316 [label=Imprimir]
+	A -> 316
+	317 [label="Arreglo Desordenado\n"]
+	316 -> 317
+	318 [label=Asignar]
+	A -> 318
+	319 [label="="]
+	318 -> 319
+	320 [label="$ra"]
+	319 -> 320
+	321 [label="+"]
+	319 -> 321
+	322 [label="$ra"]
+	321 -> 322
+	323 [label=1]
+	321 -> 323
+	324 [label=Asignar]
+	A -> 324
+	325 [label="="]
+	324 -> 325
+	326 [label="$s0"]
+	325 -> 326
+	327 [label="[]"]
+	326 -> 327
+	328 [label="$ra"]
+	327 -> 328
+	329 [label=2]
+	325 -> 329
+	330 [label=Goto]
+	A -> 330
+	331 [label=TagimprimirBurbuja10]
+	330 -> 331
+	332 [label=Etiqueta]
+	A -> 332
+	333 [label=Ret2]
+	332 -> 333
+	334 [label=Asignar]
+	A -> 334
+	335 [label="="]
+	334 -> 335
+	336 [label="$ra"]
+	335 -> 336
+	337 [label="-"]
+	335 -> 337
+	338 [label="$ra"]
+	337 -> 338
+	339 [label=1]
+	337 -> 339
+	340 [label=Exit]
+	A -> 340
+	341 [label=Etiqueta]
+	A -> 341
+	342 [label=retorno]
+	341 -> 342
+	343 [label=If]
+	A -> 343
+	344 [label=Expresion]
+	343 -> 344
+	345 [label="=="]
+	344 -> 345
+	346 [label="$s0"]
+	345 -> 346
+	347 [label="[]"]
+	346 -> 347
+	348 [label="$ra"]
+	347 -> 348
+	349 [label=0]
+	345 -> 349
+	350 [label=Goto]
+	343 -> 350
+	351 [label=Ret0]
+	350 -> 351
+	352 [label=If]
+	A -> 352
+	353 [label=Expresion]
+	352 -> 353
+	354 [label="=="]
+	353 -> 354
+	355 [label="$s0"]
+	354 -> 355
+	356 [label="[]"]
+	355 -> 356
+	357 [label="$ra"]
+	356 -> 357
+	358 [label=1]
+	354 -> 358
+	359 [label=Goto]
+	352 -> 359
+	360 [label=Ret1]
+	359 -> 360
+	361 [label=If]
+	A -> 361
+	362 [label=Expresion]
+	361 -> 362
+	363 [label="=="]
+	362 -> 363
+	364 [label="$s0"]
+	363 -> 364
+	365 [label="[]"]
+	364 -> 365
+	366 [label="$ra"]
+	365 -> 366
+	367 [label=2]
+	363 -> 367
+	368 [label=Goto]
+	361 -> 368
+	369 [label=Ret2]
+	368 -> 369
 }

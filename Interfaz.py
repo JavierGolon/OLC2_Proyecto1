@@ -27,7 +27,7 @@ class txtAsConsole(object):
 	def __init__(self,text_widget):
 		self.txt = text_widget
 	def write(self,string):
-		self.txt.insert('end',string)
+		self.txt.insert('end',str(string))
 		self.txt.see('end')
 
 # =================================== CLASE PARA EL DIALOGO DE BUSCAR Y REMPLAZAR ========================
