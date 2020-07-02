@@ -28,6 +28,7 @@ def accion_imprimir(instr,ts):
         
     else:
         try:
+            # nueva parte agregada
             decode = bytes(str(registro),"utf-8").decode("unicode_escape")
         except Exception as error:
             print(error)
