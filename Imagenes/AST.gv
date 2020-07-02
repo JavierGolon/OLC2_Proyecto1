@@ -2,6 +2,6 @@ digraph {
 	A [label=Main]
 	1 [label=Imprimir]
 	A -> 1
-	2 [label="hola \n javier alejandro "]
+	2 [label=javier]
 	1 -> 2
 }

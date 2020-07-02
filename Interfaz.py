@@ -13,8 +13,6 @@ from tkdocviewer import *
 import re
 # Importacion de la clase ejecucion
 import Ejecucion as analisador
-import Globales
-Globales.initialized()
 findtxt = 'Empty'
 searchtxt = 'Empty'
 ReporteGramatical = ['Vacio'] # es el mismo para los dos tipos
@@ -27,8 +25,10 @@ class txtAsConsole(object):
 	def __init__(self,text_widget):
 		self.txt = text_widget
 	def write(self,string):
-		self.txt.insert('end',str(string))
+		self.txt.insert('end',string)
 		self.txt.see('end')
+	def flush(self):
+		pass
 
 # =================================== CLASE PARA EL DIALOGO DE BUSCAR Y REMPLAZAR ========================
 
